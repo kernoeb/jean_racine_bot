@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const logger = require('../utils/signale')
 
-mongoose.connect('mongodb://localhost:27017/rootmebot', {
+mongoose.connect(`mongodb://${process.env.MONGODB_URL}/rootmebot`, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false,

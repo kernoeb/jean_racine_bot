@@ -1,5 +1,4 @@
 const { Client, Collection, Intents } = require('discord.js')
-const dotenv = require('dotenv')
 const fs = require('fs')
 const logger = require('./utils/signale')
 
@@ -12,7 +11,11 @@ const { challengeInfo } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
 
 const db = mongoose.connection
-dotenv.config()
+
+if (process.env.NODE_ENV !== 'production') {
+	const dotenv = require('dotenv')
+	dotenv.config()
+}
 
 let client
 
