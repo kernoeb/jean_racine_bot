@@ -1,0 +1,31 @@
+{
+  "name": "rootme_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "engines": {
+    "node": "v16.6.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.5.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "agenda": "^4.2.1",
+    "axios": "^0.21.1",
+    "discord-api-types": "^0.22.0",
+    "discord.js": "^13.1.0",
+    "luxon": "^2.0.2",
+    "mongoose": "^5.13.7",
+    "signale-logger": "^1.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "nodemon": "^2.0.12"
+  }
+}
