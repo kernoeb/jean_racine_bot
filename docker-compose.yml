@@ -6,19 +6,18 @@ services:
     restart: always
     env_file:
       - .env
+    networks:
+      - rootme
   mongodb:
     image: docker.io/bitnami/mongodb:4.4
     restart: always
+    networks:
+      - rootme
     ports:
       - "27017:27017"
     volumes:
-      - 'mongodb_data:/bitnami/mongodb'
-
-volumes:
-  mongodb_data:
-    driver: local
+      - '/opt/jeanracine:/bitnami/mongodb'
 
 networks:
-  default:
-    external:
-      name: rootme
+  rootme:
+    driver: bridge
