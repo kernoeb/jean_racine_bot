@@ -20,12 +20,13 @@ module.exports = {
 
 		let req
 		const id = interaction.options.getString('id') // ID
-		const user = await mongoose.models.user.findOne({ id_auteur: id })
+		let user = await mongoose.models.user.findOne({ id_auteur: id })
 		if (!user) {
 			try {
 				req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${id}?${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
 				req.data.timestamp = new Date()
 				await mongoose.models.user.create(req.data)
+				user = await mongoose.models.user.findOne({ id_auteur: id })
 			} catch (err) {
 				logger.error(err)
 				return await interaction.reply({ content: ':no_entry_sign: Utilisateur inexistant !', ephemeral: true })
