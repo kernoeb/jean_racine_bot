@@ -108,14 +108,19 @@ module.exports = {
                 const channelsIdsFiltered = (await mongoose.models.channels.find({ users: user.id_auteur })).map(v => v.channelId)
                 logger.log(channelsIdsFiltered)
 
-                for (const channel of channelsIdsFiltered) await client.channels.cache.get(channel).send({ embeds: [embed] })
+                for (const channel of channelsIdsFiltered) {
+                  try {
+                    await client.channels.cache.get(channel).send({ embeds: [embed] })
+                  } catch (err) {
+                    logger.error(err)
+                  }
+                }
               }
             }
           }
         }
 
         req.data.timestamp = new Date()
-        // logger.log(req.data)
         const update = await mongoose.models.user.updateOne({ id_auteur: req.data.id_auteur }, req.data, { runValidators: true }) // Update user in database
         await pause()
         logger.success('User ', update)
