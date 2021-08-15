@@ -11,8 +11,8 @@ module.exports = {
     if (!await mongoose.models.channels.findOne({ channelId: interaction.channelId, guildId: interaction.guildId }))
       return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce canal ! (**/init**)', ephemeral: true })
 
-    updateUsers(interaction.client, [interaction.channelId]).then(() => {
-      fetchChallenges(interaction.client, [interaction.channelId])
+    updateUsers([interaction.channelId]).then(() => {
+      fetchChallenges([interaction.channelId])
     })
 
 

@@ -4,13 +4,14 @@ const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
 const { challengeEmbed, challengeInfo } = require('../utils/challenge')
+const client = require('../utils/discord')()
 
 async function pause(time = 2000) {
   await new Promise(r => setTimeout(r, time))
 }
 
 module.exports = {
-  fetchChallenges: async function(client, channelIds) {
+  fetchChallenges: async function(channelIds) {
     logger.info('Fetch and update challenges')
     let fetchContinue = true
     let index = 0
@@ -46,7 +47,7 @@ module.exports = {
       index++
     }
   },
-  updateUsers: async function(client, channelIds) {
+  updateUsers: async function(channelIds) {
     logger.info('Update users')
     for await (const user of mongoose.models.user.find()) {
       try {

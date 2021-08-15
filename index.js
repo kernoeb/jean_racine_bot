@@ -2,8 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const { Client, Collection, Intents } = require('discord.js')
-const fs = require('fs')
+const client = require('./utils/discord')()
 const logger = require('./utils/signale')
 
 const mongoose = require('./utils/mongoose')
@@ -15,8 +14,6 @@ const { challengeInfo } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
 
 const db = mongoose.connection
-
-let client
 
 db.on('error', console.error.bind(console, 'connection error:'))
 
@@ -80,11 +77,11 @@ db.once('open', async function() {
 
   /** Agenda configuration **/
   agenda.define('UPDATE_USERS', {}, async () => {
-    updateUsers(client, (await Channels.find({})).map(v => v.channelId))
+    updateUsers((await Channels.find({})).map(v => v.channelId))
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async () => {
-    fetchChallenges(client, (await Channels.find({})).map(v => v.channelId))
+    fetchChallenges((await Channels.find({})).map(v => v.channelId))
   })
 
   agenda.mongo(db.db, 'agenda')
@@ -97,25 +94,13 @@ db.once('open', async function() {
     }, 5000)
 
     const UPDATE_USERS = agenda.create('UPDATE_USERS', { })
-    await UPDATE_USERS.repeatEvery('15 minutes', { skipImmediate: true }).save()
+    await UPDATE_USERS.repeatEvery('10 seconds', { skipImmediate: true }).save()
     const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', { })
     await UPDATE_CHALLENGES.repeatEvery('1 hour', { skipImmediate: true }).save()
   })
 
 
   /** Discord.js **/
-  client = new Client({ intents: [Intents.FLAGS.GUILDS] })
-  client.commands = new Collection()
-
-  const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
-
-  for (const file of commandFiles) {
-    const command = require(`./commands/${file}`)
-    // set a new item in the Collection
-    // with the key as the command name and the value as the exported module
-    client.commands.set(command.data.name, command)
-  }
-
   client.once('ready', () => {
     logger.success('Ready!')
   })
