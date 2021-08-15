@@ -33,7 +33,7 @@ module.exports = {
 			}
 		}
 
-		if (!channel.users.includes(user.id_auteur)) {
+		if (!(channel.users || []).includes(user.id_auteur)) {
 			channel.users.push(user.id_auteur)
 			await channel.save()
 			return await interaction.reply(`:white_check_mark: Utilisateur ${user.nom} (${user.id_auteur}) ajouté avec succès`)

@@ -12,7 +12,7 @@ module.exports = {
 			const embed = new MessageEmbed().setTitle(`Utilisateurs (${tmpUsers.length})`)
 			for (const user of tmpUsers) {
 				const tmpUser = user.userInfo()
-				embed.addField(tmpUser.name, tmpUser.score.toString() + ' points')
+				embed.addField(`${tmpUser.name} (${tmpUser.id})`, tmpUser.score.toString() + ' points')
 			}
 			return await interaction.reply({ embeds: [embed] })
 		}
