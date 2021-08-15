@@ -38,13 +38,12 @@ module.exports = {
 				.setTitle(u.name)
 				.setDescription(`**ID:** ${u.id}`)
 				.setThumbnail(`${process.env.ROOTME_URL}/IMG/auton${u.id}.jpg`)
-				.addFields(
-					{ name: 'Score', value: u.score.toString() },
-					{ name: 'Position', value: u.position.toString() },
-					{ name: 'Challenges', value: u.challengesLength.toString(), inline: true },
-					{ name: 'Solutions', value: u.solutionsLength.toString(), inline: true },
-					{ name: 'Validations', value: u.validationsLength.toString(), inline: true }
-				)
+
+			if (u.score != null) embed.addField('Score', u.score.toString())
+			if (u.position != null) embed.addField('Position', u.position.toString())
+			if (u.challengesLength != null) embed.addField('Challenges', u.challengesLength.toString(), true)
+			if (u.solutionsLength != null) embed.addField('Solutions', u.solutionsLength.toString(), true)
+			if (u.validationsLength != null) embed.addField('Validations', u.validationsLength.toString(), true)
 			if (u.backup) embed.setFooter('⚠️ Sauvegarde locale du ' + (DateTime.fromJSDate(u.timestamp).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)))
 
 			return await interaction.reply({ embeds: [embed] })
