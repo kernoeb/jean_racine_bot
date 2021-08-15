@@ -12,7 +12,7 @@ module.exports = {
 		if (!channel)
 			return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce canal ! (**/init**)', ephemeral: true })
 
-		const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: channel.users } }).sort({ score: -1 }) // Get all users
+		const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }).sort({ score: -1 }) // Get all users
 		if (tmpUsers && tmpUsers.length) {
 			const embed = new MessageEmbed().setTitle(`Utilisateurs (${tmpUsers.length})`)
 			for (const user of tmpUsers) {
