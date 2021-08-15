@@ -6,7 +6,7 @@ module.exports = {
 		return {
 			id: this.id_challenge || args.id_challenge,
 			title: this.titre || args.titre || this.id_challenge || args.id_challenge,
-			description: this.soustitre || args.titre || 'Aucune description',
+			description: this.soustitre || args.soustitre || 'Aucune description',
 			score: this.score || args.score || 0,
 			rubrique: this.rubrique || args.rubrique,
 			date: this.date_publication || args.date_publication,
