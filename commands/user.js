@@ -39,11 +39,11 @@ module.exports = {
 				.setDescription(`**ID:** ${u.id}`)
 				.setThumbnail(`${process.env.ROOTME_URL}/IMG/auton${u.id}.jpg`)
 
-			if (u.score != null) embed.addField('Score', u.score.toString())
-			if (u.position != null) embed.addField('Position', u.position.toString())
-			if (u.challengesLength != null) embed.addField('Challenges', u.challengesLength.toString(), true)
-			if (u.solutionsLength != null) embed.addField('Solutions', u.solutionsLength.toString(), true)
-			if (u.validationsLength != null) embed.addField('Validations', u.validationsLength.toString(), true)
+			if (u.score != null && u.score !== '') embed.addField('Score', u.score.toString())
+			if (u.position != null && u.position !== '') embed.addField('Position', u.position.toString())
+			if (u.challengesLength != null && u.challengesLength !== '') embed.addField('Challenges', u.challengesLength.toString(), true)
+			if (u.solutionsLength != null && u.solutionsLength !== '') embed.addField('Solutions', u.solutionsLength.toString(), true)
+			if (u.validationsLength != null && u.validationsLength !== '') embed.addField('Validations', u.validationsLength.toString(), true)
 			if (u.backup) embed.setFooter('⚠️ Sauvegarde locale du ' + (DateTime.fromJSDate(u.timestamp).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)))
 
 			return await interaction.reply({ embeds: [embed] })
