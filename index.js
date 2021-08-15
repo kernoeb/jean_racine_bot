@@ -94,7 +94,7 @@ db.once('open', async function() {
     }, 5000)
 
     const UPDATE_USERS = agenda.create('UPDATE_USERS', { })
-    await UPDATE_USERS.repeatEvery('10 seconds', { skipImmediate: true }).save()
+    await UPDATE_USERS.repeatEvery('15 minutes', { skipImmediate: true }).save()
     const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', { })
     await UPDATE_CHALLENGES.repeatEvery('1 hour', { skipImmediate: true }).save()
   })
