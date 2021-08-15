@@ -22,3 +22,11 @@ Slash commands
 `/challenge <id>` : Information about a challenge  
 `/user <id>`: Information about a user  
 `/ping`: Test if the bot is not down 
+
+#### Captures
+
+![img.png](images/img2.png)
+
+![img.png](images/img.png)
+
+![img.png](images/img3.png)
