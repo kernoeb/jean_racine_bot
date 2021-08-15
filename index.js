@@ -77,11 +77,19 @@ db.once('open', async function() {
 
   /** Agenda configuration **/
   agenda.define('UPDATE_USERS', {}, async () => {
-    updateUsers((await Channels.find({})).map(v => v.channelId))
+    updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
+      logger.success('UPDATE_USERS OK')
+    }).catch(err => {
+      logger.error('UPDATE_USERS ERROR', err)
+    })
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async () => {
-    fetchChallenges((await Channels.find({})).map(v => v.channelId))
+    fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
+      logger.success('UPDATE_CHALLENGES OK')
+    }).catch(err => {
+      logger.error('UPDATE_CHALLENGES ERROR', err)
+    })
   })
 
   agenda.mongo(db.db, 'agenda')
