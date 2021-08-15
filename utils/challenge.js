@@ -6,7 +6,7 @@ module.exports = {
 		return {
 			id: this.id_challenge || args.id_challenge,
 			title: this.titre || args.titre || this.id_challenge || args.id_challenge,
-			description: this.soustitre || args.soustitre || 'Aucune description',
+			description: this.soustitre || args.soustitre,
 			score: this.score || args.score || 0,
 			rubrique: this.rubrique || args.rubrique,
 			date: this.date_publication || args.date_publication,
@@ -25,7 +25,7 @@ module.exports = {
 	challengeEmbed: function(u) {
 		const embed = new MessageEmbed()
 			.setTitle('**Challenge :** ' + (u.title || u.id_challenge))
-			.setDescription(u.soustitre || 'Aucune description')
+			.setDescription(u.description || 'Aucune description')
 
 		if (u.authors != null && u.authors !== '') embed.setAuthor(u.authors)
 		if (u.validations != null && u.validations !== '') embed.addField('Validations', u.validations.toString())
