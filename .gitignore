@@ -119,3 +119,6 @@ dist
 
 # idea
 .idea/
+
+# other
+register_slash_commands_dev.js
