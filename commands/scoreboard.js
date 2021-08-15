@@ -5,7 +5,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('scoreboard')
-		.setDescription('Tableau d\'affichage des utilisateurs sauvegardés'),
+		.setDescription('Tableau des scores'),
 	async execute(interaction) {
 		const channel = await mongoose.models.channels.findOne({ channelId: interaction.channelId, guildId: interaction.guildId })
 
