@@ -5,10 +5,11 @@ const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
 const { challengeEmbed, challengeInfo } = require('../utils/challenge')
 
+async function pause(time = 2000) {
+  await new Promise(r => setTimeout(r, time))
+}
+
 module.exports = {
-  pause: async function(time = 2000) {
-    await new Promise(r => setTimeout(r, time))
-  },
   fetchChallenges: async function(client, channelIds) {
     logger.info('Fetch and update challenges')
     let fetchContinue = true
@@ -37,10 +38,10 @@ module.exports = {
           }
         }
         logger.log(page.id_challenge + ' > ' + reqPage.data.titre + (ret.nModified || ret._id ? '*' : ''))
-        await this.pause()
+        await pause()
       }
 
-      await this.pause()
+      await pause()
       if (req.data?.[1]?.rel !== 'next' && req.data?.[2]?.rel !== 'next') fetchContinue = false
       index++
     }
@@ -112,7 +113,7 @@ module.exports = {
 
         req.data.timestamp = new Date()
         const update = await mongoose.models.user.updateOne({ id_auteur: req.data.id_auteur }, req.data, { runValidators: true }) // Update user in database
-        await this.pause()
+        await pause()
         logger.success('User ', update)
       } catch (err) {
         logger.error(err)
