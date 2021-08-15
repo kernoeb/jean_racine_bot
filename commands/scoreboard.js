@@ -7,7 +7,12 @@ module.exports = {
 		.setName('scoreboard')
 		.setDescription('Tableau d\'affichage des utilisateurs sauvegardés'),
 	async execute(interaction) {
-		const tmpUsers = await mongoose.models.user.find({}).sort({ score: -1 }) // Get all users
+		const channel = await mongoose.models.channels.findOne({ channelId: interaction.channelId, guildId: interaction.guildId })
+
+		if (!channel)
+			return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce canal ! (**/init**)', ephemeral: true })
+
+		const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: channel.users } }).sort({ score: -1 }) // Get all users
 		if (tmpUsers && tmpUsers.length) {
 			const embed = new MessageEmbed().setTitle(`Utilisateurs (${tmpUsers.length})`)
 			for (const user of tmpUsers) {
