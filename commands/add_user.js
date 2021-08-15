@@ -23,7 +23,7 @@ module.exports = {
     let user = await mongoose.models.user.findOne({ id_auteur: id })
     if (!user) {
       try {
-        req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${id}?${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+        req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${id}?fakehash=${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
         req.data.timestamp = new Date()
         await mongoose.models.user.create(req.data)
         user = await mongoose.models.user.findOne({ id_auteur: id })

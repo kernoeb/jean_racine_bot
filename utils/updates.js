@@ -15,7 +15,7 @@ module.exports = {
     let fetchContinue = true
     let index = 0
     while (fetchContinue) {
-      const req = await axios.get(`${process.env.ROOTME_API_URL}/challenges?debut_challenges=${index * 50}&${new Date().getTime()}`,
+      const req = await axios.get(`${process.env.ROOTME_API_URL}/challenges?debut_challenges=${index * 50}&fakehash=${new Date().getTime()}`,
         { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
 
       const pages = Object.keys(req.data[0]).map(v => req.data[0][v])
@@ -23,7 +23,7 @@ module.exports = {
       for (const page of pages) {
         let ret
         const f = await mongoose.models.challenge.findOne({ id_challenge: page.id_challenge })
-        const reqPage = await axios.get(`${process.env.ROOTME_API_URL}/challenges/${page.id_challenge}?${new Date().getTime()}`,
+        const reqPage = await axios.get(`${process.env.ROOTME_API_URL}/challenges/${page.id_challenge}?fakehash=${new Date().getTime()}`,
           { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
         reqPage.data.timestamp = new Date()
 
@@ -50,7 +50,7 @@ module.exports = {
     logger.info('Update users')
     for await (const user of mongoose.models.user.find()) {
       try {
-        const req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${user.id_auteur}?${new Date().getTime()}`,
+        const req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${user.id_auteur}?fakehash=${new Date().getTime()}`,
           { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
 
         const toCheck = [
@@ -105,6 +105,8 @@ module.exports = {
                 }
 
                 const channelsIdsFiltered = (await mongoose.models.channels.find({ users: user.id_auteur })).map(v => v.channelId)
+                logger.log(channelsIdsFiltered)
+
                 for (const channel of channelsIdsFiltered) await client.channels.cache.get(channel).send({ embeds: [embed] })
               }
             }
@@ -112,6 +114,7 @@ module.exports = {
         }
 
         req.data.timestamp = new Date()
+        // logger.log(req.data)
         const update = await mongoose.models.user.updateOne({ id_auteur: req.data.id_auteur }, req.data, { runValidators: true }) // Update user in database
         await pause()
         logger.success('User ', update)

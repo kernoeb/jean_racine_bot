@@ -20,7 +20,7 @@ module.exports = {
     let u = undefined
 
     try {
-      req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${id}?${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+      req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${id}?fakehash=${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
       u = userInfo(req.data) // Get user info
     } catch (err) {
       if (err && err.response && err.response.status === 404) return await interaction.reply({ content: 'Utilisateur inexistant', ephemeral: true })

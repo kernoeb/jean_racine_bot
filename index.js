@@ -79,29 +79,27 @@ db.once('open', async function() {
   }
 
   /** Agenda configuration **/
-  agenda.define('UPDATE_USERS', async () => {
+  agenda.define('UPDATE_USERS', {}, async () => {
     updateUsers(client, (await Channels.find({})).map(v => v.channelId))
   })
 
-  agenda.define('UPDATE_CHALLENGES', async () => {
+  agenda.define('UPDATE_CHALLENGES', {}, async () => {
     fetchChallenges(client, (await Channels.find({})).map(v => v.channelId))
   })
 
   agenda.mongo(db.db, 'agenda')
 
-  agenda.on('ready', () => {
+  agenda.on('ready', async () => {
     setTimeout(() => {
       agenda.start().then(() => {
         logger.success('Agenda started successfully')
       })
     }, 5000)
 
-    agenda.every('15 minutes', 'UPDATE_USERS').then(() => {
-      logger.success('UPDATE_DATABASE initialized successfully')
-    })
-    agenda.every('1 hour', 'UPDATE_CHALLENGES').then(() => {
-      logger.success('UPDATE_CHALLENGES initialized successfully')
-    })
+    const UPDATE_USERS = agenda.create('UPDATE_USERS', { })
+    await UPDATE_USERS.repeatEvery('15 minutes', { skipImmediate: true }).save()
+    const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', { })
+    await UPDATE_CHALLENGES.repeatEvery('1 hour', { skipImmediate: true }).save()
   })
 
 

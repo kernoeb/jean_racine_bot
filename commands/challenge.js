@@ -18,7 +18,7 @@ module.exports = {
     let u = undefined
 
     try {
-      req = await axios.get(`${process.env.ROOTME_API_URL}/challenges/${id}?${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+      req = await axios.get(`${process.env.ROOTME_API_URL}/challenges/${id}?fakehash=${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
       req.data.id_challenge = id
       u = challengeInfo(req.data) // Get user info
     } catch (err) {
