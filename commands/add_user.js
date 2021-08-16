@@ -13,7 +13,7 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
-    const channel = await mongoose.models.channels.findOne({ channelId: interaction.channelId, guildId: interaction.guildId })
+    const channel = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
 
     if (!channel)
       return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce canal ! (**/init**)', ephemeral: true })
