@@ -20,6 +20,8 @@ db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', async function() {
   logger.success('Mongo OK')
 
+  logger.info('Agenda deleted', (await db.collection('agenda').deleteMany({})).deletedCount)
+
   /** Schema configuration **/
   const userSchemaTemplate = {
     id_auteur: { type: String, required: true, unique: true },
@@ -76,19 +78,23 @@ db.once('open', async function() {
   }
 
   /** Agenda configuration **/
-  agenda.define('UPDATE_USERS', {}, async () => {
+  agenda.define('UPDATE_USERS', {}, async (job, done) => {
     updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
       logger.success('UPDATE_USERS OK')
+      done()
     }).catch(err => {
       logger.error('UPDATE_USERS ERROR', err)
+      done()
     })
   })
 
-  agenda.define('UPDATE_CHALLENGES', {}, async () => {
+  agenda.define('UPDATE_CHALLENGES', {}, async (job, done) => {
     fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
       logger.success('UPDATE_CHALLENGES OK')
+      done()
     }).catch(err => {
       logger.error('UPDATE_CHALLENGES ERROR', err)
+      done()
     })
   })
 
@@ -99,12 +105,13 @@ db.once('open', async function() {
       agenda.start().then(() => {
         logger.success('Agenda started successfully')
       })
-    }, 5000)
+    }, 2500)
 
-    const UPDATE_USERS = agenda.create('UPDATE_USERS', { })
-    await UPDATE_USERS.repeatEvery('15 minutes', { skipImmediate: true }).save()
-    const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', { })
-    await UPDATE_CHALLENGES.repeatEvery('1 hour', { skipImmediate: true }).save()
+    const UPDATE_USERS = agenda.create('UPDATE_USERS', { }).priority('highest')
+    await UPDATE_USERS.repeatEvery('1 minute', { skipImmediate: true }).save()
+
+    const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', { }).priority('lowest')
+    await UPDATE_CHALLENGES.repeatEvery('5 minutes and 10 seconds', { skipImmediate: true }).save()
   })
 
 
