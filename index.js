@@ -7,7 +7,12 @@ const logger = require('./utils/signale')
 
 const mongoose = require('./utils/mongoose')
 const Agenda = require('agenda')
-const agenda = new Agenda()
+const agenda = new Agenda({
+  maxConcurrency: 1,
+  defaultLockLimit: 1,
+  defaultConcurrency: 1,
+  lockLimit: 1
+})
 
 const { userInfo } = require('./utils/user')
 const { challengeInfo } = require('./utils/challenge')
