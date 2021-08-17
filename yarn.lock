@@ -278,6 +278,13 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
+axios-concurrency@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/axios-concurrency/-/axios-concurrency-1.0.4.tgz#b484141eceb56e8b054110c7314fbce6e222f85f"
+  integrity sha512-KDtlv1uWln80fmr6D4aq2je/HAtiMZ6k3nY8uCbQlSQWHznpm2v3aZPlBatPBGUBWuDeFRpMF9aFFpO+xyiW4g==
+  dependencies:
+    axios "^0.21.1"
+
 axios@^0.21.1:
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
