@@ -30,5 +30,16 @@ instance.interceptors.request.use(function(config) {
   })
 })
 
+/**
+ * Axios Response Interceptor
+ */
+instance.interceptors.response.use(function(response) {
+  PENDING_REQUESTS = Math.max(0, PENDING_REQUESTS - 1)
+  return Promise.resolve(response)
+}, function(error) {
+  PENDING_REQUESTS = Math.max(0, PENDING_REQUESTS - 1)
+  return Promise.reject(error)
+})
+
 module.exports = instance
 
