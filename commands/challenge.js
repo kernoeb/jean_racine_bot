@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
-const axios = require('axios')
+const axios = require('../utils/axios')()
 const { challengeInfo, challengeEmbed } = require('../utils/challenge')
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
     let u = undefined
 
     try {
-      req = await axios.get(`${process.env.ROOTME_API_URL}/challenges/${id}?fakehash=${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+      req = await axios.get(`/challenges/${id}`, { params: { fakehash: new Date().getTime() } })
       req.data.id_challenge = id
       u = challengeInfo(req.data) // Get user info
     } catch (err) {

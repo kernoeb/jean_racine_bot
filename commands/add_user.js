@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
-const axios = require('axios')
+const axios = require('../utils/axios')()
 const logger = require('../utils/signale')
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
     let user = await mongoose.models.user.findOne({ id_auteur: id })
     if (!user) {
       try {
-        req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${id}?fakehash=${new Date().getTime()}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+        req = await axios.get(`/auteurs/${id}`, { params: { fakehash: new Date().getTime() } })
         req.data.timestamp = new Date()
         await mongoose.models.user.create(req.data)
         user = await mongoose.models.user.findOne({ id_auteur: id })

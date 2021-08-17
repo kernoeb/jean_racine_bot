@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
-const axios = require('axios')
+const axios = require('../utils/axios')()
 const { MessageEmbed } = require('discord.js')
 const { DateTime } = require('luxon')
 
@@ -16,7 +16,7 @@ module.exports = {
     const name = interaction.options.getString('name') // Name
 
     try {
-      const req = await axios.get(`${process.env.ROOTME_API_URL}/challenges?titre=${name}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+      const req = await axios.get('/challenges', { params: { titre: name, fakehash: new Date().getTime() } })
       if (req?.data?.length === 2) {
         return await interaction.reply('Trop de résultats, sois plus précis stp !')
       } else if (Object.keys((req?.data?.[0] || {})).length) {

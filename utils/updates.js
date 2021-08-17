@@ -1,5 +1,5 @@
 const mongoose = require('../utils/mongoose')
-const axios = require('axios')
+const axios = require('../utils/axios')()
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
@@ -16,16 +16,14 @@ module.exports = {
     let fetchContinue = true
     let index = 0
     while (fetchContinue) {
-      const req = await axios.get(`${process.env.ROOTME_API_URL}/challenges?debut_challenges=${index * 50}&fakehash=${new Date().getTime()}`,
-        { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+      const req = await axios.get('/challenges', { params: { debut_challenges: index * 50, fakehash: new Date().getTime() } })
 
       const pages = Object.keys(req.data[0]).map(v => req.data[0][v])
 
       for (const page of pages) {
         let ret
         const f = await mongoose.models.challenge.findOne({ id_challenge: page.id_challenge })
-        const reqPage = await axios.get(`${process.env.ROOTME_API_URL}/challenges/${page.id_challenge}?fakehash=${new Date().getTime()}`,
-          { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+        const reqPage = await axios.get(`/challenges/${page.id_challenge}`, { params: { fakehash: new Date().getTime() } })
         reqPage.data.timestamp = new Date()
 
         if (f) {
@@ -51,8 +49,7 @@ module.exports = {
     logger.info('Update users')
     for await (const user of mongoose.models.user.find()) {
       try {
-        const req = await axios.get(`${process.env.ROOTME_API_URL}/auteurs/${user.id_auteur}?fakehash=${new Date().getTime()}`,
-          { headers: { Cookie: `api_key=${process.env.API_KEY}` } })
+        const req = await axios.get(`/auteurs/${user.id_auteur}`, { params: { fakehash: new Date().getTime() } })
 
         const toCheck = [
           {
