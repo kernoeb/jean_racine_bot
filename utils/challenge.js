@@ -33,5 +33,12 @@ module.exports = {
     if (u.backup) embed.setFooter('⚠️ Sauvegarde locale du ' + (DateTime.fromJSDate(u.timestamp).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)))
 
     return embed
+  },
+  challengeFormat: function(element, chall) {
+    let ret = ''
+    ret += (DateTime.fromSQL(element).setLocale('fr').toLocaleString(DateTime.DATETIME_MED) || 'Aucune date') + '\n'
+    if (chall.rubrique) ret += chall.rubrique + '\n'
+    if (chall.url_challenge) ret += `[Accéder au chall](${process.env.ROOTME_URL}/${chall.url_challenge})\n`
+    return ret
   }
 }

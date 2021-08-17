@@ -3,7 +3,7 @@ const axios = require('../utils/axios')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
-const { challengeEmbed, challengeInfo } = require('../utils/challenge')
+const { challengeEmbed, challengeInfo, challengeFormat } = require('../utils/challenge')
 const client = require('../utils/discord')()
 
 async function pause(time = 150) {
@@ -95,9 +95,9 @@ module.exports = {
                 for (const [i, v] of increased.entries()) {
                   let chall = undefined
                   if (element.value === 'date') chall = await mongoose.models.challenge.findOne({ [element.id]: Number(v) })
-                  embed.addField((i + 1) + '. ' + (chall && chall.titre ? chall.titre.toString() : v.toString()),
+                  embed.addField((i + 1) + '. ' + (chall && chall.titre ? `${chall.titre.toString()}${chall.score ? ' (' + chall.score + ')' : ''}` : v.toString()),
                     element.value === 'date'
-                      ? (DateTime.fromSQL(newValidationElements[v]).setLocale('fr').toLocaleString(DateTime.DATETIME_MED) || 'Aucune date')
+                      ? challengeFormat(newValidationElements[v], chall)
                       : `[Lien direct](${process.env.ROOTME_URL}/${newValidationElements[v].toString()})`
                   )
                 }
