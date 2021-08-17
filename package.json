@@ -19,7 +19,6 @@
     "@discordjs/rest": "^0.1.0-canary.0",
     "agenda": "^4.2.1",
     "axios": "^0.21.1",
-    "axios-concurrency": "^1.0.4",
     "discord-api-types": "^0.22.0",
     "discord.js": "^13.1.0",
     "luxon": "^2.0.2",
