@@ -6,7 +6,7 @@ const { DateTime } = require('luxon')
 const { challengeEmbed, challengeInfo } = require('../utils/challenge')
 const client = require('../utils/discord')()
 
-async function pause(time = 200) {
+async function pause(time = 500) {
   await new Promise(r => setTimeout(r, time))
 }
 
