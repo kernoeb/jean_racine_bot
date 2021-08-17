@@ -18,7 +18,7 @@ module.exports = {
     let u = undefined
 
     try {
-      req = await axios.get(`/challenges/${id}`, { params: { fakehash: new Date().getTime() } })
+      req = await axios.get(`/challenges/${id}`, { params: { fakeHash: new Date().getTime() } })
       req.data.id_challenge = id
       u = challengeInfo(req.data) // Get user info
     } catch (err) {

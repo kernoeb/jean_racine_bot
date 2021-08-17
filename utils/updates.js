@@ -6,7 +6,7 @@ const { DateTime } = require('luxon')
 const { challengeEmbed, challengeInfo } = require('../utils/challenge')
 const client = require('../utils/discord')()
 
-async function pause(time = 50) {
+async function pause(time = 1500) {
   await new Promise(r => setTimeout(r, time))
 }
 
@@ -16,14 +16,15 @@ module.exports = {
     let fetchContinue = true
     let index = 0
     while (fetchContinue) {
-      const req = await axios.get('/challenges', { params: { debut_challenges: index * 50, fakehash: new Date().getTime() } })
+      const req = await axios.get('/challenges', { params: { debut_challenges: index * 50, fakeHash: new Date().getTime() } })
 
       const page = Object.keys(req.data[0]).map(v => req.data[0][v])
+      await pause()
 
       for (const chall of page) {
         let ret
         const f = await mongoose.models.challenge.findOne({ id_challenge: chall.id_challenge })
-        const reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakehash: new Date().getTime() } })
+        const reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime() } })
         reqPage.data.timestamp = new Date()
 
         if (f) {
@@ -40,7 +41,6 @@ module.exports = {
         await pause()
       }
 
-      await pause()
       if (req.data?.[1]?.rel !== 'next' && req.data?.[2]?.rel !== 'next') fetchContinue = false
       index++
     }
@@ -49,7 +49,7 @@ module.exports = {
     logger.info('Update users')
     for await (const user of mongoose.models.user.find()) {
       try {
-        const req = await axios.get(`/auteurs/${user.id_auteur}`, { params: { fakehash: new Date().getTime() } })
+        const req = await axios.get(`/auteurs/${user.id_auteur}`, { params: { fakeHash: new Date().getTime() } })
 
         const toCheck = [
           {
@@ -122,6 +122,7 @@ module.exports = {
         await pause()
         logger.success('User ', update)
       } catch (err) {
+        await pause()
         logger.error(err)
       }
     }

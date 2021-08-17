@@ -1,10 +1,12 @@
 const axios = require('axios')
+const logger = require('../utils/signale')
 
 const MAX_REQUESTS_COUNT = 1
-const INTERVAL_MS = 50
+const INTERVAL_MS = 1500
 let PENDING_REQUESTS = 0
 
-console.log('Axios')
+logger.log('Axios instantiated')
+
 const instance = axios.create({
   baseURL: process.env.ROOTME_API_URL,
   timeout: 5000,
@@ -25,8 +27,8 @@ instance.interceptors.request.use(function(config) {
 })
 
 /**
-   * Axios Response Interceptor
-   */
+ * Axios Response Interceptor
+ */
 instance.interceptors.response.use(function(response) {
   PENDING_REQUESTS = Math.max(0, PENDING_REQUESTS - 1)
   return Promise.resolve(response)

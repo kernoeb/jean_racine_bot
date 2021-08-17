@@ -20,7 +20,7 @@ module.exports = {
     let u = undefined
 
     try {
-      req = await axios.get(`/auteurs/${id}`, { params: { fakehash: new Date().getTime() } })
+      req = await axios.get(`/auteurs/${id}`, { params: { fakeHash: new Date().getTime() } })
       u = userInfo(req.data) // Get user info
     } catch (err) {
       if (err && err.response && err.response.status === 404) return await interaction.reply({ content: 'Utilisateur inexistant', ephemeral: true })
