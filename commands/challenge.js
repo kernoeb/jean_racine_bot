@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
-const axios = require('../utils/axios')()
+const axios = require('../utils/axios')
 const { challengeInfo, challengeEmbed } = require('../utils/challenge')
 
 module.exports = {

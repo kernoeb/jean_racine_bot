@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
-const axios = require('../utils/axios')()
+const axios = require('../utils/axios')
 const { MessageEmbed } = require('discord.js')
 const { DateTime } = require('luxon')
 

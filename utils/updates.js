@@ -1,12 +1,12 @@
 const mongoose = require('../utils/mongoose')
-const axios = require('../utils/axios')()
+const axios = require('../utils/axios')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
 const { challengeEmbed, challengeInfo } = require('../utils/challenge')
 const client = require('../utils/discord')()
 
-async function pause(time = 500) {
+async function pause(time = 50) {
   await new Promise(r => setTimeout(r, time))
 }
 
@@ -18,25 +18,25 @@ module.exports = {
     while (fetchContinue) {
       const req = await axios.get('/challenges', { params: { debut_challenges: index * 50, fakehash: new Date().getTime() } })
 
-      const pages = Object.keys(req.data[0]).map(v => req.data[0][v])
+      const page = Object.keys(req.data[0]).map(v => req.data[0][v])
 
-      for (const page of pages) {
+      for (const chall of page) {
         let ret
-        const f = await mongoose.models.challenge.findOne({ id_challenge: page.id_challenge })
-        const reqPage = await axios.get(`/challenges/${page.id_challenge}`, { params: { fakehash: new Date().getTime() } })
+        const f = await mongoose.models.challenge.findOne({ id_challenge: chall.id_challenge })
+        const reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakehash: new Date().getTime() } })
         reqPage.data.timestamp = new Date()
 
         if (f) {
-          ret = await mongoose.models.challenge.updateOne({ id_challenge: page.id_challenge }, reqPage.data)
+          ret = await mongoose.models.challenge.updateOne({ id_challenge: chall.id_challenge }, reqPage.data)
         } else {
-          reqPage.data.id_challenge = page.id_challenge
+          reqPage.data.id_challenge = chall.id_challenge
           ret = await mongoose.models.challenge.create(reqPage.data)
 
           if (client && channelIds) {
             for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data))] })
           }
         }
-        logger.log(page.id_challenge + ' > ' + reqPage.data.titre + (ret.nModified || ret._id ? '*' : ''))
+        logger.log(chall.id_challenge + ' > ' + reqPage.data.titre + (ret.nModified || ret._id ? '*' : ''))
         await pause()
       }
 

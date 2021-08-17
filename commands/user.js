@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
 const { MessageEmbed } = require('discord.js')
-const axios = require('../utils/axios')()
+const axios = require('../utils/axios')
 const { userInfo } = require('../utils/user')
 const { DateTime } = require('luxon')
 
