@@ -1,12 +1,13 @@
 const { MessageEmbed } = require('discord.js')
 const { DateTime } = require('luxon')
+const decode = require('html-entities').decode
 
 module.exports = {
   challengeInfo: function(args = {}) {
     return {
       id: this.id_challenge || args.id_challenge,
-      title: this.titre || args.titre || this.id_challenge || args.id_challenge,
-      description: this.soustitre || args.soustitre,
+      title: decode(this.titre) || decode(args.titre) || this.id_challenge || args.id_challenge,
+      description: decode(this.soustitre) || decode(args.soustitre),
       score: this.score || args.score || 0,
       rubrique: this.rubrique || args.rubrique,
       date: this.date_publication || args.date_publication,

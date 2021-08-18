@@ -2,7 +2,6 @@ const mongoose = require('../utils/mongoose')
 const axios = require('../utils/axios')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
-const { DateTime } = require('luxon')
 const { challengeEmbed, challengeInfo, challengeFormat } = require('../utils/challenge')
 const client = require('../utils/discord')()
 
