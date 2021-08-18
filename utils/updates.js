@@ -33,7 +33,7 @@ module.exports = {
           ret = await mongoose.models.challenge.create(reqPage.data)
 
           if (client && channelIds) {
-            for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data))] })
+            for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data), true)] })
           }
         }
         logger.log(chall.id_challenge + ' > ' + reqPage.data.titre + (ret.nModified || ret._id ? '*' : ''))

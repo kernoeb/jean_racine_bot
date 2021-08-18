@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders')
 const axios = require('../utils/axios')
 const { MessageEmbed } = require('discord.js')
 const { DateTime } = require('luxon')
+const decode = require('html-entities').decode
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -22,7 +23,7 @@ module.exports = {
       } else if (Object.keys((req?.data?.[0] || {})).length) {
         const embed = new MessageEmbed().setTitle('Challenges trouvés !')
         for (const challNb of Object.keys(req.data[0])) {
-          embed.addField(req.data[0][challNb].titre + ' (' + req.data[0][challNb].id_challenge + ')', DateTime.fromSQL(req.data[0][challNb].date_publication).setLocale('fr').toLocaleString(DateTime.DATETIME_MED))
+          embed.addField(decode(req.data[0][challNb].titre) + ' (' + req.data[0][challNb].id_challenge + ')', DateTime.fromSQL(req.data[0][challNb].date_publication).setLocale('fr').toLocaleString(DateTime.DATETIME_MED))
         }
         return await interaction.reply({ embeds: [embed] })
       } else return await interaction.reply({ content: ':no_entry_sign: Aucun résultat (ou problème serveur)', ephemeral: true })

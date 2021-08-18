@@ -20,9 +20,9 @@ module.exports = {
       timestamp: this.timestamp || args.timestamp
     }
   },
-  challengeEmbed: function(u) {
+  challengeEmbed: function(u, newChall = false) {
     const embed = new MessageEmbed()
-      .setTitle('**Challenge :** ' + (u.title || u.id_challenge))
+      .setTitle(`**${newChall ? 'Nouveau challenge :' : 'Challenge : '}** ` + (u.title || '') + ` (${u.id})`)
       .setDescription(u.description || 'Aucune description')
 
     if (u.authors != null && u.authors !== '') embed.setAuthor(u.authors)
