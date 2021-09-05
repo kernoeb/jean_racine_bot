@@ -97,7 +97,7 @@ module.exports = {
                   if (element.value === 'date') chall = await mongoose.models.challenge.findOne({ [element.id]: Number(v) })
                   embed.addField((i + 1) + '. ' + (chall && chall.titre ? `${decode(chall.titre.toString())}${chall.score ? ' (' + chall.score + ')' : ''}` : v.toString()),
                     element.value === 'date'
-                      ? challengeFormat(newValidationElements[v], chall)
+                      ? challengeFormat(newValidationElements[v], chall || {})
                       : `[Lien direct](${process.env.ROOTME_URL}/${newValidationElements[v].toString()})`
                   )
                 }
