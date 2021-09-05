@@ -5,7 +5,18 @@ let client
 module.exports = function() {
   if (client) return client
 
-  client = new Client({ intents: [Intents.FLAGS.GUILDS] })
+  client = new Client({
+    intents: [Intents.FLAGS.GUILDS],
+    presence: {
+      status: 'online',
+      activities: [{
+        name: 'Root-me | kernoeb',
+        type: 'PLAYING',
+        url: 'https://root-me.org'
+      }]
+    },
+    ws: { properties: { $browser: 'Discord iOS' } } }) // Mobile icon
+
   client.commands = new Collection()
 
   const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
