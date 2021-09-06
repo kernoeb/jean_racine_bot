@@ -16,7 +16,7 @@ module.exports = {
     const channel = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
 
     if (!channel)
-      return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce canal ! (**/init**)', ephemeral: true })
+      return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true })
 
     let req
     const id = interaction.options.getString('id') // ID

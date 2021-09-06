@@ -12,6 +12,7 @@ const agenda = new Agenda()
 const { userInfo } = require('./utils/user')
 const { challengeInfo } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
+const { getScoreboard } = require('./utils/get_scoreboard')
 
 const db = mongoose.connection
 
@@ -107,11 +108,13 @@ db.once('open', async function() {
       })
     }, 2500)
 
-    const UPDATE_USERS = agenda.create('UPDATE_USERS', { }).priority('highest')
-    await UPDATE_USERS.repeatEvery('5 seconds', { skipImmediate: true }).save()
+    if (!process.env.NO_UPDATE) {
+      const UPDATE_USERS = agenda.create('UPDATE_USERS', {}).priority('highest')
+      await UPDATE_USERS.repeatEvery('5 seconds', { skipImmediate: true }).save()
 
-    const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', { }).priority('lowest')
-    await UPDATE_CHALLENGES.repeatEvery('2 minutes', { skipImmediate: true }).save()
+      const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
+      await UPDATE_CHALLENGES.repeatEvery('2 minutes', { skipImmediate: true }).save()
+    }
   })
 
 
@@ -132,6 +135,12 @@ db.once('open', async function() {
       logger.error(error)
       await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
     }
+  })
+
+  client.on('interactionCreate', async interaction => {
+    if (!interaction.isButton()) return
+
+    interaction.update(await getScoreboard(interaction.guildId, interaction.customId.split('go_page_')[1]))
   })
 
   client.login(process.env.TOKEN).then(() => {
