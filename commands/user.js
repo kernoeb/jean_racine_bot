@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js')
 const axios = require('../utils/axios')
 const { userInfo } = require('../utils/user')
 const { DateTime } = require('luxon')
+const { getProfilePicture } = require('../utils/get_profile_picture')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -37,7 +38,9 @@ module.exports = {
         .setColor('#0099ff')
         .setTitle(u.name)
         .setDescription(`**ID:** ${u.id}`)
-        .setThumbnail(`${process.env.ROOTME_URL}/IMG/auton${u.id}.jpg`)
+
+      const thumbnail = await getProfilePicture(u.id)
+      if (thumbnail) embed.setThumbnail(thumbnail)
 
       if (u.score != null && u.score !== '') embed.addField('Score', u.score.toString())
       if (u.position != null && u.position !== '') embed.addField('Position', u.position.toString())

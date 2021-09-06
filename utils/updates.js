@@ -3,6 +3,7 @@ const axios = require('../utils/axios')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { challengeEmbed, challengeInfo, challengeFormat } = require('../utils/challenge')
+const { getProfilePicture } = require('../utils/get_profile_picture')
 const client = require('../utils/discord')()
 const decode = require('html-entities').decode
 
@@ -90,7 +91,9 @@ module.exports = {
               if (increased.length) {
                 const embed = new MessageEmbed()
                   .setTitle(element.title + user.nom)
-                  .setThumbnail(`${process.env.ROOTME_URL}/IMG/auton${user.id_auteur}.jpg`)
+
+                const thumbnail = await getProfilePicture(user.id_auteur)
+                if (thumbnail) embed.setThumbnail(thumbnail)
 
                 for (const [i, v] of increased.entries()) {
                   let chall = undefined
