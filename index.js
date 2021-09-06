@@ -140,7 +140,7 @@ db.once('open', async function() {
   client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return
 
-    interaction.update(await getScoreboard(interaction.guildId, interaction.customId.split('go_page_')[1]))
+    if (interaction.customId.startsWith('go_page_')) return interaction.update(await getScoreboard(interaction.guildId, interaction.customId.split('go_page_')[1]))
   })
 
   client.login(process.env.TOKEN).then(() => {
