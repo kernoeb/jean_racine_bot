@@ -7,7 +7,7 @@ const { getProfilePicture } = require('../utils/get_profile_picture')
 const client = require('../utils/discord')()
 const decode = require('html-entities').decode
 
-async function pause(time = 150) {
+async function pause(time = 200) {
   await new Promise(r => setTimeout(r, time))
 }
 
