@@ -9,7 +9,7 @@ const ConcurrencyManager = (axios, MAX_CONCURRENT = 2) => {
         if (instance.running.length < MAX_CONCURRENT) {
           instance.shift()
         }
-      }, 150)
+      }, 220)
     },
     push: reqHandler => {
       instance.queue.push(reqHandler)
