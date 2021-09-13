@@ -3,8 +3,8 @@ const logger = require('../utils/signale')
 const http = require('http')
 const https = require('https')
 
-const MAX_REQUESTS_COUNT = 1
-const INTERVAL_MS = 100
+const MAX_REQUESTS_COUNT = 2
+const INTERVAL_MS = 150
 let PENDING_REQUESTS = 0
 
 logger.log('Axios instantiated')
