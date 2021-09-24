@@ -79,24 +79,40 @@ db.once('open', async function() {
   }
 
   /** Agenda configuration **/
+  let TIMEOUT = false
+
   agenda.define('UPDATE_USERS', {}, async (job, done) => {
     updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
       logger.success('UPDATE_USERS OK')
       done()
     }).catch(err => {
+      if (err.response.status === 429) {
+        TIMEOUT = true
+        setTimeout(() => {
+          TIMEOUT = false
+        }, (1000 * 60 * 5) + 5000)
+      }
       logger.error('UPDATE_USERS ERROR', err)
       done()
     })
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async (job, done) => {
-    fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
-      logger.success('UPDATE_CHALLENGES OK')
-      done()
-    }).catch(err => {
-      logger.error('UPDATE_CHALLENGES ERROR', err)
-      done()
-    })
+    if (!TIMEOUT) {
+      fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
+        logger.success('UPDATE_CHALLENGES OK')
+        done()
+      }).catch(err => {
+        if (err.response.status === 429) {
+          TIMEOUT = true
+          setTimeout(() => {
+            TIMEOUT = false
+          }, (1000 * 60 * 5) + 5000)
+        }
+        logger.error('UPDATE_CHALLENGES ERROR', err)
+        done()
+      })
+    }
   })
 
   agenda.mongo(db.db, 'agenda')
