@@ -86,7 +86,7 @@ db.once('open', async function() {
       logger.success('UPDATE_USERS OK')
       done()
     }).catch(err => {
-      if (err.response.status === 429) {
+      if (err?.response?.status === 429) {
         TIMEOUT = true
         setTimeout(() => {
           TIMEOUT = false
@@ -103,7 +103,7 @@ db.once('open', async function() {
         logger.success('UPDATE_CHALLENGES OK')
         done()
       }).catch(err => {
-        if (err.response.status === 429) {
+        if (err?.response?.status === 429) {
           TIMEOUT = true
           setTimeout(() => {
             TIMEOUT = false

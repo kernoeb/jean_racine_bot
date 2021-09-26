@@ -1,9 +1,10 @@
-FROM node:16.8.0
+FROM node:16.10.0
 
 # Create app directory
 WORKDIR /app
 ADD . /app/
 
+RUN yarn set version berry && yarn set version berry
 RUN yarn
 
 ENV NODE_ENV production

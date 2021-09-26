@@ -9,7 +9,7 @@
     "lint": "eslint --fix . --ext .js"
   },
   "engines": {
-    "node": "v16.8.0"
+    "node": "v16.10.0"
   },
   "keywords": [],
   "author": "",
@@ -30,5 +30,6 @@
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "nodemon": "^2.0.12"
-  }
+  },
+  "packageManager": "yarn@3.0.2"
 }
