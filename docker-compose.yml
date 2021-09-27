@@ -12,7 +12,7 @@ services:
     networks:
       - rootme
     ports:
-      - "27017:27017"
+      - "27017"
     volumes:
       - '/opt/jeanracine:/bitnami/mongodb'
 
