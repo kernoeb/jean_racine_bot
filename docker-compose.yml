@@ -1,18 +1,16 @@
-version: '2'
-
 services:
-#  rootme_node:
-#    build: .
-#    restart: always
-#    env_file:
-#      - .env
-#    networks:
-#      - rootme
+  rootme_node:
+    build: .
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - rootme
   mongodb:
     image: docker.io/bitnami/mongodb:4.4
     restart: always
-#    networks:
-#      - rootme
+    networks:
+      - rootme
     ports:
       - "27017:27017"
     volumes:
