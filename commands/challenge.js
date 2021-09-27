@@ -32,7 +32,14 @@ module.exports = {
     }
 
     if (u && !!Object.keys(u).length) {
-      return await interaction.reply({ embeds: [challengeEmbed(u)] })
+      let validUsers = null
+      try {
+        const guildUsers = (await mongoose.models.channels.findOne({ guildId: interaction.guildId }) || {}).users
+        const users = (await mongoose.models.user.find({ id_auteur: { $in: guildUsers } }) || [])
+        validUsers = users.filter(v => v && v.validations && v.validations.length && v.validations.some(i => i.id_challenge === id)).map(v => v.nom)
+      } catch (err) {
+      }
+      return await interaction.reply({ embeds: [challengeEmbed(u, false, validUsers)] })
     } else {
       return await interaction.reply('Challenge inexistant' + (req === undefined ? ' ou serveur indisponible' : ''))
     }

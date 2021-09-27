@@ -20,7 +20,7 @@ module.exports = {
       timestamp: this.timestamp || args.timestamp
     }
   },
-  challengeEmbed: function(u, newChall = false) {
+  challengeEmbed: function(u, newChall = false, users = null) {
     const embed = new MessageEmbed()
       .setTitle(`**${newChall ? 'Nouveau challenge :' : 'Challenge : '}** ` + (u.title || '') + ` (${u.id})`)
       .setDescription(u.description || 'Aucune description')
@@ -31,6 +31,9 @@ module.exports = {
     if (u.difficulty != null && u.difficulty !== '') embed.addField('Difficulté', u.difficulty.toString(), true)
     if (u.score != null && u.score !== '') embed.addField('Score', u.score.toString(), true)
     if (u.url != null && u.url !== '') embed.setURL(`${process.env.ROOTME_URL}/${u.url}`)
+
+    if (users) embed.addField('Flaggeurs', users.join(', '))
+
     if (u.backup) embed.setFooter('⚠️ Sauvegarde locale du ' + (DateTime.fromJSDate(u.timestamp).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)))
 
     return embed
