@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  mongodb:
+    image: docker.io/bitnami/mongodb:4.4
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - '/opt/jeanracine:/bitnami/mongodb'
+
+networks:
+  rootme:
+    driver: bridge
