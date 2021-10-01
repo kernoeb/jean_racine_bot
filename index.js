@@ -36,6 +36,12 @@ db.once('open', async function() {
     timestamp: Date
   }
   const userSchema = new mongoose.Schema(userSchemaTemplate)
+
+  userSchema.index({ score: -1, nom: -1 })
+  userSchema.index({ score: -1, nom: 1 })
+  userSchema.index({ score: 1, nom: -1 })
+  userSchema.index({ score: 1, nom: 1 })
+
   userSchema.methods.userInfo = userInfo
   mongoose.model('user', userSchema)
 
