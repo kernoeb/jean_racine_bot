@@ -11,7 +11,7 @@ module.exports = {
     if (!channel)
       return { content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true }
 
-    const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }).sort({ score: -1 })
+    const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }).sort({ score: -1, nom: 1 })
       .limit(LIMIT).skip(index * LIMIT)
     if (tmpUsers && tmpUsers.length) {
       const nb = await mongoose.models.user.countDocuments({ id_auteur: { $in: (channel.users || []) } })

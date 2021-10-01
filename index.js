@@ -25,11 +25,11 @@ db.once('open', async function() {
 
   /** Schema configuration **/
   const userSchemaTemplate = {
-    id_auteur: { type: String, required: true, unique: true },
-    nom: { type: String, required: true },
+    id_auteur: { type: String, required: true, unique: true, index: true },
+    nom: { type: String, required: true, index: true },
     statut: String,
-    score: { type: Number, default: 0 },
-    position: { type: Number, default: 0 },
+    score: { type: Number, default: 0, index: true },
+    position: { type: Number, default: 0, index: true },
     challenges: Array,
     solutions: Array,
     validations: Array,
@@ -40,14 +40,14 @@ db.once('open', async function() {
   mongoose.model('user', userSchema)
 
   const challengeSchemaTemplate = {
-    id_challenge: { type: Number, required: true, unique: true },
-    id_rubrique: Number,
-    titre: String,
+    id_challenge: { type: Number, required: true, unique: true, index: true },
+    id_rubrique: { type: Number, index: true },
+    titre: { type: String, index: true },
     soustitre: String,
     rubrique: String,
     lang: String,
     date_publication: Date,
-    score: Number,
+    score: { type: Number, index: true },
     auteurs: Array,
     validations: Number,
     difficulte: String,
