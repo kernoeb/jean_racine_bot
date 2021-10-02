@@ -6,6 +6,9 @@ services:
       - .env
     networks:
       - rootme
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
   mongodb:
     image: docker.io/bitnami/mongodb:4.4
     restart: always
