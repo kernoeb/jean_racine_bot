@@ -2,8 +2,15 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const client = require('./utils/discord')()
 const logger = require('./utils/signale')
+
+const packageJson = require('./package.json')
+if (process.version !== packageJson.engines.node) {
+  logger.error('Please use ' + packageJson.engines.node + ' node version')
+  process.exit(1)
+}
+
+const client = require('./utils/discord')()
 
 const mongoose = require('./utils/mongoose')
 const Agenda = require('agenda')
@@ -12,7 +19,7 @@ const agenda = new Agenda()
 const { userInfo } = require('./utils/user')
 const { challengeInfo } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
-const { getScoreboard } = require('./utils/get_scoreboard')
+const { getScoreboard, updateScoreboards } = require('./utils/scoreboard')
 
 const db = mongoose.connection
 
@@ -65,9 +72,13 @@ db.once('open', async function() {
   const Challenges = mongoose.model('challenge', challengeSchema)
 
   const discordChannelsSchemaTemplate = {
-    channelId: { type: String, required: true, unique: true },
-    guildId: { type: String, required: true, unique: true },
-    users: Array
+    channelId: { type: String, required: true, unique: true, index: true },
+    guildId: { type: String, required: true, unique: true, index: true },
+    users: Array,
+    scoreboard: {
+      messageId: { type: String, required: true, unique: true, index: true },
+      channelId: { type: String, required: true, unique: true, index: true }
+    }
   }
   const discordChannelsSchema = new mongoose.Schema(discordChannelsSchemaTemplate)
   const Channels = mongoose.model('channels', discordChannelsSchema)
@@ -119,8 +130,10 @@ db.once('open', async function() {
       const UPDATE_USERS = agenda.create('UPDATE_USERS', {}).priority('highest')
       await UPDATE_USERS.repeatEvery('5 seconds', { skipImmediate: true }).save()
 
-      const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
-      await UPDATE_CHALLENGES.repeatEvery('2 minutes', { skipImmediate: true }).save()
+      if (!process.env.NO_UPDATE_CHALLENGES) {
+        const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
+        await UPDATE_CHALLENGES.repeatEvery('2 minutes', { skipImmediate: true }).save()
+      }
     }
   })
 
@@ -128,6 +141,12 @@ db.once('open', async function() {
   /** Discord.js **/
   client.once('ready', () => {
     logger.success('Ready!')
+
+    setTimeout(() => {
+      updateScoreboards().catch(() => {
+        logger.error('Error while updating scoreboards')
+      })
+    }, 1500)
   })
 
   client.on('interactionCreate', async interaction => {
@@ -147,7 +166,7 @@ db.once('open', async function() {
   client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return
 
-    if (interaction.customId.startsWith('go_page_')) return interaction.update(await getScoreboard(interaction.guildId, interaction.customId.split('go_page_')[1]))
+    if (interaction.customId.startsWith('go_page_')) return interaction.update(await getScoreboard({ guildId: interaction.guildId, index: interaction.customId.split('go_page_')[1] }))
   })
 
   client.login(process.env.TOKEN).then(() => {

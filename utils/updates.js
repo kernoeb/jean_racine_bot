@@ -3,13 +3,11 @@ const axios = require('../utils/axios')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { challengeEmbed, challengeInfo, challengeFormat } = require('../utils/challenge')
+const { updateScoreboards } = require('../utils/scoreboard')
 const { getProfilePicture } = require('../utils/get_profile_picture')
 const client = require('../utils/discord')()
 const decode = require('html-entities').decode
-
-async function pause(time = 200) {
-  await new Promise(r => setTimeout(r, time))
-}
+const { pause } = require('../utils/util')
 
 module.exports = {
   fetchChallenges: async function(channelIds) {
@@ -73,6 +71,8 @@ module.exports = {
           }
         ]
 
+        let updateScoreboard = false
+
         if (client && channelIds) {
           for (const element of toCheck) {
             if (req.data[element.key] && req.data[element.key].length) {
@@ -89,6 +89,8 @@ module.exports = {
               })
 
               if (increased.length) {
+                updateScoreboard = true
+
                 const embed = new MessageEmbed()
                   .setTitle(element.title + user.nom)
 
@@ -122,6 +124,13 @@ module.exports = {
 
         req.data.timestamp = new Date()
         const update = await mongoose.models.user.updateOne({ id_auteur: req.data.id_auteur }, req.data, { runValidators: true }) // Update user in database
+
+        if (updateScoreboard) {
+          updateScoreboards().catch(() => {
+            logger.error('Error while updating scoreboards')
+          })
+        }
+
         await pause()
         logger.success('User ', update)
       } catch (err) {

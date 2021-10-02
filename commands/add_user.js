@@ -13,9 +13,9 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
-    const channel = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
+    const guild = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
 
-    if (!channel)
+    if (!guild)
       return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true })
 
     let req
@@ -33,9 +33,9 @@ module.exports = {
       }
     }
 
-    if (!(channel.users || []).includes(user.id_auteur)) {
-      channel.users.push(user.id_auteur)
-      await channel.save()
+    if (!(guild.users || []).includes(user.id_auteur)) {
+      guild.users.push(user.id_auteur)
+      await guild.save()
       return await interaction.reply(`:white_check_mark: Utilisateur ${user.nom} (${user.id_auteur}) ajouté avec succès`)
     } else {
       return await interaction.reply({ content: ':no_entry_sign: Utilisateur déjà présent ici !', ephemeral: true })
