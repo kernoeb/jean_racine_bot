@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Staatliches">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+        }
+
+        .pp {
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border-style: solid;
+        }
+
+        .pp_name {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-family: Staatliches,serif;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <span style="left: 50%; top: 25px; font-weight: bold; font-size: 25px;" class="pp_name">Root-Me</span>
+
+    <img alt="{{ name1 }}" height="110" width="110" src="{{ pp1 }}"
+         style="left: 50%; top: 110px;" class="pp">
+    <span class="pp_name" style="left: 50%; top: 185px;">{{ name1 }}</span>
+
+    <img alt="{{ name2 }}" height="80" width="80" src="{{ pp2 }}"
+         style="left: calc(50% - 170px); top: 160px;" class="pp">
+    <span class="pp_name" style="left: calc(50% - 170px); top: 220px;">{{ name2 }}</span>
+
+    <img alt="{{ name3 }}" height="80" width="80" src="{{ pp3 }}"
+         style="left: calc(50% + 160px); top: 170px;" class="pp">
+    <span class="pp_name" style="left: calc(50% + 160px); top: 230px;">{{ name3 }}</span>
+
+    <img alt="podium" src="https://img.freepik.com/vecteurs-libre/podium-gagnants-vierges-projecteurs-piedestal_275806-988.jpg?size=626&ext=jpg">
+</div>
+</body>
+</html>
