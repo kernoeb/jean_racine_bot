@@ -42,11 +42,27 @@ module.exports = {
       const thumbnail = await getProfilePicture(u.id)
       if (thumbnail) embed.setThumbnail(thumbnail)
 
-      if (u.score != null && u.score !== '') embed.addField('Score', u.score.toString())
-      if (u.position != null && u.position !== '') embed.addField('Position', u.position.toString())
+      if (u.score != null && u.score !== '') embed.addField('Score', u.score.toString(), true)
+      if (u.position != null && u.position !== '') embed.addField('Rang', u.position.toString(), true)
+      if (u.position != null && u.position !== '') embed.addField('\u200B', '\u200B', true)
+      if (u.validationsLength != null && u.validationsLength !== '') embed.addField('Validations', u.validationsLength.toString(), true)
       if (u.challengesLength != null && u.challengesLength !== '') embed.addField('Challenges', u.challengesLength.toString(), true)
       if (u.solutionsLength != null && u.solutionsLength !== '') embed.addField('Solutions', u.solutionsLength.toString(), true)
-      if (u.validationsLength != null && u.validationsLength !== '') embed.addField('Validations', u.validationsLength.toString(), true)
+
+      if (u.validationsIds && u.validationsIds.length) {
+        embed.addField('\u200B', '\u200B')
+
+        const currentCategories = await mongoose.models.challenge.aggregate([{ '$group': { '_id': '$id_rubrique', 'rubrique': { $first: '$rubrique' }, count:{ '$sum': 1 } } }])
+        const challs = await mongoose.models.challenge.find({ id_challenge: { $in: u.validationsIds } }, { id_rubrique: 1 })
+
+        let tmpCount = 0
+        for (const category of currentCategories.sort((a, b) => (a.rubrique || '').localeCompare((b.rubrique || '')))) {
+          if ((tmpCount + 1) % 2 === 0) embed.addField('\u200B', '\u200B', true)
+          embed.addField(category.rubrique, challs.filter(v => v.id_rubrique === category._id).length + '/' + category.count, true)
+          tmpCount++
+        }
+      }
+
       if (u.backup) embed.setFooter('⚠️ Sauvegarde locale du ' + (DateTime.fromJSDate(u.timestamp).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)))
 
       return await interaction.reply({ embeds: [embed] })
