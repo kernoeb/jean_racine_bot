@@ -95,7 +95,7 @@ module.exports = {
                   .setTitle(element.title + user.nom)
 
                 const thumbnail = await getProfilePicture(user.id_auteur)
-                if (thumbnail) embed.setThumbnail(thumbnail)
+                if (thumbnail) embed.setThumbnail(thumbnail + `?fakeHash=${new Date().getTime()}`)
 
                 for (const [i, v] of increased.entries()) {
                   let chall = undefined

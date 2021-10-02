@@ -40,7 +40,7 @@ module.exports = {
         .setDescription(`**ID:** ${u.id}`)
 
       const thumbnail = await getProfilePicture(u.id)
-      if (thumbnail) embed.setThumbnail(thumbnail)
+      if (thumbnail) embed.setThumbnail(thumbnail + `?fakeHash=${new Date().getTime()}`)
 
       if (u.score != null && u.score !== '') embed.addField('Score', u.score.toString(), true)
       if (u.position != null && u.position !== '') embed.addField('Rang', u.position.toString(), true)
