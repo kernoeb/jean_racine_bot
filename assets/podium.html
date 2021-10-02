@@ -19,6 +19,7 @@
             border-radius: 50%;
             position: absolute;
             transform: translate(-50%, -50%);
+            object-fit: cover;
             border-style: solid;
         }
 
@@ -34,8 +35,8 @@
 <div class="container">
     <span style="left: 50%; top: 25px; font-weight: bold; font-size: 25px;" class="pp_name">Root-Me</span>
 
-    <img alt="{{ name1 }}" height="110" width="110" src="{{ pp1 }}"
-         style="left: 50%; top: 110px;" class="pp">
+    <img alt="{{ name1 }}" src="{{ pp1 }}"
+         style="left: 50%; top: 110px; height: 110px; width: 110px;" class="pp">
     <span class="pp_name" style="left: 50%; top: 185px;">{{ name1 }}</span>
 
     <img alt="{{ name2 }}" height="80" width="80" src="{{ pp2 }}"
