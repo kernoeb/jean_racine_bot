@@ -6,6 +6,8 @@ const logger = require('./utils/signale')
 
 dotenv.config()
 
+process.env.REGISTER = 'true'
+
 const commands = []
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
@@ -21,8 +23,8 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
     logger.info('Started refreshing application (/) commands.')
 
     await rest.put(
-      Routes.applicationGuildCommands(process.env.CLIENT_ID, 'XXXXX'),
-      // Routes.applicationCommands(process.env.CLIENT_ID),
+      // Routes.applicationGuildCommands(process.env.CLIENT_ID, 'XXXXX'),
+      Routes.applicationCommands(process.env.CLIENT_ID),
       { body: commands }
     )
 
