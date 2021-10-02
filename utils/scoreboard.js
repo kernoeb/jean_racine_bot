@@ -13,16 +13,18 @@ module.exports = {
     const scoreboards = channels.map(c => c.scoreboard)
     logger.info(JSON.stringify(scoreboards))
 
+    let nb = 0
     for (const s of scoreboards.filter(v => v.messageId && v.channelId)) {
       client.channels.cache.get(s.channelId).messages.fetch(s.messageId).then(async msg => {
         await msg.edit(await module.exports.getScoreboard({ guildId: msg.guildId, limit: 50 }))
+        nb++
         await pause(100)
       }).catch(() => {
         logger.error('Error while updating scoreboard : ' + s.messageId)
       })
     }
 
-    logger.success('Scoreboards updated.')
+    logger.success(`Scoreboards updated (${nb}/${channels.length})`)
   },
   async getScoreboard({ guildId, index = 0, limit = 5 }) {
 
