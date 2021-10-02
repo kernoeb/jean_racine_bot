@@ -2,6 +2,8 @@ services:
   rootme_node:
     build: .
     restart: always
+    stdin_open: true
+    tty: true
     env_file:
       - .env
     networks:
