@@ -21,7 +21,7 @@ Slash commands
 `/searchchallenge`: Search a challenge  
 `/challenge <id>` : Information about a challenge  
 `/user <id>`: Information about a user  
-`/createglobalscoreboard` : Add a global scoreboard
+`/createglobalscoreboard` : Add a global scoreboard  
 `/ping`: Test if the bot is not down 
 
 #### Captures
