@@ -1,9 +1,10 @@
 # Jean Racine
 ### RootMe bot
 
-Slash commands
+Root-Me Discord using `Discord.js` and `Slash Commands`.  
+built by `@kernoeb`
 
-#### Features
+### Features
 
 - Add user / Remove user
 - Scoreboard with auto update
@@ -11,7 +12,7 @@ Slash commands
 - Search a user or a challenge id
 - Information about a challenge or a user
 
-#### Commands
+### Commands
 
 `/init`: Initialize the bot in the canal  
 `/adduser` : Add a user  
@@ -24,7 +25,7 @@ Slash commands
 `/createglobalscoreboard` : Add a global scoreboard  
 `/ping`: Test if the bot is not down 
 
-#### Captures
+### Captures
 
 **Global Scoreboard**
 
@@ -47,3 +48,7 @@ Slash commands
 **Scoreboard with arrows**
 
 ![Arrow scoreboard](images/arrow_scoreboard.png)
+
+### Similar projects
+
+- [RootMeBotV2](https://github.com/slowerzs/RootMeBotV2/) - Slowerzs
