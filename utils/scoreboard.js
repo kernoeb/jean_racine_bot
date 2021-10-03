@@ -32,7 +32,8 @@ module.exports = {
         await msg.edit(await module.exports.getScoreboard({ guildId: msg.guildId, limit: 60, globalScoreboard: true }))
         nb++
         await pause(100)
-      }).catch(() => {
+      }).catch((err) => {
+        console.error(err)
         logger.error('Error while updating scoreboard : ' + s.messageId)
       })
     }
