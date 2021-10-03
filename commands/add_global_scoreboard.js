@@ -21,7 +21,7 @@ module.exports = {
       })
     }
 
-    await interaction.reply(await getScoreboard({ guildId, limit: 50 }))
+    await interaction.reply(await getScoreboard({ guildId, limit: 60, globalScoreboard: true }))
 
     try {
       const message = await interaction.fetchReply()
