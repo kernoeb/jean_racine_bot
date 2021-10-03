@@ -65,11 +65,13 @@ module.exports = {
         }
       } else {
         let f = DateTime.now().setLocale('fr').toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS) + '\n\n'
+        let countUsers = 1
         for (const user of tmpUsers) {
           const tmpUser = user.userInfo()
-          if (tmpUser && tmpUser.name && tmpUser.score != null) f += `**${tmpUser.name}**` + '\n' + tmpUser.score.toString() + ' points\n'
+          if (tmpUser && tmpUser.name && tmpUser.score != null) f += `${countUsers}. **${tmpUser.name}**` + '\n' + tmpUser.score.toString() + ' points\n'
+          countUsers++
         }
-        if (f) embed.setDescription(f)
+        embed.setDescription(f)
       }
       return { embeds: [embed], components: row?.components?.length ? [row] : [], content: null }
     }
