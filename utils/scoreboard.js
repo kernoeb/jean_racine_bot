@@ -91,7 +91,7 @@ module.exports = {
           embed.addField(`${numberList[c] || c} - ${tmpUser.name}`, tmpUser.score.toString() + ' points')
           c++
         }
-        if ((tmpUsers.slice(25) || []).length) embed.addField('...', tmpUsers.slice(25).map(u => u.userInfo().name).join(', '))
+        if ((tmpUsers.slice(24) || []).length) embed.addField('...', tmpUsers.slice(25).map(u => u.userInfo().name).join(', '))
       }
 
       return { embeds: [embed], components: row?.components?.length ? [row] : [], content: null }
