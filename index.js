@@ -108,6 +108,7 @@ db.once('open', async function() {
         if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
           banned = true
           setTimeout(() => {
+            logger.error('BANNED !')
             banned = false
           }, (1000 * 60 * 5) + 20)
         }
@@ -124,6 +125,7 @@ db.once('open', async function() {
         done()
       }).catch(err => {
         if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+          logger.error('BANNED !')
           banned = true
           setTimeout(() => {
             banned = false

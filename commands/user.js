@@ -50,12 +50,12 @@ module.exports = {
             setTimeout(() => {
               interaction.deleteReply().then(() => {}).catch(() => {})
             }, DELETE_TIME)
-            return await interaction.editReply({ content: 'Aucun utilisateur trouvé bg, désolé !' })
+            return await interaction.editReply({ content: '*Aucun utilisateur trouvé bg, désolé !*' })
           } else if (Object.keys((req?.data?.[0] || {})).length > 1) {
             setTimeout(() => {
               interaction.deleteReply().then(() => {}).catch(() => {})
             }, DELETE_TIME)
-            return await interaction.editReply({ content: 'Trop d\'utilisateurs portent ce nom, soit plus précis stp.. ou donne son identifiant : /searchuser' })
+            return await interaction.editReply({ content: '*Trop d\'utilisateurs portent ce nom, soit plus précis stp.. ou donne son identifiant :* `/searchuser`' })
           }
           if (req.data?.[0]?.['0']?.id_auteur) {
             req = await axios.get(`/auteurs/${req.data[0]['0'].id_auteur}`)
@@ -65,7 +65,7 @@ module.exports = {
           setTimeout(() => {
             interaction.deleteReply().then(() => {}).catch(() => {})
           }, DELETE_TIME)
-          if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
+          if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !* :pray:' })
         }
       }
     }

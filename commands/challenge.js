@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
-const axios = require('../utils/axios')
-const { challengeInfo, challengeEmbed } = require('../utils/challenge')
+const { challengeEmbed } = require('../utils/challenge')
 const { DateTime } = require('luxon')
 
 module.exports = {
@@ -21,11 +20,11 @@ module.exports = {
     if (/^\d+$/.test(option)) {
       const tmpChall = await mongoose.models.challenge.findOne({ id_challenge: option }) // Find if backed up
       if (tmpChall) u = tmpChall.challengeInfo()
-      else return await interaction.reply({ content: 'Challenge inexistant ou erreur côté serveur, désolé !', ephemeral: true })
+      else return await interaction.reply({ content: '*Challenge inexistant ou erreur côté serveur, désolé !*', ephemeral: true })
     } else {
       const chall = await mongoose.models.challenge.find({ titre: new RegExp(option, 'i') })
-      if (!chall || (chall && !chall.length)) return await interaction.reply({ content: 'Aucun challenge trouvé, désolé ! Soit plus précis p\'têt.. ou donne son identifiant (/searchchallenge)', ephemeral: true })
-      if (chall.length !== 1) return await interaction.reply({ content: 'Trop de challenges trouvés... soit plus précis, ou donne son identifiant (/searchchallenge)', ephemeral: true })
+      if (!chall || (chall && !chall.length)) return await interaction.reply({ content: '*Aucun challenge trouvé, désolé ! Soit plus précis p\'têt.. ou donne son identifiant* : `/searchchallenge`', ephemeral: true })
+      if (chall.length !== 1) return await interaction.reply({ content: '*Trop de challenges trouvés... soit plus précis, ou donne son identifiant* : `/searchchallenge`', ephemeral: true })
       u = chall[0].challengeInfo()
       if (u && !!Object.keys(u).length) option = u.id.toString()
     }
@@ -42,7 +41,7 @@ module.exports = {
       }
       return await interaction.reply({ embeds: [challengeEmbed(u, false, validUsers && validUsers.length ? validUsers : null)] })
     } else {
-      return await interaction.reply({ content: 'Challenge indisponible ou erreur côté serveur, désolé !', ephemeral: true })
+      return await interaction.reply({ content: '*Challenge indisponible ou erreur côté serveur, désolé !*', ephemeral: true })
     }
   }
 }
