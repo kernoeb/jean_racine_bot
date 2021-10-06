@@ -97,24 +97,42 @@ db.once('open', async function() {
 
   /** Agenda configuration **/
 
+  let banned = false
+
   agenda.define('UPDATE_USERS', {}, async (job, done) => {
-    updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
-      logger.success('UPDATE_USERS OK')
-      done()
-    }).catch(err => {
-      logger.error('UPDATE_USERS ERROR', err)
-      done()
-    })
+    if (!banned) {
+      updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
+        logger.success('UPDATE_USERS OK')
+        done()
+      }).catch(err => {
+        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+          banned = true
+          setTimeout(() => {
+            banned = false
+          }, (1000 * 60 * 5) + 20)
+        }
+        logger.error('UPDATE_USERS ERROR', err)
+        done()
+      })
+    }
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async (job, done) => {
-    fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
-      logger.success('UPDATE_CHALLENGES OK')
-      done()
-    }).catch(err => {
-      logger.error('UPDATE_CHALLENGES ERROR', err)
-      done()
-    })
+    if (!banned) {
+      fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
+        logger.success('UPDATE_CHALLENGES OK')
+        done()
+      }).catch(err => {
+        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+          banned = true
+          setTimeout(() => {
+            banned = false
+          }, (1000 * 60 * 5) + 20)
+        }
+        logger.error('UPDATE_CHALLENGES ERROR', err)
+        done()
+      })
+    }
   })
 
   agenda.mongo(db.db, 'agenda')

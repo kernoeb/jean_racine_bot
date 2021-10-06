@@ -42,7 +42,7 @@ module.exports = {
         setTimeout(() => {
           interaction.deleteReply().then(() => {}).catch(() => {})
         }, DELETE_TIME)
-        if (err.code === 'ECONNRESET') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
+        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
         return await interaction.editReply({ content: ':no_entry_sign: Utilisateur inexistant !' })
       }
     }

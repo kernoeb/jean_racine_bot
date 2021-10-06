@@ -136,6 +136,7 @@ module.exports = {
       } catch (err) {
         await pause()
         logger.error(err)
+        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') throw new Error('DOWN_OR_BANNED')
       }
     }
   }
