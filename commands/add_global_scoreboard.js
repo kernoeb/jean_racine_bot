@@ -12,16 +12,18 @@ module.exports = {
   async execute(interaction) {
     const { guildId, channelId } = interaction
 
+    await interaction.deferReply()
+
     const guild = await mongoose.models.channels.findOne({ guildId })
 
     if (!guild) {
-      return await interaction.reply({
+      return await interaction.editReply({
         content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)',
         ephemeral: true
       })
     }
 
-    await interaction.reply(await getScoreboard({ guildId, limit: 60, globalScoreboard: true }))
+    await interaction.editReply(await getScoreboard({ guildId, limit: 60, globalScoreboard: true }))
 
     try {
       const message = await interaction.fetchReply()

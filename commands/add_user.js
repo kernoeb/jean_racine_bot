@@ -3,6 +3,8 @@ const mongoose = require('../utils/mongoose')
 const axios = require('../utils/axios')
 const logger = require('../utils/signale')
 
+const DELETE_TIME = 5000
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('adduser')
@@ -13,10 +15,18 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
+    await interaction.deferReply()
+
     const guild = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
 
-    if (!guild)
-      return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true })
+    if (!guild) {
+      setTimeout(() => {
+        interaction.deleteReply().then(() => {}).catch(() => {})
+      }, DELETE_TIME)
+      return await interaction.editReply({
+        content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)'
+      })
+    }
 
     let req
     const id = interaction.options.getString('id') // ID
@@ -29,16 +39,23 @@ module.exports = {
         user = await mongoose.models.user.findOne({ id_auteur: id })
       } catch (err) {
         logger.error(err)
-        return await interaction.reply({ content: ':no_entry_sign: Utilisateur inexistant !', ephemeral: true })
+        setTimeout(() => {
+          interaction.deleteReply().then(() => {}).catch(() => {})
+        }, DELETE_TIME)
+        if (err.code === 'ECONNRESET') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
+        return await interaction.editReply({ content: ':no_entry_sign: Utilisateur inexistant !' })
       }
     }
 
     if (!(guild.users || []).includes(user.id_auteur)) {
       guild.users.push(user.id_auteur)
       await guild.save()
-      return await interaction.reply(`:white_check_mark: Utilisateur ${user.nom} (${user.id_auteur}) ajouté avec succès`)
+      return await interaction.editReply(`:white_check_mark: Utilisateur ${user.nom} (${user.id_auteur}) ajouté avec succès`)
     } else {
-      return await interaction.reply({ content: ':no_entry_sign: Utilisateur déjà présent ici !', ephemeral: true })
+      setTimeout(() => {
+        interaction.deleteReply().then(() => {}).catch(() => {})
+      }, DELETE_TIME)
+      return await interaction.editReply({ content: ':no_entry_sign: Utilisateur déjà présent ici !' })
     }
   }
 }

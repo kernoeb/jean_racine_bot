@@ -21,20 +21,22 @@ module.exports = {
         .setRequired(true)),
 
   async execute(interaction) {
+    await interaction.deferReply()
+
     const guild = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
 
     if (!guild)
-      return await interaction.reply({ content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true })
+      return await interaction.editReply({ content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true })
     const id = interaction.options.getString('id') // ID
 
     if ((guild.users || []).includes(id)) {
       guild.users = (guild.users || []).filter(v => v !== id)
       await guild.save()
       await cleanUser(id)
-      return await interaction.reply(`:white_check_mark: Utilisateur ${id} supprimé avec succès`)
+      return await interaction.editReply(`:white_check_mark: Utilisateur ${id} supprimé avec succès`)
     } else {
       await cleanUser(id)
-      return await interaction.reply({ content: ':no_entry_sign: Utilisateur non présent ici !', ephemeral: true })
+      return await interaction.editReply({ content: ':no_entry_sign: Utilisateur non présent ici !', ephemeral: true })
     }
   }
 }

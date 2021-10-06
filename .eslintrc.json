@@ -18,7 +18,6 @@
     "max-nested-callbacks": ["error", { "max": 5 }],
     "max-statements-per-line": ["error", { "max": 2 }],
     "no-console": "off",
-    "no-empty-function": "error",
     "no-empty": ["error", { "allowEmptyCatch": true }],
     "no-floating-decimal": "error",
     "no-lonely-if": "error",

@@ -3,30 +3,71 @@ const mongoose = require('../utils/mongoose')
 const { MessageEmbed } = require('discord.js')
 const axios = require('../utils/axios')
 const { userInfo } = require('../utils/user')
-const { DateTime } = require('luxon')
 const { getProfilePicture } = require('../utils/get_profile_picture')
+
+const DELETE_TIME = 5000
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('user')
     .setDescription('Informations sur un utilisateur')
     .addStringOption(option =>
-      option.setName('id')
+      option.setName('id_or_name')
         .setDescription('Identifiant de l\'utilisateur')
         .setRequired(true)),
 
   async execute(interaction) {
-    const id = interaction.options.getString('id') // ID
+    const option = interaction.options.getString('id_or_name') || interaction.options.getString('id') // ID
     let req = undefined
     let u = undefined
 
-    const tmpUser = await mongoose.models.user.findOne({ id_auteur: id }) // Find if backed up
+    await interaction.deferReply()
 
-    if (tmpUser) {
-      u = tmpUser.userInfo() // Get user info
+    if (/^\d+$/.test(option.trim())) {
+      const tmpUser = await mongoose.models.user.findOne({ id_auteur: option }) // Find if backed up
+
+      if (tmpUser) {
+        u = tmpUser.userInfo() // Get user info
+      } else {
+        try {
+          req = await axios.get(`/auteurs/${option}`, { params: { fakeHash: new Date().getTime() } })
+          u = userInfo(req.data) // Get user info
+        } catch (err) {
+          setTimeout(() => {
+            interaction.deleteReply().then(() => {}).catch(() => {})
+          }, DELETE_TIME)
+          if (err.code === 'ECONNRESET') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
+        }
+      }
     } else {
-      req = await axios.get(`/auteurs/${id}`, { params: { fakeHash: new Date().getTime() } })
-      u = userInfo(req.data) // Get user info
+      const tmpUser = await mongoose.models.user.findOne({ nom: new RegExp('^' + option + '$', 'i') }) // Find if backed up
+      if (tmpUser) {
+        u = tmpUser.userInfo() // Get user info
+      } else {
+        try {
+          req = await axios.get('/auteurs', { params: { nom: option, fakeHash: new Date().getTime() } })
+          if (Object.keys((req?.data?.[0] || {})).length === 0) {
+            setTimeout(() => {
+              interaction.deleteReply().then(() => {}).catch(() => {})
+            }, DELETE_TIME)
+            return await interaction.editReply({ content: 'Aucun utilisateur trouvé bg, désolé !' })
+          } else if (Object.keys((req?.data?.[0] || {})).length > 1) {
+            setTimeout(() => {
+              interaction.deleteReply().then(() => {}).catch(() => {})
+            }, DELETE_TIME)
+            return await interaction.editReply({ content: 'Trop d\'utilisateurs portent ce nom, soit plus précis stp.. ou donne son identifiant : /searchuser' })
+          }
+          if (req.data?.[0]?.['0']?.id_auteur) {
+            req = await axios.get(`/auteurs/${req.data[0]['0'].id_auteur}`)
+            if (req.data) u = userInfo(req.data) // Get user info
+          }
+        } catch (err) {
+          setTimeout(() => {
+            interaction.deleteReply().then(() => {}).catch(() => {})
+          }, DELETE_TIME)
+          if (err.code === 'ECONNRESET') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
+        }
+      }
     }
 
     if (u && !!Object.keys(u).length) {
@@ -59,9 +100,12 @@ module.exports = {
         }
       }
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.editReply({ embeds: [embed] })
     } else {
-      return await interaction.reply('Utilisateur inexistant' + (req === undefined ? ' ou serveur indisponible' : ''))
+      setTimeout(() => {
+        interaction.deleteReply().then(() => {}).catch(() => {})
+      }, DELETE_TIME)
+      return await interaction.editReply('*Utilisateur inexistant' + ((req === undefined ? ' ou serveur indisponible (ou trop lent mdr)' : '') + '*'))
     }
   }
 }

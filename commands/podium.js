@@ -13,6 +13,8 @@ module.exports = {
     .setName('podium')
     .setDescription('Podium sous forme d\'image'),
   async execute(interaction) {
+    await interaction.deferReply()
+
     try {
       const channel = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
       const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }).sort({
@@ -29,9 +31,10 @@ module.exports = {
         height: 352
       }, { responseType: 'arraybuffer' })
       const attachment = new MessageAttachment(Buffer.from(data), 'oui.png')
-      await interaction.reply({ files: [attachment] })
+      await interaction.editReply({ files: [attachment] })
     } catch (err) {
-      await interaction.reply({ content: 'Erreur désolé...', ephemeral: true })
+      console.log(err)
+      await interaction.editReply({ content: 'Erreur désolé...', ephemeral: true })
     }
   }
 }
