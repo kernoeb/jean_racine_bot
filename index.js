@@ -106,6 +106,8 @@ db.once('open', async function() {
         logger.success('UPDATE_USERS OK')
         done()
       }).catch(err => {
+        logger.error('UPDATE_USERS ERROR', err)
+
         if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
           logger.error('BANNED ! (users)')
           bannedUsers = true
@@ -113,11 +115,12 @@ db.once('open', async function() {
           setTimeout(() => {
             bannedUsers = false
             bannedChallenges = false
-            console.log('Pause finished after 6 minutes.')
+            logger.info('Pause finished after 6 minutes.')
+            done()
           }, 1000 * 60 * 6)
+        } else {
+          done()
         }
-        logger.error('UPDATE_USERS ERROR', err)
-        done()
       })
     }
   })
@@ -128,6 +131,8 @@ db.once('open', async function() {
         logger.success('UPDATE_CHALLENGES OK')
         done()
       }).catch(err => {
+        logger.error('UPDATE_CHALLENGES ERROR', err)
+
         if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
           logger.error('BANNED ! (challenges)')
           bannedUsers = true
@@ -135,11 +140,12 @@ db.once('open', async function() {
           setTimeout(() => {
             bannedUsers = false
             bannedChallenges = false
-            console.log('Pause finished after 6 minutes.')
+            logger.info('Pause finished after 6 minutes.')
+            done()
           }, 1000 * 60 * 6)
+        } else {
+          done()
         }
-        logger.error('UPDATE_CHALLENGES ERROR', err)
-        done()
       })
     }
   })
