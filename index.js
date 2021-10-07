@@ -107,10 +107,10 @@ db.once('open', async function() {
         done()
       }).catch(err => {
         if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+          logger.error('BANNED ! (users)')
           bannedUsers = true
           bannedChallenges = true
           setTimeout(() => {
-            logger.error('BANNED !')
             bannedUsers = false
             bannedChallenges = false
             console.log('Pause finished after 6 minutes.')
@@ -129,7 +129,7 @@ db.once('open', async function() {
         done()
       }).catch(err => {
         if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
-          logger.error('BANNED !')
+          logger.error('BANNED ! (challenges)')
           bannedUsers = true
           bannedChallenges = true
           setTimeout(() => {
