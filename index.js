@@ -97,57 +97,42 @@ db.once('open', async function() {
 
   /** Agenda configuration **/
 
-  let bannedUsers = false
-  let bannedChallenges = false
-
   agenda.define('UPDATE_USERS', {}, async (job, done) => {
-    if (!bannedUsers && !bannedChallenges) {
-      updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
-        logger.success('UPDATE_USERS OK')
-        done()
-      }).catch(err => {
-        logger.error('UPDATE_USERS ERROR', err)
+    updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
+      logger.success('UPDATE_USERS OK')
+      done()
+    }).catch(err => {
+      logger.error('UPDATE_USERS ERROR', err)
 
-        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
-          logger.error('BANNED ! (users)')
-          bannedUsers = true
-          bannedChallenges = true
-          setTimeout(() => {
-            bannedUsers = false
-            bannedChallenges = false
-            logger.info('Pause finished after 6 minutes.')
-            done()
-          }, 1000 * 60 * 6)
-        } else {
+      if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+        logger.error('BANNED ! (users)')
+        setTimeout(() => {
+          logger.info('Pause finished after 6 minutes.')
           done()
-        }
-      })
-    }
+        }, 1000 * 60 * 6)
+      } else {
+        done()
+      }
+    })
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async (job, done) => {
-    if (!bannedChallenges && !bannedUsers) {
-      fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
-        logger.success('UPDATE_CHALLENGES OK')
-        done()
-      }).catch(err => {
-        logger.error('UPDATE_CHALLENGES ERROR', err)
+    fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
+      logger.success('UPDATE_CHALLENGES OK')
+      done()
+    }).catch(err => {
+      logger.error('UPDATE_CHALLENGES ERROR', err)
 
-        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
-          logger.error('BANNED ! (challenges)')
-          bannedUsers = true
-          bannedChallenges = true
-          setTimeout(() => {
-            bannedUsers = false
-            bannedChallenges = false
-            logger.info('Pause finished after 6 minutes.')
-            done()
-          }, 1000 * 60 * 6)
-        } else {
+      if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+        logger.error('BANNED ! (challenges)')
+        setTimeout(() => {
+          logger.info('Pause finished after 6 minutes.')
           done()
-        }
-      })
-    }
+        }, 1000 * 60 * 6)
+      } else {
+        done()
+      }
+    })
   })
 
   agenda.mongo(db.db, 'agenda')
