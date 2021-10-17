@@ -11,7 +11,9 @@ module.exports = {
         .setDescription('Type de graphique')
         .setRequired(true)),
   async execute(interaction) {
+    await interaction.deferReply()
+
     const attachment = new MessageAttachment(await getMonthChart(interaction.guildId), `month-${interaction.guildId}.png`)
-    await interaction.reply({ files: [attachment] })
+    await interaction.editReply({ files: [attachment] })
   }
 }
