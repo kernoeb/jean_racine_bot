@@ -96,43 +96,56 @@ db.once('open', async function() {
   }
 
   /** Agenda configuration **/
+  let BANNED = false
 
   agenda.define('UPDATE_USERS', {}, async (job, done) => {
-    updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
-      logger.success('UPDATE_USERS OK')
-      done()
-    }).catch(err => {
-      logger.error('UPDATE_USERS ERROR', err)
-
-      if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
-        logger.error('BANNED ! (users)')
-        setTimeout(() => {
-          logger.info('Pause finished after 6 minutes.')
-          done()
-        }, 1000 * 60 * 6)
-      } else {
+    if (!BANNED) {
+      updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
+        logger.success('UPDATE_USERS OK')
         done()
-      }
-    })
+      }).catch(async err => {
+        logger.error('UPDATE_USERS ERROR', err)
+
+        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+          logger.error('BANNED ! (users)')
+          BANNED = true
+          await new Promise(resolve => setTimeout(resolve, 1000 * 60 * 6))
+          logger.info('Pause finished after 6 minutes (users)')
+          BANNED = false
+          done()
+        } else {
+          done()
+        }
+      })
+    } else {
+      logger.info('Nope ! Currently banned (users).')
+      done()
+    }
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async (job, done) => {
-    fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
-      logger.success('UPDATE_CHALLENGES OK')
-      done()
-    }).catch(err => {
-      logger.error('UPDATE_CHALLENGES ERROR', err)
-
-      if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
-        logger.error('BANNED ! (challenges)')
-        setTimeout(() => {
-          logger.info('Pause finished after 6 minutes.')
-          done()
-        }, 1000 * 60 * 6)
-      } else {
+    if (!BANNED) {
+      fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
+        logger.success('UPDATE_CHALLENGES OK')
         done()
-      }
-    })
+      }).catch(async err => {
+        logger.error('UPDATE_CHALLENGES ERROR', err)
+
+        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
+          logger.error('BANNED ! (challenges)')
+          BANNED = true
+          await new Promise(resolve => setTimeout(resolve, 1000 * 60 * 6))
+          logger.info('Pause finished after 6 minutes (challenges)')
+          BANNED = false
+          done()
+        } else {
+          done()
+        }
+      })
+    } else {
+      logger.info('Nope ! Currently banned (challenges).')
+      done()
+    }
   })
 
   agenda.mongo(db.db, 'agenda')

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const { MessageAttachment } = require('discord.js')
 const axios = require('axios')
+const logger = require('../utils/signale')
 const fs = require('fs')
 const path = require('path')
 const { getProfilePicture } = require('../utils/get_profile_picture')
@@ -33,7 +34,7 @@ module.exports = {
       const attachment = new MessageAttachment(Buffer.from(data), 'oui.png')
       await interaction.editReply({ files: [attachment] })
     } catch (err) {
-      console.log(err)
+      logger.error(err)
       await interaction.editReply({ content: 'Erreur désolé...', ephemeral: true })
     }
   }
