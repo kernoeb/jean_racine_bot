@@ -5,7 +5,7 @@ const { getMonthChart } = require('../utils/charts')
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('chart')
-    .setDescription('Vive le tennis de table :ping_pong:')
+    .setDescription('Un maximum de statistiques.')
     .addStringOption(option =>
       option.setName('type')
         .setDescription('Type de graphique')
