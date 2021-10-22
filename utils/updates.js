@@ -27,7 +27,7 @@ module.exports = {
         try {
           reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime() } })
         } catch (err) {
-          if (err.code === '401') logger.error(`Premium challenge : ${chall.id_challenge}`)
+          if (err?.response?.status === 401) logger.error(`Premium challenge : ${chall.id_challenge}`)
           else logger.error(err)
           if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') throw new Error('DOWN_OR_BANNED')
         }
