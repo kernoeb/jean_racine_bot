@@ -4,7 +4,8 @@ const http = require('http')
 const https = require('https')
 
 const MAX_REQUESTS_COUNT = 1
-const INTERVAL_MS = 333
+const INTERVAL_MS = Number(process.env.INTERVAL_MS) || 333
+logger.log('INTERVAL : ', INTERVAL_MS)
 let PENDING_REQUESTS = 0
 
 logger.log('Axios instantiated')
