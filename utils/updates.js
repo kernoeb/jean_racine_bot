@@ -23,21 +23,32 @@ module.exports = {
       for (const chall of page) {
         let ret
         const f = await mongoose.models.challenge.findOne({ id_challenge: chall.id_challenge })
-        const reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime() } })
-        reqPage.data.timestamp = new Date()
-
-        if (f) {
-          ret = await mongoose.models.challenge.updateOne({ id_challenge: chall.id_challenge }, reqPage.data)
-        } else {
-          reqPage.data.id_challenge = chall.id_challenge
-          ret = await mongoose.models.challenge.create(reqPage.data)
-
-          if (client && channelIds) {
-            for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data), true)] })
-          }
+        let reqPage
+        try {
+          reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime() } })
+        } catch (err) {
+          if (err.code === '401') logger.error(`Premium challenge : ${chall.id_challenge}`)
+          else logger.error(err)
+          if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') throw new Error('DOWN_OR_BANNED')
         }
-        logger.log(chall.id_challenge + ' > ' + reqPage.data.titre + (ret.nModified || ret._id ? '*' : ''))
-        await pause()
+        if (reqPage && reqPage.data) {
+          reqPage.data.timestamp = new Date()
+
+          if (f) {
+            ret = await mongoose.models.challenge.updateOne({ id_challenge: chall.id_challenge }, reqPage.data)
+          } else {
+            reqPage.data.id_challenge = chall.id_challenge
+            ret = await mongoose.models.challenge.create(reqPage.data)
+
+            if (client && channelIds) {
+              for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data), true)] })
+            }
+          }
+          logger.log(chall.id_challenge + ' > ' + reqPage.data.titre + (ret.nModified || ret._id ? '*' : ''))
+          await pause()
+        } else {
+          logger.error('Failed while loading challenge')
+        }
       }
 
       if (req.data?.[1]?.rel !== 'next' && req.data?.[2]?.rel !== 'next') fetchContinue = false
