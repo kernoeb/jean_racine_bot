@@ -31,6 +31,8 @@ module.exports = {
           else if (err?.response?.status === 401 && process.env.API_KEY) {
             logger.error(`Premium challenge : ${chall.id_challenge}`)
             try {
+              logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
+              await pause(10000)
               reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` }, params: { fakeHash: new Date().getTime() } })
             } catch (err) {
               logger.error(err)
