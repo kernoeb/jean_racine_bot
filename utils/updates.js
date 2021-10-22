@@ -27,9 +27,15 @@ module.exports = {
         try {
           reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime() } })
         } catch (err) {
-          if (err?.response?.status === 401) logger.error(`Premium challenge : ${chall.id_challenge}`)
-          else logger.error(err)
           if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') throw new Error('DOWN_OR_BANNED')
+          else if (err?.response?.status === 401 && process.env.API_KEY) {
+            logger.error(`Premium challenge : ${chall.id_challenge}`)
+            try {
+              reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` }, params: { fakeHash: new Date().getTime() } })
+            } catch (err) {
+              logger.error(err)
+            }
+          } else logger.error(err)
         }
         if (reqPage && reqPage.data) {
           reqPage.data.timestamp = new Date()
