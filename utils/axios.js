@@ -13,7 +13,7 @@ logger.log('Axios instantiated')
 const instance = axios.create({
   baseURL: process.env.ROOTME_API_URL,
   timeout: 5000,
-  headers: { Cookie: `api_key=${process.env.API_KEY}` },
+  headers: { Cookie: process.env.SPIP_SESSION ? `spip_session=${process.env.SPIP_SESSION}` : `api_key=${process.env.API_KEY}` },
   withCredentials: true,
   httpAgent: new http.Agent({ keepAlive: true }),
   httpsAgent: new https.Agent({ keepAlive: true })
