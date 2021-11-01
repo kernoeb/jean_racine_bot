@@ -10,10 +10,15 @@ let PENDING_REQUESTS = 0
 
 logger.log('Axios instantiated')
 
+const getCookie = () => {
+  if (process.env.API_KEY_FIRST) return `api_key=${process.env.API_KEY_FIRST}`
+  else return process.env.SPIP_SESSION ? `spip_session=${process.env.SPIP_SESSION}` : `api_key=${process.env.API_KEY}`
+}
+
 const instance = axios.create({
   baseURL: process.env.ROOTME_API_URL,
   timeout: 5000,
-  headers: { Cookie: process.env.SPIP_SESSION ? `spip_session=${process.env.SPIP_SESSION}` : `api_key=${process.env.API_KEY}` },
+  headers: { Cookie: getCookie() },
   withCredentials: true,
   httpAgent: new http.Agent({ keepAlive: true }),
   httpsAgent: new https.Agent({ keepAlive: true })
