@@ -23,6 +23,7 @@ module.exports = {
       for (const chall of page) {
         let ret
         const f = await mongoose.models.challenge.findOne({ id_challenge: chall.id_challenge })
+        await pause(1000)
         let reqPage
         try {
           reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime() } })

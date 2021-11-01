@@ -12,7 +12,8 @@ logger.log('Axios instantiated')
 
 const getCookie = () => {
   if (process.env.API_KEY_FIRST) return `api_key=${process.env.API_KEY_FIRST}`
-  else return process.env.SPIP_SESSION ? `spip_session=${process.env.SPIP_SESSION}` : `api_key=${process.env.API_KEY}`
+  else if (process.env.SPIP_SESSION) return `spip_session=${process.env.SPIP_SESSION}`
+  else return `api_key=${process.env.API_KEY}`
 }
 
 const instance = axios.create({

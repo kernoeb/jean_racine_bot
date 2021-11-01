@@ -163,7 +163,7 @@ db.once('open', async function() {
 
       if (!process.env.NO_UPDATE_CHALLENGES) {
         const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
-        await UPDATE_CHALLENGES.repeatEvery('2 minutes', { skipImmediate: true }).save()
+        await UPDATE_CHALLENGES.repeatEvery('2 minutes', { skipImmediate: false }).save()
       }
     }
   })
