@@ -159,11 +159,11 @@ db.once('open', async function() {
 
     if (!process.env.NO_UPDATE) {
       const UPDATE_USERS = agenda.create('UPDATE_USERS', {}).priority('highest')
-      await UPDATE_USERS.repeatEvery('5 seconds', { skipImmediate: true }).save()
+      await UPDATE_USERS.repeatEvery(process.env.REPEAT_USERS || '5 seconds', { skipImmediate: true }).save()
 
       if (!process.env.NO_UPDATE_CHALLENGES) {
         const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
-        await UPDATE_CHALLENGES.repeatEvery('2 minutes', { skipImmediate: false }).save()
+        await UPDATE_CHALLENGES.repeatEvery(process.env.REPEAT_CHALLENGES || '2 minutes', { skipImmediate: false }).save()
       }
     }
   })
