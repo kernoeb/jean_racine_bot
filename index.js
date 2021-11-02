@@ -97,11 +97,15 @@ db.once('open', async function() {
 
   /** Agenda configuration **/
   let BANNED = false
+  let LOADING_CHALLENGES = false
+  let LOADING_USERS = false
 
   agenda.define('UPDATE_USERS', {}, async (job, done) => {
-    if (!BANNED) {
+    if (BANNED === false && LOADING_USERS === false) {
+      LOADING_USERS = true
       updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
         logger.success('UPDATE_USERS OK')
+        LOADING_USERS = false
         done()
       }).catch(async err => {
         logger.error('UPDATE_USERS ERROR', err)
@@ -112,8 +116,10 @@ db.once('open', async function() {
           await new Promise(resolve => setTimeout(resolve, 1000 * 60 * 6))
           logger.info('Pause finished after 6 minutes (users)')
           BANNED = false
+          LOADING_USERS = false
           done()
         } else {
+          LOADING_USERS = false
           done()
         }
       })
@@ -124,9 +130,11 @@ db.once('open', async function() {
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async (job, done) => {
-    if (!BANNED) {
+    if (BANNED === false && LOADING_CHALLENGES === false) {
+      LOADING_CHALLENGES = true
       fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
         logger.success('UPDATE_CHALLENGES OK')
+        LOADING_CHALLENGES = false
         done()
       }).catch(async err => {
         logger.error('UPDATE_CHALLENGES ERROR', err)
@@ -137,8 +145,10 @@ db.once('open', async function() {
           await new Promise(resolve => setTimeout(resolve, 1000 * 60 * 6))
           logger.info('Pause finished after 6 minutes (challenges)')
           BANNED = false
+          LOADING_CHALLENGES = false
           done()
         } else {
+          LOADING_CHALLENGES = false
           done()
         }
       })
