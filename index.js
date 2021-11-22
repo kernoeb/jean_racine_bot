@@ -168,8 +168,10 @@ db.once('open', async function() {
     }, 2500)
 
     if (!process.env.NO_UPDATE) {
-      const UPDATE_USERS = agenda.create('UPDATE_USERS', {}).priority('highest')
-      await UPDATE_USERS.repeatEvery(process.env.REPEAT_USERS || '5 seconds', { skipImmediate: false }).save()
+      if (!process.env.NO_UPDATE_USERS) {
+        const UPDATE_USERS = agenda.create('UPDATE_USERS', {}).priority('highest')
+        await UPDATE_USERS.repeatEvery(process.env.REPEAT_USERS || '5 seconds', { skipImmediate: false }).save()
+      }
 
       if (!process.env.NO_UPDATE_CHALLENGES) {
         const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
