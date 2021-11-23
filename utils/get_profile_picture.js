@@ -12,22 +12,22 @@ const instance = axios.create({
 module.exports = {
   async getProfilePicture(id) {
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/auton${id}.jpg`
+      const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.jpg`
       await instance.get(url, { params: { fakeHash: new Date().getTime() } })
       return url
     } catch (err) {}
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/auton${id}.png`
+      const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.png`
       await instance.get(url, { params: { fakeHash: new Date().getTime() } })
       return url
     } catch (err) {}
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/auton${id}.gif`
+      const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.gif`
       await instance.get(url, { params: { fakeHash: new Date().getTime() } })
       return url
     } catch (err) {}
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/auton0.png`
+      const url = `${process.env.ROOTME_URL}/IMG/logo/auton0.png`
       await instance.get(url)
       return url
     } catch (err) {}
