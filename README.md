@@ -7,7 +7,7 @@ built by `@kernoeb`
 ### Features
 
 - Add user / Remove user
-- Scoreboard with auto update
+- Scoreboard with auto update / refresh
 - Notifications (new challenge added or succeed, new validation, new solution)
 - Search a user or a challenge id
 - Information about a challenge or a user
@@ -23,7 +23,8 @@ built by `@kernoeb`
 `/challenge <id>` : Information about a challenge  
 `/user <id>`: Information about a user  
 `/createglobalscoreboard` : Add a global scoreboard  
-`/ping`: Test if the bot is not down 
+`/getlastchallenges` : Get last challenges  
+`/ping`: Test if the bot is not down
 
 ### Captures
 
@@ -48,6 +49,10 @@ built by `@kernoeb`
 **Scoreboard with arrows**
 
 ![Arrow scoreboard](images/arrow_scoreboard.png)
+
+**Last challenges**
+
+![Last challenges](images/last_challenges.png)
 
 ### Similar projects
 
