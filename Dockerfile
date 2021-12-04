@@ -9,7 +9,7 @@ ADD README.md .
 ADD package.json .
 ADD yarn.lock .
 ADD .yarnrc.yml .
-ADD .yarn/releases .yarn/releases
+ADD .yarn .yarn
 
 ADD index.js .
 ADD assets assets
@@ -22,6 +22,9 @@ RUN mv assets/register_slash_commands /usr/local/bin/register_slash_commands && 
 RUN yarn set version berry && yarn set version berry
 RUN yarn -v
 RUN yarn
+
+# Remove useless yarn cache in container
+RUN rm -rf .yarn/cache
 
 EXPOSE 3000
 
