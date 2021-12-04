@@ -23,9 +23,6 @@ RUN yarn set version berry && yarn set version berry
 RUN yarn -v
 RUN yarn
 
-# Remove useless yarn cache in container
-RUN rm -rf .yarn/cache
-
 EXPOSE 3000
 
 CMD [ "yarn", "start" ]
