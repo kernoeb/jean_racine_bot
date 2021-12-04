@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
 const axios = require('../utils/axios')
 const logger = require('../utils/signale')
+const { updateScoreboards } = require('../utils/scoreboard')
 
 const DELETE_TIME = 5000
 
@@ -50,6 +51,11 @@ module.exports = {
     if (!(guild.users || []).includes(user.id_auteur)) {
       guild.users.push(user.id_auteur)
       await guild.save()
+
+      updateScoreboards().catch(() => {
+        logger.error('Error while updating scoreboards')
+      })
+
       return await interaction.editReply(`:white_check_mark: Utilisateur ${user.nom} (${user.id_auteur}) ajouté avec succès`)
     } else {
       setTimeout(() => {

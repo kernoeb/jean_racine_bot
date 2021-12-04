@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
 const logger = require('../utils/signale')
+const { updateScoreboards } = require('../utils/scoreboard')
 
 async function cleanUser(id) {
   try {
@@ -33,6 +34,11 @@ module.exports = {
       guild.users = (guild.users || []).filter(v => v !== id)
       await guild.save()
       await cleanUser(id)
+
+      updateScoreboards().catch(() => {
+        logger.error('Error while updating scoreboards')
+      })
+
       return await interaction.editReply(`:white_check_mark: Utilisateur ${id} supprimé avec succès`)
     } else {
       await cleanUser(id)
