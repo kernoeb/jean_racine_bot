@@ -202,14 +202,30 @@ db.once('open', async function() {
       await client.commands.get(interaction.commandName).execute(interaction)
     } catch (error) {
       logger.error(error)
-      await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+      try {
+        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+      } catch (err) {
+        logger.error(err)
+      }
     }
   })
 
   client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return
 
-    if (interaction.customId.startsWith('go_page_')) return interaction.update(await getScoreboard({ guildId: interaction.guildId, index: interaction.customId.split('go_page_')[1] }))
+    try {
+      if (interaction.customId.startsWith('go_page_')) return interaction.update(await getScoreboard({
+        guildId: interaction.guildId,
+        index: interaction.customId.split('go_page_')[1]
+      }))
+    } catch (e) {
+      logger.error(e)
+      try {
+        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+      } catch (err) {
+        logger.error(err)
+      }
+    }
   })
 
   client.login(process.env.TOKEN).then(() => {
