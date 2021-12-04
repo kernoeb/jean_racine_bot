@@ -1,3 +1,3 @@
 #!/bin/sh
 cd /app || exit 1
-node register_slash_commands.js
+yarn node register_slash_commands.js
