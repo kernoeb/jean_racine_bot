@@ -1,10 +1,12 @@
 {
-  "name": "rootme_bot",
+  "name": "jean_racine_bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "register": "node register_slash_commands.js",
+    "register_dev": "node register_slash_commands_dev.js",
     "dev": "nodemon index.js",
     "lint": "eslint --fix . --ext .js"
   },
