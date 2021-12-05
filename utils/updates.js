@@ -15,7 +15,7 @@ module.exports = {
     let fetchContinue = true
     let index = 0
     while (fetchContinue) {
-      const req = await axios.get('/challenges', { params: { debut_challenges: index * 50, fakeHash: new Date().getTime() } })
+      const req = await axios.get('/challenges', { params: { debut_challenges: index * 50, fakeHash: new Date().getTime(), var_mode: calcul } })
 
       const page = Object.keys(req.data[0]).map(v => req.data[0][v])
       await pause()
@@ -26,7 +26,7 @@ module.exports = {
         await pause(1000)
         let reqPage
         try {
-          reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime() } })
+          reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { fakeHash: new Date().getTime(), var_mode: calcul } })
         } catch (err) {
           await pause()
           if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') throw new Error('DOWN_OR_BANNED')
@@ -35,7 +35,7 @@ module.exports = {
             try {
               logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
               await pause(9000)
-              reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` }, params: { fakeHash: new Date().getTime() } })
+              reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` }, params: { fakeHash: new Date().getTime(), var_mode: calcul } })
             } catch (err) {
               logger.error(err)
             }
@@ -69,7 +69,7 @@ module.exports = {
     logger.info('Update users')
     for await (const user of mongoose.models.user.find()) {
       try {
-        const req = await axios.get(`/auteurs/${user.id_auteur}`, { params: { fakeHash: new Date().getTime() } })
+        const req = await axios.get(`/auteurs/${user.id_auteur}`, { params: { fakeHash: new Date().getTime(), var_mode: calcul } })
 
         const toCheck = [
           {
