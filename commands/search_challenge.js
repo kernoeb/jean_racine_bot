@@ -19,7 +19,7 @@ module.exports = {
     await interaction.deferReply()
 
     try {
-      const req = await axios.get('/challenges', { params: { titre: name, fakeHash: new Date().getTime() } })
+      const req = await axios.get('/challenges', { params: { titre: name, [new Date().getTime().toString()]: new Date().getTime().toString() } })
       if (req?.data?.length === 2) {
         return await interaction.editReply('Trop de résultats, sois plus précis stp !')
       } else if (Object.keys((req?.data?.[0] || {})).length) {

@@ -13,17 +13,17 @@ module.exports = {
   async getProfilePicture(id) {
     try {
       const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.jpg`
-      await instance.get(url, { params: { fakeHash: new Date().getTime() } })
+      await instance.get(url, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
       return url
     } catch (err) {}
     try {
       const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.png`
-      await instance.get(url, { params: { fakeHash: new Date().getTime() } })
+      await instance.get(url, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
       return url
     } catch (err) {}
     try {
       const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.gif`
-      await instance.get(url, { params: { fakeHash: new Date().getTime() } })
+      await instance.get(url, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
       return url
     } catch (err) {}
     try {

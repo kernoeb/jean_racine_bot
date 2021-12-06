@@ -30,7 +30,7 @@ module.exports = {
         u = tmpUser.userInfo() // Get user info
       } else {
         try {
-          req = await axios.get(`/auteurs/${option}`, { params: { fakeHash: new Date().getTime() } })
+          req = await axios.get(`/auteurs/${option}`, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
           u = userInfo(req.data) // Get user info
         } catch (err) {
           setTimeout(() => {
@@ -45,7 +45,7 @@ module.exports = {
         u = tmpUser.userInfo() // Get user info
       } else {
         try {
-          req = await axios.get('/auteurs', { params: { nom: option, fakeHash: new Date().getTime() } })
+          req = await axios.get('/auteurs', { params: { nom: option, [new Date().getTime().toString()]: new Date().getTime().toString() } })
           if (Object.keys((req?.data?.[0] || {})).length === 0) {
             setTimeout(() => {
               interaction.deleteReply().then(() => {}).catch(() => {})
@@ -77,7 +77,7 @@ module.exports = {
         .setDescription(`**ID:** ${u.id}`)
 
       const thumbnail = await getProfilePicture(u.id)
-      if (thumbnail) embed.setThumbnail(thumbnail + `?fakeHash=${new Date().getTime()}`)
+      if (thumbnail) embed.setThumbnail(thumbnail + `?${new Date().getTime().toString()}=${new Date().getTime().toString()}`)
 
       if (u.score != null && u.score !== '') embed.addField('Score', u.score.toString(), true)
       if (u.position != null && u.position !== '') embed.addField('Rang', u.position.toString(), true)
