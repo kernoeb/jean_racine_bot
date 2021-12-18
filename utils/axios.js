@@ -19,7 +19,7 @@ const getCookie = () => {
 const instance = axios.create({
   baseURL: process.env.ROOTME_API_URL,
   timeout: 5000,
-  headers: { Cookie: getCookie() },
+  headers: { Cookie: getCookie(), 'cache-control': 'max-age=0' },
   withCredentials: true,
   httpAgent: new http.Agent({ keepAlive: true }),
   httpsAgent: new https.Agent({ keepAlive: true })
