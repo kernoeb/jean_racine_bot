@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
 const { challengeEmbed } = require('../utils/challenge')
+const { validUsers: getValidUsers } = require('../utils/user')
 const { DateTime } = require('luxon')
 
 module.exports = {
@@ -30,15 +31,7 @@ module.exports = {
     }
 
     if (u && !!Object.keys(u).length) {
-      let validUsers = null
-      try {
-        const guildUsers = (await mongoose.models.channels.findOne({ guildId: interaction.guildId }) || {}).users
-        const users = (await mongoose.models.user.find({ id_auteur: { $in: guildUsers } }) || [])
-        validUsers = users.filter(v => v && v.validations && v.validations.length && v.validations.some(i => i.id_challenge === option))
-          .sort((a, b) => DateTime.fromSQL((a.validations.find(i => i.id_challenge === option) || {}).date).setLocale('fr').toMillis() - DateTime.fromSQL((b.validations.find(i => i.id_challenge === option) || {}).date).setLocale('fr').toMillis())
-          .map(v => v.nom)
-      } catch (err) {
-      }
+      const validUsers = await getValidUsers({ challId: option, guildId: interaction.guildId })
       return await interaction.reply({ embeds: [challengeEmbed(u, false, validUsers && validUsers.length ? validUsers : null)] })
     } else {
       return await interaction.reply({ content: '*Challenge indisponible ou erreur côté serveur, désolé !*', ephemeral: true })

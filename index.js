@@ -62,7 +62,7 @@ db.once('open', async function() {
     date_publication: Date,
     score: { type: Number, index: true },
     auteurs: Array,
-    validations: Number,
+    validations: Number, // Deprecated
     difficulte: String,
     url_challenge: String,
     timestamp: Date
@@ -70,6 +70,9 @@ db.once('open', async function() {
   const challengeSchema = new mongoose.Schema(challengeSchemaTemplate)
   challengeSchema.methods.challengeInfo = challengeInfo
   const Challenges = mongoose.model('challenge', challengeSchema)
+
+  // Remove validations as it's not used anymore
+  await Challenges.updateMany({}, { $unset: { 'validations': 1 } })
 
   const discordChannelsSchemaTemplate = {
     channelId: { type: String, required: true, unique: true, index: true },
@@ -96,12 +99,11 @@ db.once('open', async function() {
   }
 
   /** Agenda configuration **/
-  let BANNED = false
   let LOADING_CHALLENGES = false
   let LOADING_USERS = false
 
   agenda.define('UPDATE_USERS', {}, async (job, done) => {
-    if (BANNED === false && LOADING_USERS === false) {
+    if (LOADING_USERS === false) {
       LOADING_USERS = true
       updateUsers((await Channels.find({})).map(v => v.channelId)).then(() => {
         logger.success('UPDATE_USERS OK')
@@ -109,19 +111,6 @@ db.once('open', async function() {
         done()
       }).catch(async err => {
         logger.error('UPDATE_USERS ERROR', err)
-
-        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
-          logger.error('BANNED ! (users)')
-          BANNED = true
-          await new Promise(resolve => setTimeout(resolve, 1000 * 60 * 6))
-          logger.info('Pause finished after 6 minutes (users)')
-          BANNED = false
-          LOADING_USERS = false
-          done()
-        } else {
-          LOADING_USERS = false
-          done()
-        }
       })
     } else {
       logger.info('Nope ! Currently banned (users).')
@@ -130,7 +119,7 @@ db.once('open', async function() {
   })
 
   agenda.define('UPDATE_CHALLENGES', {}, async (job, done) => {
-    if (BANNED === false && LOADING_CHALLENGES === false) {
+    if (LOADING_CHALLENGES === false) {
       LOADING_CHALLENGES = true
       fetchChallenges((await Channels.find({})).map(v => v.channelId)).then(() => {
         logger.success('UPDATE_CHALLENGES OK')
@@ -138,19 +127,6 @@ db.once('open', async function() {
         done()
       }).catch(async err => {
         logger.error('UPDATE_CHALLENGES ERROR', err)
-
-        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED' || err === 'DOWN_OR_BANNED') {
-          logger.error('BANNED ! (challenges)')
-          BANNED = true
-          await new Promise(resolve => setTimeout(resolve, 1000 * 60 * 6))
-          logger.info('Pause finished after 6 minutes (challenges)')
-          BANNED = false
-          LOADING_CHALLENGES = false
-          done()
-        } else {
-          LOADING_CHALLENGES = false
-          done()
-        }
       })
     } else {
       logger.info('Nope ! Currently banned (challenges).')
@@ -170,12 +146,12 @@ db.once('open', async function() {
     if (!process.env.NO_UPDATE) {
       if (!process.env.NO_UPDATE_USERS) {
         const UPDATE_USERS = agenda.create('UPDATE_USERS', {}).priority('highest')
-        await UPDATE_USERS.repeatEvery(process.env.REPEAT_USERS || '5 seconds', { skipImmediate: false }).save()
+        await UPDATE_USERS.repeatEvery(process.env.REPEAT_USERS || '1 minute', { skipImmediate: false }).save()
       }
 
       if (!process.env.NO_UPDATE_CHALLENGES) {
         const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
-        await UPDATE_CHALLENGES.repeatEvery(process.env.REPEAT_CHALLENGES || '2 minutes', { skipImmediate: false }).save()
+        await UPDATE_CHALLENGES.repeatEvery(process.env.REPEAT_CHALLENGES || '15 minutes', { skipImmediate: false }).save()
       }
     }
   })

@@ -1,35 +1,28 @@
-const axios = require('axios')
-const http = require('http')
-const https = require('https')
+const curl = require('../utils/curl')
 
-const instance = axios.create({
-  baseURL: process.env.ROOTME_API_URL,
-  timeout: 3000,
-  httpAgent: new http.Agent({ keepAlive: true }),
-  httpsAgent: new https.Agent({ keepAlive: true })
-})
+const hostname = process.env.ROOTME_URL.replace(/https?:\/\//, '')
 
 module.exports = {
-  async getProfilePicture(id) {
+  async getProfilePicture(id, asImage) {
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.jpg`
-      await instance.get(url, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
-      return url
+      const url = `/IMG/logo/auton${id}.jpg`
+      const { data } = await curl.get(url, { customHostname: hostname })
+      return asImage ? data : process.env.ROOTME_URL + url
     } catch (err) {}
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.png`
-      await instance.get(url, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
-      return url
+      const url = `/IMG/logo/auton${id}.png`
+      const { data } = await curl.get(url, { customHostname: hostname })
+      return asImage ? data : process.env.ROOTME_URL + url
     } catch (err) {}
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/logo/auton${id}.gif`
-      await instance.get(url, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
-      return url
+      const url = `/IMG/logo/auton${id}.gif`
+      const { data } = await curl.get(url, { customHostname: hostname })
+      return asImage ? data : process.env.ROOTME_URL + url
     } catch (err) {}
     try {
-      const url = `${process.env.ROOTME_URL}/IMG/logo/auton0.png`
-      await instance.get(url)
-      return url
+      const url = '/IMG/logo/auton0.png'
+      const { data } = await curl.get(url, { customHostname: hostname })
+      return asImage ? data : process.env.ROOTME_URL + url
     } catch (err) {}
     return null
   }

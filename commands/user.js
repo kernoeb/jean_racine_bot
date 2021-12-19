@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
 const { MessageEmbed } = require('discord.js')
-const axios = require('../utils/axios')
+const curl = require('../utils/curl')
 const { userInfo } = require('../utils/user')
 const { getProfilePicture } = require('../utils/get_profile_picture')
 
@@ -30,13 +30,12 @@ module.exports = {
         u = tmpUser.userInfo() // Get user info
       } else {
         try {
-          req = await axios.get(`/auteurs/${option}`, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
+          req = await curl.get(`/auteurs/${option}`)
           u = userInfo(req.data) // Get user info
         } catch (err) {
           setTimeout(() => {
             interaction.deleteReply().then(() => {}).catch(() => {})
           }, DELETE_TIME)
-          if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
         }
       }
     } else {
@@ -45,7 +44,7 @@ module.exports = {
         u = tmpUser.userInfo() // Get user info
       } else {
         try {
-          req = await axios.get('/auteurs', { params: { nom: option, [new Date().getTime().toString()]: new Date().getTime().toString() } })
+          req = await curl.get('/auteurs', { params: { nom: option } })
           if (Object.keys((req?.data?.[0] || {})).length === 0) {
             setTimeout(() => {
               interaction.deleteReply().then(() => {}).catch(() => {})
@@ -58,14 +57,13 @@ module.exports = {
             return await interaction.editReply({ content: '*Trop d\'utilisateurs portent ce nom, soit plus précis stp.. ou donne son identifiant :* `/searchuser`' })
           }
           if (req.data?.[0]?.['0']?.id_auteur) {
-            req = await axios.get(`/auteurs/${req.data[0]['0'].id_auteur}`)
+            req = await curl.get(`/auteurs/${req.data[0]['0'].id_auteur}`)
             if (req.data) u = userInfo(req.data) // Get user info
           }
         } catch (err) {
           setTimeout(() => {
             interaction.deleteReply().then(() => {}).catch(() => {})
           }, DELETE_TIME)
-          if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !* :pray:' })
         }
       }
     }

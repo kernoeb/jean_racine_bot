@@ -24,6 +24,31 @@ services:
       - "27017"
     volumes:
       - '/opt/jeanracine:/bitnami/mongodb'
+  tor-node-1:
+    image: osminogin/tor-simple
+    networks:
+      - rootme
+    restart: always
+  tor-node-2:
+    image: osminogin/tor-simple
+    networks:
+      - rootme
+    restart: always
+  tor-node-3:
+    image: osminogin/tor-simple
+    networks:
+      - rootme
+    restart: always
+  tor-node-4:
+    image: osminogin/tor-simple
+    networks:
+      - rootme
+    restart: always
+  tor-node-chall:
+    image: osminogin/tor-simple
+    networks:
+      - rootme
+    restart: always
 
 networks:
   rootme:

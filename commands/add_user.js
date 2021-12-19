@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
-const axios = require('../utils/axios')
+const curl = require('../utils/curl')
 const logger = require('../utils/signale')
 const { updateScoreboards } = require('../utils/scoreboard')
 
@@ -34,7 +34,7 @@ module.exports = {
     let user = await mongoose.models.user.findOne({ id_auteur: id })
     if (!user) {
       try {
-        req = await axios.get(`/auteurs/${id}`, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
+        req = await curl.get(`/auteurs/${id}`)
         req.data.timestamp = new Date()
         await mongoose.models.user.create(req.data)
         user = await mongoose.models.user.findOne({ id_auteur: id })
@@ -43,7 +43,8 @@ module.exports = {
         setTimeout(() => {
           interaction.deleteReply().then(() => {}).catch(() => {})
         }, DELETE_TIME)
-        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
+        // TODO better error handling
+        // if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') return await interaction.editReply({ content: '*Root-me m\'a temporairement banni (ou est down)... attend 5 minutes, merci bg !*' })
         return await interaction.editReply({ content: ':no_entry_sign: Utilisateur inexistant !' })
       }
     }

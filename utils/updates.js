@@ -1,13 +1,17 @@
 const mongoose = require('../utils/mongoose')
-const axios = require('../utils/axios')
-const { MessageEmbed } = require('discord.js')
+const curl = require('./curl')
 const logger = require('../utils/signale')
-const { challengeEmbed, challengeInfo, challengeFormat } = require('../utils/challenge')
+const { challengeEmbed, challengeInfo, getNumberOfValidations } = require('../utils/challenge')
 const { updateScoreboards } = require('../utils/scoreboard')
-const { getProfilePicture } = require('../utils/get_profile_picture')
 const client = require('../utils/discord')()
 const decode = require('html-entities').decode
 const { pause } = require('../utils/util')
+const { MessageAttachment, MessageEmbed } = require('discord.js')
+const getCanvas = require('../utils/canvas')
+const { validUsers } = require('./user')
+const { DateTime } = require('luxon')
+
+const customProxy = process.env.NODE_ENV === 'production' ? (process.env.PROXY_CHALL || 'tor-node-chall:9050') : '127.0.0.1:9054'
 
 module.exports = {
   fetchChallenges: async function(channelIds) {
@@ -15,7 +19,7 @@ module.exports = {
     let fetchContinue = true
     let index = 0
     while (fetchContinue) {
-      const req = await axios.get('/challenges', { params: { debut_challenges: index * 50, [new Date().getTime().toString()]: new Date().getTime().toString() } })
+      const req = await curl.get('/challenges', { params: { debut_challenges: index * 50 } })
 
       const page = Object.keys(req.data[0]).map(v => req.data[0][v])
       await pause()
@@ -26,23 +30,40 @@ module.exports = {
         await pause(1000)
         let reqPage
         try {
-          reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
+          reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { customProxy, bypassCache: true })
         } catch (err) {
           await pause()
-          if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') throw new Error('DOWN_OR_BANNED')
-          else if (err?.response?.status === 401 && process.env.API_KEY) {
+          if (err.code === 429) {
+            logger.warn('Too many request, wait a bit')
+            await pause(5000)
+          }
+          if (err.code === 401 && process.env.API_KEY) {
             logger.error(`Premium challenge : ${chall.id_challenge}`)
             try {
               logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
               await pause(9000)
-              reqPage = await axios.get(`/challenges/${chall.id_challenge}`, { headers: { Cookie: `api_key=${process.env.API_KEY}` }, params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
+              reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { headers: [`cookie: api_key=${process.env.API_KEY}`], customProxy, bypassCache: true })
             } catch (err) {
               logger.error(err)
             }
           } else logger.error(err)
         }
-        if (reqPage && reqPage.data) {
+        if (reqPage?.data?.[0] && reqPage?.data?.[0]?.['error'] == null) {
+          reqPage.data = reqPage.data[0]
           reqPage.data.timestamp = new Date()
+
+          try {
+            delete reqPage.data.validations
+          } catch (err) {}
+
+          const nbOfValidations = await getNumberOfValidations(chall.id_challenge)
+          if (nbOfValidations != null) reqPage.data.validations = nbOfValidations
+
+          try {
+            reqPage.data.auteurs = Object.keys(reqPage.data.auteurs).map(v => reqPage.data.auteurs[v])
+          } catch (err) {
+            reqPage.data.auteurs = []
+          }
 
           if (f) {
             ret = await mongoose.models.challenge.updateOne({ id_challenge: chall.id_challenge }, reqPage.data)
@@ -54,7 +75,7 @@ module.exports = {
               for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data), true)] })
             }
           }
-          logger.log(chall.id_challenge + ' > ' + reqPage.data.titre + (ret.nModified || ret._id ? '*' : ''))
+          logger.log(chall.id_challenge + ' > ' + (reqPage?.data?.titre || 'Titre inconnu') + (ret.nModified || ret._id ? '*' : ''))
           await pause()
         } else {
           logger.error('Failed while loading challenge')
@@ -69,26 +90,26 @@ module.exports = {
     logger.info('Update users')
     for await (const user of mongoose.models.user.find()) {
       try {
-        const req = await axios.get(`/auteurs/${user.id_auteur}`, { params: { [new Date().getTime().toString()]: new Date().getTime().toString() } })
+        const req = await curl.get(`/auteurs/${user.id_auteur}`, { bypassCache: true })
 
         const toCheck = [
           {
             key: 'validations',
             id: 'id_challenge',
             value: 'date',
-            title: 'Nouveaux challenges validés par '
+            title: 'Nouveau challenge validé'
           },
           {
             key: 'solutions',
             id: 'id_solution',
             value: 'url_solution',
-            title: 'Nouvelles solutions ajoutées par '
+            title: 'Nouvelle solution ajoutée'
           },
           {
             key: 'challenges',
             id: 'id_challenge',
             value: 'url_challenge',
-            title: 'Nouveaux challenges créés par '
+            title: 'Nouveau challenge créé'
           }
         ]
 
@@ -112,30 +133,69 @@ module.exports = {
               if (increased.length) {
                 updateScoreboard = true
 
-                const embed = new MessageEmbed()
-                  .setTitle(element.title + user.nom)
-
-                const thumbnail = await getProfilePicture(user.id_auteur)
-                if (thumbnail) embed.setThumbnail(thumbnail + `?${new Date().getTime().toString()}=${new Date().getTime().toString()}`)
-
-                for (const [i, v] of increased.entries()) {
-                  let chall = undefined
-                  if (element.value === 'date') chall = await mongoose.models.challenge.findOne({ [element.id]: Number(v) })
-                  embed.addField((i + 1) + '. ' + (chall && chall.titre ? `${decode(chall.titre.toString())}${chall.score ? ' (' + chall.score + ')' : ''}` : v.toString()),
-                    element.value === 'date'
-                      ? challengeFormat(newValidationElements[v], chall || {})
-                      : `[Lien direct](${process.env.ROOTME_URL}/${newValidationElements[v].toString()})`
-                  )
-                }
-
-                const channelsIdsFiltered = (await mongoose.models.channels.find({ users: user.id_auteur })).map(v => v.channelId)
+                const channelsIdsFiltered = (await mongoose.models.channels.find({ users: user.id_auteur })).map(v => ({ channelId: v.channelId, guildId: v.guildId }))
                 logger.log(channelsIdsFiltered)
 
                 for (const channel of channelsIdsFiltered) {
-                  try {
-                    await client.channels.cache.get(channel).send({ embeds: [embed] })
-                  } catch (err) {
-                    logger.error(err)
+                  let lastScore = user.score || 0
+                  for (const [_, v] of increased.entries()) {
+                    let chall = undefined
+                    const isChall = element.id === 'id_challenge'
+
+                    if (isChall) chall = await mongoose.models.challenge.findOne({ [element.id]: Number(v) })
+
+                    // Try to fetch the challenge if not found
+                    if (!chall && isChall) {
+                      try {
+                        logger.info('Try to fetch the challenge because it\'s not found')
+                        const reqChall = await curl.get(`/challenges/${v}`)
+                        chall = reqChall.data
+                      } catch (err) {
+                        logger.error(err)
+                      }
+                    }
+
+                    // Increment temporarily the score
+                    if (chall && chall.score) lastScore = lastScore + Number(chall.score)
+
+                    const objUser = {
+                      username: user.nom,
+                      id: user.id_auteur,
+                      score: lastScore != null ? lastScore : undefined
+                    }
+
+                    const objChallUsers = {}
+                    if (isChall && element.key !== 'challenges') {
+                      const valid = await validUsers({ challId: v, guildId: channel.guildId })
+                      if (valid) {
+                        if (valid.length + 1 === 1) objChallUsers.firstBlood = true
+                        else objChallUsers.serverRank = valid.length + 1
+                      }
+                    }
+
+                    const objChall = {
+                      title: chall && chall.titre ? decode(chall.titre.toString()) : v.toString(),
+                      points: chall && chall.score ? Number(chall.score) : undefined,
+                      date: (element.value === 'date' && newValidationElements[v] && DateTime.fromSQL(newValidationElements[v]).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)) || 'Aucune date',
+                      validations: isChall ? await getNumberOfValidations(v) : undefined
+                    }
+
+                    // Send Discord message in channel
+                    try {
+                      const attachment = new MessageAttachment((await getCanvas({ typeText: element.title, channel: {}, user: objUser, challUsers: objChallUsers, chall: objChall })).toBuffer(), new Date().toISOString() + '-profile-image.png')
+                      const toSend = { files: [attachment] }
+                      if (isChall && chall && chall.titre && chall.url_challenge) {
+                        toSend.embeds = [
+                          new MessageEmbed()
+                            .setTitle(chall.titre)
+                            .setURL(`${process.env.ROOTME_URL}/${chall.url_challenge}`)
+                            // .setDescription(`${process.env.ROOTME_URL}/${userUrl}`)
+                        ]
+                      }
+                      await client.channels.cache.get(channel.channelId).send(toSend)
+                    } catch (err) {
+                      logger.error(err)
+                    }
                   }
                 }
               }
@@ -155,9 +215,9 @@ module.exports = {
         await pause()
         logger.success('User ', update)
       } catch (err) {
-        await pause()
-        logger.error(err)
-        if (err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') throw new Error('DOWN_OR_BANNED')
+        await pause(3000)
+        if (err?.code === 28) logger.error('Root-Me is slow, timeout was reached...')
+        else logger.error(err)
       }
     }
   }

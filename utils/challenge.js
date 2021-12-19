@@ -1,8 +1,29 @@
 const { MessageEmbed } = require('discord.js')
 const { DateTime } = require('luxon')
 const decode = require('html-entities').decode
+const jsdom = require('jsdom')
+const { JSDOM } = jsdom
+const curl = require('../utils/curl')
+
+const customHostname = process.env.ROOTME_URL.replace(/https?:\/\//, '')
+
+/* const getDate = (date) => {
+  return '<t:' + (DateTime.fromSQL(date).setLocale('fr').valueOf() / 1000) + ':R>'
+}*/
 
 module.exports = {
+  getNumberOfValidations:  async function(challId) {
+    try {
+      const dom = new JSDOM((await curl.get(null, {
+        customHostname,
+        params: { page: 'structure', inc: 'inclusions/qui_a_valid', id_c: challId, lang: 'fr', ajah: 1, var_mode: 'calcul' }
+      })).data)
+      return Number(dom.window?.document?.querySelector('h3')?.textContent?.match(/\d+/g)?.[0].trim()) || null
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+  },
   challengeInfo: function(args = {}) {
     return {
       id: this.id_challenge || args.id_challenge,
@@ -37,12 +58,5 @@ module.exports = {
     if (u.backup) embed.setFooter('⚠️ Sauvegarde locale du ' + (DateTime.fromJSDate(u.timestamp).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)))
 
     return embed
-  },
-  challengeFormat: function(element, chall) {
-    let ret = ''
-    ret += (DateTime.fromSQL(element).setLocale('fr').toLocaleString(DateTime.DATETIME_MED) || 'Aucune date') + '\n'
-    if (chall.rubrique) ret += chall.rubrique + '\n'
-    if (chall.url_challenge) ret += `[Accéder au chall](${process.env.ROOTME_URL}/${chall.url_challenge})\n`
-    return ret
   }
 }

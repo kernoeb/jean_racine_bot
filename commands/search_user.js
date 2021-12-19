@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
-const axios = require('../utils/axios')
+const curl = require('../utils/curl')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     await interaction.deferReply()
 
     try {
-      const req = await axios.get('/auteurs', { params: { nom: name } })
+      const req = await curl.get('/auteurs', { params: { nom: name } })
       if (req?.data?.length === 2) {
         return await interaction.editReply({ content: 'Trop de résultats, sois plus précis stp !' })
       } else if (Object.keys((req?.data?.[0] || {})).length) {

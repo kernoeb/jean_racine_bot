@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
-const axios = require('../utils/axios')
+const curl = require('../utils/curl')
 const { MessageEmbed } = require('discord.js')
 const { DateTime } = require('luxon')
 const decode = require('html-entities').decode
@@ -19,7 +19,7 @@ module.exports = {
     await interaction.deferReply()
 
     try {
-      const req = await axios.get('/challenges', { params: { titre: name, [new Date().getTime().toString()]: new Date().getTime().toString() } })
+      const req = await curl.get('/challenges', { params: { titre: name } })
       if (req?.data?.length === 2) {
         return await interaction.editReply('Trop de résultats, sois plus précis stp !')
       } else if (Object.keys((req?.data?.[0] || {})).length) {
