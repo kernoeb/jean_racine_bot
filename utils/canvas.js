@@ -104,7 +104,7 @@ module.exports = async function getCanvas({ typeText, user, challUsers, chall })
   if (challUsers && Object.keys(challUsers).length) {
     if (!challUsers.firstBlood) {
       context.fillStyle = '#bdbdbd'
-      if (chall.validations) context.fillText(chall.validations + ' validations · 4ème du serveur', leftX, topY + 180)
+      if (chall.validations) context.fillText(chall.validations + ' validations · ' + challUsers.serverRank + 'ème du serveur', leftX, topY + 180)
       else context.fillText(challUsers.serverRank + 'ème du serveur', leftX, topY + 180)
     } else {
       context.fillStyle = '#bdbdbd'
