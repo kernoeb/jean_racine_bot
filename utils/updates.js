@@ -148,9 +148,20 @@ module.exports = {
                     if (!chall && isChall) {
                       try {
                         logger.info('Try to fetch the challenge because it\'s not found')
-                        const reqChall = await curl.get(`/challenges/${v}`)
+                        const reqChall = await curl.get(`/challenges/${v}`, { customProxy, bypassCache: true })
                         chall = reqChall.data
                       } catch (err) {
+                        if (err.code === 401) {
+                          logger.error(`Premium challenge : ${v}`)
+                          try {
+                            const reqChall = await curl.get(`/challenges/${v}`, {
+                              headers: [`cookie: api_key=${process.env.API_KEY}`],
+                              customProxy,
+                              bypassCache: true
+                            })
+                            chall = reqChall.data
+                          } catch (err) {}
+                        }
                         logger.error(err)
                       }
                     }
