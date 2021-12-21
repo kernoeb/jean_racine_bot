@@ -61,7 +61,7 @@ const get = async (pathname, options) => {
     protocol: 'https:',
     query: options.params
   }).toString()
-  logger.log('GET : ', s)
+  // logger.log('GET : ', s)
   const optionalHeaders = options?.headers || {}
   const tmpHeaders = { ...HEADERS_OBJ, ...optionalHeaders }
   const headers = Object.entries(tmpHeaders).map(([k, v]) => `${k}: ${v}`)

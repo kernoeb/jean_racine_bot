@@ -111,9 +111,13 @@ db.once('open', async function() {
         done()
       }).catch(async err => {
         logger.error('UPDATE_USERS ERROR', err)
+        setTimeout(() => {
+          LOADING_USERS = false
+          done()
+        }, 10000)
       })
     } else {
-      logger.info('Nope ! Currently banned (users).')
+      logger.info('Nope ! Already loading (users).')
       done()
     }
   })
@@ -127,9 +131,13 @@ db.once('open', async function() {
         done()
       }).catch(async err => {
         logger.error('UPDATE_CHALLENGES ERROR', err)
+        setTimeout(() => {
+          LOADING_CHALLENGES = false
+          done()
+        }, 10000)
       })
     } else {
-      logger.info('Nope ! Currently banned (challenges).')
+      logger.info('Nope ! Already loading (challenges).')
       done()
     }
   })
