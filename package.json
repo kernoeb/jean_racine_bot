@@ -9,6 +9,7 @@
     "register_dev": "node register_slash_commands_dev.js",
     "dev": "nodemon index.js",
     "dev_no_update": "cross-env NO_UPDATE=true yarn dev",
+    "test_canvas": "cross-env ROOTME_API_URL=https://api.www.root-me.org ROOTME_URL=https://www.root-me.org nodemon manual/app.js",
     "lint": "eslint --fix . --ext .js"
   },
   "engines": {

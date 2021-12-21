@@ -190,6 +190,7 @@ module.exports = {
                       title: chall && chall.titre ? decode(chall.titre.toString()) : v.toString(),
                       points: chall && chall.score ? Number(chall.score) : undefined,
                       date: (element.value === 'date' && newValidationElements[v] && DateTime.fromSQL(newValidationElements[v]).setLocale('fr').toLocaleString(DateTime.DATETIME_MED)) || 'Aucune date',
+                      category: chall && chall.id_rubrique ? chall.id_rubrique : undefined,
                       validations: isChall ? await getNumberOfValidations(v) : undefined
                     }
 

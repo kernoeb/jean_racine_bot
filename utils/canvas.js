@@ -2,6 +2,23 @@ const Canvas = require('canvas')
 const path = require('path')
 const { getProfilePicture } = require('../utils/get_profile_picture')
 
+function getCategoryIcon(category) {
+  const categories = {
+    '16': { title: 'Web - Client', image: 'web-client.svg' },
+    '17': { title: 'Programmation', image: 'programmation.svg' },
+    '18': { title: 'Cryptanalyse', image: 'cryptanalyse.svg' },
+    '67': { title: 'Stéganographie', image: 'steganographie.svg' },
+    '68': { title: 'Web - Serveur', image: 'web-serveur.svg' },
+    '69': { title: 'Cracking', image: 'cracking.svg' },
+    '70': { title: 'Réaliste', image: 'realiste.svg' },
+    '182': { title: 'Réseau', image: 'reseau.svg' },
+    '189': { title: 'App - Script', image: 'app-script.svg' },
+    '203': { title: 'App - Système', image: 'app-systeme.svg' },
+    '208': { title: 'Forensic', image: 'forensic.svg' }
+  }
+  return categories[category]
+}
+
 async function roundRect(ctx, x, y, width, height, radius, fill, stroke, background) {
   if (typeof stroke === 'undefined') stroke = true
   if (typeof radius === 'undefined') radius = 5
@@ -97,19 +114,29 @@ module.exports = async function getCanvas({ typeText, user, challUsers, chall })
     context.fillText(chall.points + ' points', tmpX, topY + 125)
   }
 
-  context.fillStyle = '#888888'
+  if (chall && chall.category && getCategoryIcon(chall.category)) {
+    const categoryImage = await Canvas.loadImage(path.join(process.cwd(), '/assets/categories/' + getCategoryIcon(chall.category).image))
+    context.drawImage(categoryImage, leftX, topY + 136, 28, 28)
+    context.fillStyle = '#bdbdbd'
+    setFont(context, 20, 'Staatliches')
+    context.fillText(getCategoryIcon(chall.category)?.title, leftX + 36, topY + 156)
+  } else {
+    context.fillStyle = '#888888'
+    setFont(context, 20, 'sans-serif')
+    context.fillText(chall.date, leftX, topY + 156)
+  }
+
   setFont(context, 20, 'sans-serif')
-  context.fillText(chall.date, leftX, topY + 155)
 
   if (challUsers && Object.keys(challUsers).length) {
     if (!challUsers.firstBlood) {
       context.fillStyle = '#bdbdbd'
-      if (chall.validations) context.fillText(chall.validations + ' validations · ' + challUsers.serverRank + 'ème du serveur', leftX, topY + 180)
-      else context.fillText(challUsers.serverRank + 'ème du serveur', leftX, topY + 180)
+      if (chall.validations) context.fillText(chall.validations + ' validations · ' + challUsers.serverRank + 'ème du serveur', leftX, topY + 187)
+      else context.fillText(challUsers.serverRank + 'ème du serveur', leftX, topY + 187)
     } else {
       context.fillStyle = '#bdbdbd'
-      if (chall.validations) context.fillText(chall.validations + ' validations · 1er du serveur', leftX, topY + 180)
-      else context.fillText('1er du serveur', leftX, topY + 180)
+      if (chall.validations) context.fillText(chall.validations + ' validations · 1er du serveur', leftX, topY + 187)
+      else context.fillText('1er du serveur', leftX, topY + 187)
       const firstBlood = await Canvas.loadImage(path.join(process.cwd(), '/assets/firstblood.png'))
       context.drawImage(firstBlood, leftX + typeTextWidth.width + 10, topY - typeTextWidth.emHeightAscent + 2, 50, 50)
     }
