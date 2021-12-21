@@ -151,9 +151,11 @@ module.exports = {
                         const reqChall = await curl.get(`/challenges/${v}`, { customProxy, bypassCache: true })
                         chall = reqChall.data
                       } catch (err) {
-                        if (err.code === 401) {
+                        if (err.code === 401 && process.env.API_KEY) {
                           logger.error(`Premium challenge : ${v}`)
                           try {
+                            logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
+                            await pause(9000)
                             const reqChall = await curl.get(`/challenges/${v}`, {
                               headers: [`cookie: api_key=${process.env.API_KEY}`],
                               customProxy,
