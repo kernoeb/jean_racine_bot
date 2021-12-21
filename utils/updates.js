@@ -169,7 +169,7 @@ module.exports = {
                     }
 
                     // Increment temporarily the score
-                    if (chall && chall.score) lastScore = lastScore + Number(chall.score)
+                    if (chall && chall.score && element.key === 'validations') lastScore = lastScore + Number(chall.score)
 
                     const objUser = {
                       username: user.nom,
