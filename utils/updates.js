@@ -42,7 +42,7 @@ module.exports = {
             try {
               logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
               await pause(9000)
-              reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { headers: [`cookie: api_key=${process.env.API_KEY}`], customProxy, bypassCache: true })
+              reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { headers: { cookie: `api_key=${process.env.API_KEY}` }, customProxy, bypassCache: true })
             } catch (err) {
               logger.error(err)
             }
@@ -157,7 +157,7 @@ module.exports = {
                             logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
                             await pause(9000)
                             const reqChall = await curl.get(`/challenges/${v}`, {
-                              headers: [`cookie: api_key=${process.env.API_KEY}`],
+                              headers: { cookie: `api_key=${process.env.API_KEY}` },
                               customProxy,
                               bypassCache: true
                             })

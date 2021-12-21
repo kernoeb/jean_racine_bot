@@ -14,22 +14,20 @@ const proxies = process.env.PROXIES?.split(',') || null
 logger.log('PROXIES : ', proxies)
 let count = 0
 
-const HEADERS = [
-  'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-  'accept-encoding: gzip, deflate, br',
-  'accept-language: fr-FR,fr;q=0.9',
-  'cache-control: max-age=0',
-  'sec-fetch-dest: document',
-  'sec-fetch-mode: navigate',
-  'sec-fetch-site: none',
-  'sec-fetch-user: ?1',
-  'sec-gpc: 1',
-  'upgrade-insecure-requests: 1',
-  'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-  'cookie: msg_history=explication_site_multilingue%3B;' + getCookie()
-]
-
-const headerKeys = HEADERS.map(h => h.split(':')[0].trim())
+const HEADERS_OBJ = {
+  'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'accept-encoding': 'gzip, deflate, br',
+  'accept-language': 'fr-FR,fr;q=0.9',
+  'cache-control': 'max-age=0',
+  'sec-fetch-dest': 'document',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-site': 'none',
+  'sec-fetch-user': '?1',
+  'sec-gpc': '1',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+  'cookie': `msg_history=explication_site_multilingue%3B; ${getCookie()}`
+}
 
 const baseUrl = process.env.ROOTME_API_URL.replace(/https?:\/\//, '')
 
@@ -64,12 +62,13 @@ const get = async (pathname, options) => {
     query: options.params
   }).toString()
   logger.log('GET : ', s)
-  const optionalHeaders = options?.headers || []
-  const tmpHeaders = [...HEADERS].filter(v => headerKeys.includes(v?.split(':')?.[0]?.trim()))
+  const optionalHeaders = options?.headers || {}
+  const tmpHeaders = { ...HEADERS_OBJ, ...optionalHeaders }
+  const headers = Object.entries(tmpHeaders).map(([k, v]) => `${k}: ${v}`)
   const opts = {
     timeoutMs: process.env.TIMEOUT_MS || 15000,
     followLocation: true,
-    httpHeader: tmpHeaders.concat(optionalHeaders)
+    httpHeader: headers
   }
   // console.log(tmpHeaders.concat(optionalHeaders))
   if (proxies && options?.customProxy) opts.proxy = `socks5://${options.customProxy}`
