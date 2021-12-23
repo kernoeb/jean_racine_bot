@@ -32,11 +32,7 @@ module.exports = {
         try {
           reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { customProxy, bypassCache: true })
         } catch (err) {
-          await pause()
-          if (err.code === 429) {
-            logger.warn('Too many request, wait a bit')
-            await pause(5000)
-          }
+          await pause(1000)
           if (err.code === 401 && process.env.API_KEY) {
             logger.error(`Premium challenge : ${chall.id_challenge}`)
             try {
@@ -76,7 +72,7 @@ module.exports = {
             }
           }
           logger.log(chall.id_challenge + ' > ' + (reqPage?.data?.titre || 'Titre inconnu') + (ret.nModified || ret._id ? '*' : ''))
-          await pause()
+          await pause(1000)
         } else {
           logger.error('Failed while loading challenge')
         }

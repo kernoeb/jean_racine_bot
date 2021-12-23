@@ -9,6 +9,7 @@ const getCookie = () => {
 }
 
 const { curly } = require('node-libcurl')
+const { pause } = require('../utils/util')
 
 const proxies = process.env.PROXIES?.split(',') || null
 logger.log('PROXIES : ', proxies)
@@ -76,6 +77,10 @@ const get = async (pathname, options) => {
   const { statusCode, data } = await curly.get(s, opts)
   count++
   if (statusCode !== 200) {
+    if (statusCode === 429) {
+      logger.warn('Too many request, wait a bit')
+      await pause(5000)
+    }
     if (statusCode === 404) logger.warn('404')
     else logger.error('Error : ', statusCode)
     throw { code: statusCode }
