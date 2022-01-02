@@ -20,18 +20,6 @@ const numberList = {
   10: ':keycap_ten:'
 }
 
-const sumByCategory = async (arr, category) => {
-  const challs = []
-  for (const item of arr || []) {
-    if (Number(item.id_rubrique) === Number(category)) {
-      challs.push(Number(item.id_challenge))
-    }
-  }
-  if (challs.length === 0) return 0
-  const agg = await mongoose.models.challenge.aggregate([{ $match: { id_challenge: { $in: challs } } }, { $group: { _id : null, sum : { $sum: '$score' } } }])
-  return agg?.length ? agg[0].sum : 0
-}
-
 module.exports = {
   async updateScoreboards() {
     logger.info('Updating scoreboards...')
@@ -54,7 +42,7 @@ module.exports = {
 
     logger.success(`Scoreboards updated (${nb}/${channels.length})`)
   },
-  async getScoreboard({ guildId, index = 0, limit = 5, globalScoreboard = false, category = undefined }) {
+  async getScoreboard({ guildId, index = 0, limit = 5, globalScoreboard = false, category = undefined, fromArrow = false }) {
 
     const channel = await mongoose.models.channels.findOne({ guildId })
     index = Number(index)
@@ -62,7 +50,7 @@ module.exports = {
     if (!channel)
       return { content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true }
 
-    const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }).sort({ score: -1, nom: 1 })
+    const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }).sort({ [category ? `score_${category}` : 'score']: -1, nom: 1 })
       .limit(limit).skip(index * limit)
     if (tmpUsers && tmpUsers.length) {
       const nb = await mongoose.models.user.countDocuments({ id_auteur: { $in: (channel.users || []) } })
@@ -98,35 +86,23 @@ module.exports = {
         )
       }
 
-      const toAdd = []
       if (limit < 25) {
         for (const user of tmpUsers) {
           const tmpUser = user.userInfo()
-          if (category) tmpUser.score = await sumByCategory(user.validations, category)
-          toAdd.push({ score: tmpUser.score, data: [`${tmpUser.name} (${tmpUser.id})`, tmpUser.score.toString() + ' points'] })
+          embed.addField(`${tmpUser.name} (${tmpUser.id})`, tmpUser[category ? `score_${category}` : 'score'].toString() + ' points')
         }
       } else {
         let c = 1
         for (const user of tmpUsers.slice(0, 24)) {
           const tmpUser = user.userInfo()
-          if (category) tmpUser.score = await sumByCategory(user.validations, category)
-          toAdd.push({ score: tmpUser.score, data: [`${numberList[c] || c} - ${tmpUser.name}`, tmpUser.score.toString() + ' points'] })
+          embed.addField(`${numberList[c] || c} - ${tmpUser.name}`, tmpUser[category ? `score_${category}` : 'score'].toString() + ' points')
           c++
         }
-        if ((tmpUsers.slice(24) || []).length) {
-          toAdd.push({ score: null, data: ['...', (await Promise.all(tmpUsers.slice(24).map(async u => {
-            const tmpUser = u.userInfo()
-            if (category) tmpUser.score = await sumByCategory(u.validations, category)
-            return `**${tmpUser.name}** (${tmpUser.score})`
-          }))).join(', ')] })
-        }
+        if ((tmpUsers.slice(24) || []).length) embed.addField('...', tmpUsers.slice(24).map(u => `**${u.userInfo().name}** (${u.userInfo()[category ? `score_${category}` : 'score']})`).join(', '))
       }
-      toAdd.sort((a, b) => (a.score === null) - (b.score === null) || -(a.score > b.score) || +(a.score < b.score)).forEach(v => {
-        embed.addField(...v.data)
-      })
 
       const ret = { embeds: [embed], components: row?.components?.length ? [row] : [], content: null }
-      if (category) ret['files'] = [ path.join(process.cwd(), 'assets', 'categories', getCategory(category)?.image + '.png') ]
+      if (category && !fromArrow) ret['files'] = [ path.join(process.cwd(), 'assets', 'categories', getCategory(category)?.image + '.png') ]
       return ret
     }
     return ':no_entry_sign: Aucun utilisateur enregistré !'

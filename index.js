@@ -17,7 +17,7 @@ const Agenda = require('agenda')
 const agenda = new Agenda()
 
 const { userInfo } = require('./utils/user')
-const { challengeInfo } = require('./utils/challenge')
+const { challengeInfo, getCategory } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
 const { getScoreboard, updateScoreboards } = require('./utils/scoreboard')
 
@@ -42,12 +42,25 @@ db.once('open', async function() {
     validations: Array,
     timestamp: Date
   }
+
+  const categories = getCategory(null, true)
+  Object.keys(categories).forEach(key => {
+    userSchemaTemplate[`score_${key}`] = { type: Number, index: true }
+  })
+
   const userSchema = new mongoose.Schema(userSchemaTemplate)
 
   userSchema.index({ score: -1, nom: -1 })
   userSchema.index({ score: -1, nom: 1 })
   userSchema.index({ score: 1, nom: -1 })
   userSchema.index({ score: 1, nom: 1 })
+
+  Object.keys(categories).forEach(key => {
+    userSchema.index({ [`score_${key}`]: -1, nom: -1 })
+    userSchema.index({ [`score_${key}`]: -1, nom: 1 })
+    userSchema.index({ [`score_${key}`]: 1, nom: -1 })
+    userSchema.index({ [`score_${key}`]: 1, nom: 1 })
+  })
 
   userSchema.methods.userInfo = userInfo
   mongoose.model('user', userSchema)
@@ -67,6 +80,7 @@ db.once('open', async function() {
     url_challenge: String,
     timestamp: Date
   }
+
   const challengeSchema = new mongoose.Schema(challengeSchemaTemplate)
   challengeSchema.methods.challengeInfo = challengeInfo
   const Challenges = mongoose.model('challenge', challengeSchema)
@@ -203,12 +217,14 @@ db.once('open', async function() {
         return interaction.update(await getScoreboard({
           guildId: interaction.guildId,
           index: interaction.customId.split(`go_${chall}_page_`)[1],
-          category: Number(chall)
+          category: Number(chall),
+          fromArrow: true
         }))
       } else if (interaction.customId.startsWith('go_page_')) {
         return interaction.update(await getScoreboard({
           guildId: interaction.guildId,
-          index: interaction.customId.split('go_page_')[1]
+          index: interaction.customId.split('go_page_')[1],
+          fromArrow: true
         }))
       }
     } catch (e) {

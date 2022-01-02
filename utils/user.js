@@ -1,9 +1,12 @@
 const mongoose = require('../utils/mongoose')
 const { DateTime } = require('luxon')
+const { getCategory } = require('./challenge')
+
+const categories = getCategory(null, true)
 
 module.exports = {
   userInfo: function(args = {}) {
-    return {
+    const tmp = {
       id: this.id_auteur || args.id_auteur,
       name: this.nom || args.nom || this.id_auteur || args.id_auteur || 'Aucun nom',
       score: this.score || args.score || 0,
@@ -14,6 +17,10 @@ module.exports = {
       validationsIds: (this.validations || args.validations || []).map(v => v.id_challenge),
       timestamp: this.timestamp || args.timestamp || undefined
     }
+    Object.keys(categories).forEach(key => {
+      tmp[`score_${key}`] = (this[`score_${key}`] || args[`score_${key}`] || 0)
+    })
+    return tmp
   },
   validUsers: async function({ challId, guildId }) {
     let validUsers = null

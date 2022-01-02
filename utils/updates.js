@@ -10,8 +10,21 @@ const { MessageAttachment, MessageEmbed } = require('discord.js')
 const getCanvas = require('../utils/canvas')
 const { validUsers } = require('./user')
 const { DateTime } = require('luxon')
+const { getCategory } = require('./challenge')
 
 const customProxy = process.env.NODE_ENV === 'production' ? (process.env.PROXY_CHALL || 'tor-node-chall:9050') : '127.0.0.1:9054'
+
+const sumByCategory = async (arr, category) => {
+  const challs = []
+  for (const item of arr || []) {
+    if (Number(item.id_rubrique) === Number(category)) {
+      challs.push(Number(item.id_challenge))
+    }
+  }
+  if (challs.length === 0) return 0
+  const agg = await mongoose.models.challenge.aggregate([{ $match: { id_challenge: { $in: challs } } }, { $group: { _id : null, sum : { $sum: '$score' } } }])
+  return agg?.length ? agg[0].sum : 0
+}
 
 module.exports = {
   fetchChallenges: async function(channelIds) {
@@ -211,6 +224,11 @@ module.exports = {
               }
             }
           }
+        }
+
+        const categories = getCategory(null, true)
+        for (const categoryKey of Object.keys(categories)) {
+          req.data['score_' + categoryKey] = await sumByCategory(req.data.validations, categoryKey)
         }
 
         req.data.timestamp = new Date()
