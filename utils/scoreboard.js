@@ -4,6 +4,8 @@ const { DateTime } = require('luxon')
 const logger = require('../utils/signale')
 const client = require('../utils/discord')()
 const { pause } = require('../utils/util')
+const { getCategory } = require('./challenge')
+const path = require('path')
 
 const numberList = {
   1: ':one:',
@@ -16,6 +18,18 @@ const numberList = {
   8: ':eight:',
   9: ':nine:',
   10: ':keycap_ten:'
+}
+
+const sumByCategory = async (arr, category) => {
+  const challs = []
+  for (const item of arr || []) {
+    if (Number(item.id_rubrique) === Number(category)) {
+      challs.push(Number(item.id_challenge))
+    }
+  }
+  if (challs.length === 0) return 0
+  const agg = await mongoose.models.challenge.aggregate([{ $match: { id_challenge: { $in: challs } } }, { $group: { _id : null, sum : { $sum: '$score' } } }])
+  return agg?.length ? agg[0].sum : 0
 }
 
 module.exports = {
@@ -40,7 +54,7 @@ module.exports = {
 
     logger.success(`Scoreboards updated (${nb}/${channels.length})`)
   },
-  async getScoreboard({ guildId, index = 0, limit = 5, globalScoreboard = false }) {
+  async getScoreboard({ guildId, index = 0, limit = 5, globalScoreboard = false, category = undefined }) {
 
     const channel = await mongoose.models.channels.findOne({ guildId })
     index = Number(index)
@@ -59,13 +73,18 @@ module.exports = {
         embed.setDescription(`${DateTime.now().setLocale('fr').toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS)}`)
       } else {
         embed.setTitle(`Utilisateurs (${(index * limit) + 1}-${limit * (index + 1) - (limit - tmpUsers.length)}/${nb})`)
+        if (category) {
+          const tmpCategory = getCategory(category)
+          embed.setDescription('**' + tmpCategory?.title + '**')
+          embed.setThumbnail('attachment://' + tmpCategory?.image + '.png')
+        }
       }
 
       const row = new MessageActionRow()
       if (index !== 0) {
         row.addComponents(
           new MessageButton()
-            .setCustomId('go_page_' + (index - 1))
+            .setCustomId(`go_${category ? category + '_' : ''}page_` + (index - 1))
             .setStyle('SECONDARY')
             .setEmoji('⬅️')
         )
@@ -73,28 +92,42 @@ module.exports = {
       if (tmpUsers.length === limit && (limit * (index + 1) - (limit - tmpUsers.length) !== nb)) {
         row.addComponents(
           new MessageButton()
-            .setCustomId('go_page_' + (index + 1))
+            .setCustomId(`go_${category ? category + '_' : ''}page_` + (index + 1))
             .setStyle('SECONDARY')
             .setEmoji('➡️')
         )
       }
 
+      const toAdd = []
       if (limit < 25) {
         for (const user of tmpUsers) {
           const tmpUser = user.userInfo()
-          embed.addField(`${tmpUser.name} (${tmpUser.id})`, tmpUser.score.toString() + ' points')
+          if (category) tmpUser.score = await sumByCategory(user.validations, category)
+          toAdd.push({ score: tmpUser.score, data: [`${tmpUser.name} (${tmpUser.id})`, tmpUser.score.toString() + ' points'] })
         }
       } else {
         let c = 1
         for (const user of tmpUsers.slice(0, 24)) {
           const tmpUser = user.userInfo()
-          embed.addField(`${numberList[c] || c} - ${tmpUser.name}`, tmpUser.score.toString() + ' points')
+          if (category) tmpUser.score = await sumByCategory(user.validations, category)
+          toAdd.push({ score: tmpUser.score, data: [`${numberList[c] || c} - ${tmpUser.name}`, tmpUser.score.toString() + ' points'] })
           c++
         }
-        if ((tmpUsers.slice(24) || []).length) embed.addField('...', tmpUsers.slice(24).map(u => `**${u.userInfo().name}** (${u.userInfo().score})`).join(', '))
+        if ((tmpUsers.slice(24) || []).length) {
+          toAdd.push({ score: null, data: ['...', (await Promise.all(tmpUsers.slice(24).map(async u => {
+            const tmpUser = u.userInfo()
+            if (category) tmpUser.score = await sumByCategory(u.validations, category)
+            return `**${tmpUser.name}** (${tmpUser.score})`
+          }))).join(', ')] })
+        }
       }
+      toAdd.sort((a, b) => (a.score === null) - (b.score === null) || -(a.score > b.score) || +(a.score < b.score)).forEach(v => {
+        embed.addField(...v.data)
+      })
 
-      return { embeds: [embed], components: row?.components?.length ? [row] : [], content: null }
+      const ret = { embeds: [embed], components: row?.components?.length ? [row] : [], content: null }
+      if (category) ret['files'] = [ path.join(process.cwd(), 'assets', 'categories', getCategory(category)?.image + '.png') ]
+      return ret
     }
     return ':no_entry_sign: Aucun utilisateur enregistré !'
   }

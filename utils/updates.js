@@ -53,7 +53,7 @@ module.exports = {
           } catch (err) {}
 
           const nbOfValidations = await getNumberOfValidations(chall.id_challenge)
-          if (nbOfValidations != null) reqPage.data.validations = nbOfValidations
+          if (nbOfValidations != null) reqPage.data.validations = nbOfValidations || 0
 
           try {
             reqPage.data.auteurs = Object.keys(reqPage.data.auteurs).map(v => reqPage.data.auteurs[v])

@@ -198,10 +198,19 @@ db.once('open', async function() {
     if (!interaction.isButton()) return
 
     try {
-      if (interaction.customId.startsWith('go_page_')) return interaction.update(await getScoreboard({
-        guildId: interaction.guildId,
-        index: interaction.customId.split('go_page_')[1]
-      }))
+      if (/go_\d+_page_/.test(interaction.customId)) {
+        const chall = interaction.customId.match(/\d+/)?.[0]?.trim()
+        return interaction.update(await getScoreboard({
+          guildId: interaction.guildId,
+          index: interaction.customId.split(`go_${chall}_page_`)[1],
+          category: Number(chall)
+        }))
+      } else if (interaction.customId.startsWith('go_page_')) {
+        return interaction.update(await getScoreboard({
+          guildId: interaction.guildId,
+          index: interaction.customId.split('go_page_')[1]
+        }))
+      }
     } catch (e) {
       logger.error(e)
       try {

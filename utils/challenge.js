@@ -12,6 +12,23 @@ const customHostname = process.env.ROOTME_URL.replace(/https?:\/\//, '')
 }*/
 
 module.exports = {
+  getCategory: function(category, all = false) {
+    const categories = {
+      '16': { title: 'Web - Client', image: 'web-client' },
+      '17': { title: 'Programmation', image: 'programmation' },
+      '18': { title: 'Cryptanalyse', image: 'cryptanalyse' },
+      '67': { title: 'Stéganographie', image: 'steganographie' },
+      '68': { title: 'Web - Serveur', image: 'web-serveur' },
+      '69': { title: 'Cracking', image: 'cracking' },
+      '70': { title: 'Réaliste', image: 'realiste' },
+      '182': { title: 'Réseau', image: 'reseau' },
+      '189': { title: 'App - Script', image: 'app-script' },
+      '203': { title: 'App - Système', image: 'app-systeme' },
+      '208': { title: 'Forensic', image: 'forensic' }
+    }
+    if (all) return categories
+    return categories[category]
+  },
   getNumberOfValidations:  async function(challId) {
     try {
       const dom = new JSDOM((await curl.get(null, {

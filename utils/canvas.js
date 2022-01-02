@@ -1,23 +1,7 @@
 const Canvas = require('canvas')
 const path = require('path')
 const { getProfilePicture } = require('../utils/get_profile_picture')
-
-function getCategoryIcon(category) {
-  const categories = {
-    '16': { title: 'Web - Client', image: 'web-client.svg' },
-    '17': { title: 'Programmation', image: 'programmation.svg' },
-    '18': { title: 'Cryptanalyse', image: 'cryptanalyse.svg' },
-    '67': { title: 'Stéganographie', image: 'steganographie.svg' },
-    '68': { title: 'Web - Serveur', image: 'web-serveur.svg' },
-    '69': { title: 'Cracking', image: 'cracking.svg' },
-    '70': { title: 'Réaliste', image: 'realiste.svg' },
-    '182': { title: 'Réseau', image: 'reseau.svg' },
-    '189': { title: 'App - Script', image: 'app-script.svg' },
-    '203': { title: 'App - Système', image: 'app-systeme.svg' },
-    '208': { title: 'Forensic', image: 'forensic.svg' }
-  }
-  return categories[category]
-}
+const { getCategory } = require('./challenge')
 
 async function roundRect(ctx, x, y, width, height, radius, fill, stroke, background) {
   if (typeof stroke === 'undefined') stroke = true
@@ -114,12 +98,12 @@ module.exports = async function getCanvas({ typeText, user, challUsers, chall })
     context.fillText(chall.points + ' points', tmpX, topY + 125)
   }
 
-  if (chall && chall.category && getCategoryIcon(chall.category)) {
-    const categoryImage = await Canvas.loadImage(path.join(process.cwd(), '/assets/categories/' + getCategoryIcon(chall.category).image))
+  if (chall && chall.category && getCategory(chall.category)) {
+    const categoryImage = await Canvas.loadImage(path.join(process.cwd(), '/assets/categories/' + getCategory(chall.category).image + '.svg'))
     context.drawImage(categoryImage, leftX, topY + 136, 28, 28)
     context.fillStyle = '#bdbdbd'
     setFont(context, 20, 'Staatliches')
-    context.fillText(getCategoryIcon(chall.category)?.title, leftX + 36, topY + 156)
+    context.fillText(getCategory(chall.category)?.title, leftX + 36, topY + 156)
   } else {
     context.fillStyle = '#888888'
     setFont(context, 20, 'sans-serif')
