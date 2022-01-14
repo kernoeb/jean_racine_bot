@@ -13,24 +13,24 @@
     "lint": "eslint --fix . --ext .js"
   },
   "engines": {
-    "node": "v16.13.1"
+    "node": "v16.13.2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/builders": "^0.9.0",
-    "@discordjs/rest": "^0.1.0-canary.0",
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
     "agenda": "^4.2.1",
     "canvas": "^2.8.0",
-    "chart.js": "^3.6.1",
+    "chart.js": "^3.7.0",
     "chartjs-node-canvas": "^4.1.5",
-    "discord-api-types": "^0.25.2",
-    "discord.js": "^13.3.1",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.6.0",
     "html-entities": "^2.3.2",
     "jsdom": "^19.0.0",
-    "luxon": "^2.1.1",
-    "mongoose": "5.13.13",
+    "luxon": "^2.3.0",
+    "mongoose": "5.13.14",
     "random-useragent": "^0.5.0",
     "rss-parser": "^3.12.0",
     "signale-logger": "^1.5.1"

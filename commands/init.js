@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const mongoose = require('../utils/mongoose')
+const logger = require('../utils/signale')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,6 +14,7 @@ module.exports = {
       if (err.name === 'MongoError' && err.code === 11000) {
         return await interaction.reply({ content: ':no_entry_sign: Canal déjà initialisé. Tu as une mauvaise mémoire je pense :heart:', ephemeral: true })
       }
+      logger.error(err)
       return await interaction.reply({ content: ':no_entry_sign: Petit problème serveur, mp @kernoeb#7737', ephemeral: true })
     }
     return await interaction.reply(':white_check_mark: Canal initialisé avec succès ! :tada:\n`/adduser id` pour ajouter un utilisateur !')

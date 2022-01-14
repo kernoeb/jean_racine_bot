@@ -93,8 +93,11 @@ db.once('open', async function() {
     guildId: { type: String, required: true, unique: true, index: true },
     users: Array,
     scoreboard: {
-      messageId: { type: String, required: true, unique: true, index: true },
-      channelId: { type: String, required: true, unique: true, index: true }
+      type: {
+        messageId: { type: String, required: true, unique: true, index: true },
+        channelId: { type: String, required: true, unique: true, index: true }
+      },
+      required: false
     }
   }
   const discordChannelsSchema = new mongoose.Schema(discordChannelsSchemaTemplate)
