@@ -9,7 +9,8 @@ ADD README.md .
 ADD package.json .
 ADD yarn.lock .
 ADD .yarnrc.yml .
-ADD .yarn .yarn
+ADD .yarn/cache .yarn/cache
+ADD .yarn/releases .yarn/releases
 
 ADD index.js .
 ADD assets assets
