@@ -9,8 +9,7 @@ ADD README.md .
 ADD package.json .
 ADD yarn.lock .
 ADD .yarnrc.yml .
-ADD .yarn/cache .yarn/cache
-ADD .yarn/releases .yarn/releases
+ADD .yarn .yarn
 
 ADD index.js .
 ADD assets assets
@@ -20,7 +19,6 @@ ADD utils utils
 ADD register_slash_commands.js .
 RUN mv assets/register_slash_commands /usr/local/bin/register_slash_commands && chmod +x /usr/local/bin/register_slash_commands
 
-RUN apk add --no-cache python3 py3-pip cairo-dev pango-dev alpine-sdk
 RUN yarn -v && yarn
 
 EXPOSE 3000
