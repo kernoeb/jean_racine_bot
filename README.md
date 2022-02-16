@@ -38,11 +38,11 @@ built by `@kernoeb`
 
 ![Notifications 2](images/notifications_2.png)
 
-**Informations about a user**
+**Information about a user**
 
 ![User info](images/img4.png)
 
-**Informations about a challenge**
+**Information about a challenge**
 
 ![Challenge info](images/challenge.png)
 
@@ -53,6 +53,10 @@ built by `@kernoeb`
 **Last challenges**
 
 ![Last challenges](images/last_challenges.png)
+
+**Charts**
+
+![img.png](images/chart.png)
 
 ### Similar projects
 
