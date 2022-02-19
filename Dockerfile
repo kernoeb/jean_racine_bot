@@ -25,4 +25,4 @@ RUN mv assets/register_slash_commands /usr/local/bin/register_slash_commands && 
 
 EXPOSE 3000
 
-CMD [ "node", "index.js" ]
+CMD [ "yarn", "start" ]
