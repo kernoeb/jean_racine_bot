@@ -1,4 +1,4 @@
-FROM node:16.13.2
+FROM node:16.14.0
 
 ENV NODE_ENV production
 
@@ -12,6 +12,9 @@ ADD .yarnrc.yml .
 ADD .yarn/cache .yarn/cache
 ADD .yarn/releases .yarn/releases
 
+# Note : we use yarn pnp here to install dependencies
+RUN yarn
+
 ADD index.js .
 ADD assets assets
 ADD commands commands
@@ -20,8 +23,6 @@ ADD utils utils
 ADD register_slash_commands.js .
 RUN mv assets/register_slash_commands /usr/local/bin/register_slash_commands && chmod +x /usr/local/bin/register_slash_commands
 
-RUN yarn -v && yarn
-
 EXPOSE 3000
 
-CMD [ "yarn", "start" ]
+CMD [ "node", "index.js" ]
