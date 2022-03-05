@@ -20,16 +20,16 @@ module.exports = {
 
     const datasets = []
     const colors = [
-      'red',
-      'purple',
-      'blue',
-      'orange',
-      'green',
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(54, 162, 235, 0.2)',
-      'rgba(75, 192, 192, 0.2)',
-      'rgba(153, 102, 255, 0.2)',
-      'rgba(255, 159, 64, 0.2)'
+      'rgba(195, 40, 96, 1)',
+      '#ffa500',
+      '#00bcd4',
+      '#ffd700',
+      '#00ff77',
+      'rgb(255,0,213)',
+      'rgba(8,255,0,0.66)',
+      'rgba(75,192,192,0.42)',
+      'rgba(153,102,255,0.42)',
+      'rgba(255,123,0,0.2)'
     ]
 
     let count = 0
@@ -62,6 +62,9 @@ module.exports = {
         label: user.nom,
         data,
         fill: false,
+        pointRadius: 2,
+        pointBackgroundColor: colors[count],
+        pointBorderColor: colors[count],
         borderColor: colors[count],
         tension: 0.1
       })
@@ -70,7 +73,7 @@ module.exports = {
 
 
     const width = 650 // px
-    const height = 450 // px
+    const height = 470 // px
 
     const chartCallback = (ChartJS) => {
       ChartJS.defaults.responsive = true
@@ -85,12 +88,47 @@ module.exports = {
         labels: range(31 + 1).slice(1),
         datasets
       },
+      options: {
+        scales: {
+          y: {
+            ticks: {
+              color: 'rgba(250,250,250,0.7)'
+            }
+          },
+          x: {
+            ticks: {
+              color: 'rgba(250,250,250,0.7)'
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Root-Me : ' + DateTime.now().setLocale('fr').toFormat('MMMM yyyy'),
+            font: {
+              size: 18,
+              weight: 'bold'
+            },
+            color: '#fff'
+          },
+          legend: {
+            display: true,
+            labels: {
+              boxWidth: 10,
+              font: {
+                size: 12
+              },
+              color: '#fafafa'
+            }
+          }
+        }
+      },
       plugins: [{
         id: 'background-colour',
         beforeDraw: (chart) => {
           const ctx = chart.ctx
           ctx.save()
-          ctx.fillStyle = 'white'
+          ctx.fillStyle = '#202b33'
           ctx.fillRect(0, 0, width, height)
           ctx.restore()
         }
