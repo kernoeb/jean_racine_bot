@@ -210,7 +210,7 @@ module.exports = {
                       if (isChall && chall && chall.titre && chall.url_challenge) {
                         toSend.embeds = [
                           new MessageEmbed()
-                            .setTitle(decode(chall.titre))
+                            .setTitle(decode((chall.titre || '').toString()))
                             .setURL(`${process.env.ROOTME_URL}/${chall.url_challenge}`)
                             // .setDescription(`${process.env.ROOTME_URL}/${userUrl}`)
                         ]
