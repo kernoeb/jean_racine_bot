@@ -46,6 +46,11 @@ module.exports = {
           reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { customProxy, bypassCache: true })
         } catch (err) {
           await pause(1000)
+          if (err.code === 403) {
+            logger.info('403, wait 9 seconds and retrying later...')
+            await pause(9000)
+            continue
+          }
           if (err.code === 401 && process.env.API_KEY) {
             logger.error(`Premium challenge : ${chall.id_challenge}`)
             try {
@@ -60,6 +65,8 @@ module.exports = {
         if (reqPage?.data?.[0] && reqPage?.data?.[0]?.['error'] == null) {
           reqPage.data = reqPage.data[0]
           reqPage.data.timestamp = new Date()
+          if (reqPage.data.titre) reqPage.data.titre = decode(reqPage.data.titre).replace('’', '\'')
+          if (reqPage.data.soustitre) reqPage.data.soustitre = decode(reqPage.data.soustitre).replace('’', '\'')
 
           try {
             delete reqPage.data.validations
