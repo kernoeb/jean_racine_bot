@@ -50,7 +50,7 @@ module.exports = {
       rubrique: this.rubrique || args.rubrique,
       date: this.date_publication || args.date_publication,
       url: this.url_challenge || args.url_challenge,
-      authors: (this.auteurs && this.auteurs.length ? this.auteurs.map(v => v.nom).join(',') : undefined)
+      authors: (this.auteurs && this.auteurs.length ? this.auteurs.map(v => v.nom).join(', ') : undefined)
           || (args.auteurs && args.auteurs.length
             ? args.auteurs.map(v => v.nom).join(',') : undefined),
       validations: this.validations || args.validations,
@@ -63,7 +63,7 @@ module.exports = {
       .setTitle(`**${newChall ? 'Nouveau challenge :' : 'Challenge : '}** ` + (u.title || '') + ` (${u.id})`)
       .setDescription(u.description || 'Aucune description')
 
-    if (u.authors != null && u.authors !== '') embed.setAuthor(u.authors)
+    if (u.authors != null && u.authors !== '') embed.setAuthor({ name: u.authors })
     if (u.validations != null && u.validations !== '') embed.addField('Validations', u.validations.toString())
     if (u.rubrique != null && u.rubrique !== '') embed.addField('Catégorie', u.rubrique.toString(), true)
     if (u.difficulty != null && u.difficulty !== '') embed.addField('Difficulté', u.difficulty.toString(), true)

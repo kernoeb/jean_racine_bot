@@ -19,8 +19,7 @@ built by `@kernoeb`
 `/deluser` : Delete a user  
 `/scoreboard` : Scoreboard  
 `/searchuser` : Search a user  
-`/searchchallenge`: Search a challenge  
-`/challenge <id>` : Information about a challenge  
+`/challenge <id>` : Search and information about a challenge  
 `/user <id>`: Information about a user  
 `/createglobalscoreboard` : Add a global scoreboard  
 `/getlastchallenges` : Get last challenges  

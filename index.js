@@ -83,6 +83,12 @@ db.once('open', async function() {
 
   const challengeSchema = new mongoose.Schema(challengeSchemaTemplate)
   challengeSchema.methods.challengeInfo = challengeInfo
+
+  challengeSchema.index(
+    { titre: 'text', rubrique: 'text' },
+    { weights: { titre: 10, rubrique: 2 } }
+  )
+
   const Challenges = mongoose.model('challenge', challengeSchema)
 
   // Remove validations as it's not used anymore

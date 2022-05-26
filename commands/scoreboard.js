@@ -5,7 +5,7 @@ const { getCategory } = require('../utils/challenge')
 const addChoices = (option) => {
   const categories = getCategory(null, true)
   for (const [key, value] of Object.entries(categories)) {
-    option.addChoice(value.title, key)
+    option.addChoices({ name: value.title, value: key })
   }
   return option
 }

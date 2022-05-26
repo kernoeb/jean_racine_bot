@@ -29,70 +29,73 @@ const sumByCategory = async (arr, category) => {
 module.exports = {
   fetchChallenges: async function(channelIds) {
     logger.info('Fetch and update challenges')
-    let fetchContinue = true
-    let index = 0
-    while (fetchContinue) {
-      const req = await curl.get('/challenges', { params: { debut_challenges: index * 50 } })
 
-      const page = Object.keys(req.data[0]).map(v => req.data[0][v])
-      await pause()
-
-      for (const chall of page) {
-        let ret
-        const f = await mongoose.models.challenge.findOne({ id_challenge: chall.id_challenge })
+    for (let idChallenge = Number(process.env.TOTAL_CHALLENGES || 5000); idChallenge > 0; idChallenge--) {
+      await pause(1000)
+      logger.log('Trying to fetch challenge ' + idChallenge)
+      let ret
+      const f = await mongoose.models.challenge.findOne({ id_challenge: idChallenge })
+      let reqPage
+      try {
+        reqPage = await curl.get(`/challenges/${idChallenge}`, { customProxy, bypassCache: true })
+      } catch (err) {
         await pause(1000)
-        let reqPage
-        try {
-          reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { customProxy, bypassCache: true })
-        } catch (err) {
-          await pause(1000)
-          if (err.code === 401 && process.env.API_KEY) {
-            logger.error(`Premium challenge : ${chall.id_challenge}`)
-            try {
-              logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
-              await pause(9000)
-              reqPage = await curl.get(`/challenges/${chall.id_challenge}`, { headers: { cookie: `api_key=${process.env.API_KEY}` }, customProxy, bypassCache: true })
-            } catch (err) {
-              logger.error(err)
-            }
-          } else logger.error(err)
+        if (err.code === 404) continue // Challenge not found, we skip it
+        if (err.code === 403) {
+          logger.info('Petite pause de 9 secondes')
+          await pause(9000)
         }
-        if (reqPage?.data?.[0] && reqPage?.data?.[0]?.['error'] == null) {
-          reqPage.data = reqPage.data[0]
-          reqPage.data.timestamp = new Date()
-
+        if (err.code === 401 && process.env.API_KEY) {
+          logger.error(`Premium challenge : ${idChallenge}`)
           try {
-            delete reqPage.data.validations
-          } catch (err) {}
-
-          const nbOfValidations = await getNumberOfValidations(chall.id_challenge)
-          if (nbOfValidations != null) reqPage.data.validations = nbOfValidations || 0
-
-          try {
-            reqPage.data.auteurs = Object.keys(reqPage.data.auteurs).map(v => reqPage.data.auteurs[v])
+            logger.info('Petite pause de 9 secondes parce que l\'api est reloue')
+            await pause(9000)
+            reqPage = await curl.get(`/challenges/${idChallenge}`, { headers: { cookie: `api_key=${process.env.API_KEY}` }, customProxy, bypassCache: true })
           } catch (err) {
-            reqPage.data.auteurs = []
+            logger.error(err)
           }
-
-          if (f) {
-            ret = await mongoose.models.challenge.updateOne({ id_challenge: chall.id_challenge }, reqPage.data)
-          } else {
-            reqPage.data.id_challenge = chall.id_challenge
-            ret = await mongoose.models.challenge.create(reqPage.data)
-
-            if (client && channelIds) {
-              for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data), true)] })
-            }
-          }
-          logger.log(chall.id_challenge + ' > ' + (reqPage?.data?.titre || 'Titre inconnu') + (ret.nModified || ret._id ? '*' : ''))
-          await pause(1000)
-        } else {
-          logger.error('Failed while loading challenge')
-        }
+        } else logger.error(err)
       }
+      if (reqPage?.data?.[0] && reqPage?.data?.[0]?.['error'] == null) {
+        reqPage.data = reqPage.data[0]
 
-      if (req.data?.[1]?.rel !== 'next' && req.data?.[2]?.rel !== 'next') fetchContinue = false
-      index++
+        if (!(reqPage.data?.url_challenge || '').toString().startsWith('fr')) {
+          logger.warn(`Challenge ${idChallenge} is not in french, skipping`)
+          continue
+        }
+
+        reqPage.data.timestamp = new Date()
+        if (reqPage.data.titre) reqPage.data.titre = decode(reqPage.data.titre).replace('’', '\'')
+        if (reqPage.data.soustitre) reqPage.data.soustitre = decode(reqPage.data.soustitre).replace('’', '\'')
+
+        try {
+          delete reqPage.data.validations
+        } catch (err) {}
+
+        const nbOfValidations = await getNumberOfValidations(idChallenge)
+        if (nbOfValidations != null) reqPage.data.validations = nbOfValidations || 0
+
+        try {
+          reqPage.data.auteurs = Object.keys(reqPage.data.auteurs).map(v => reqPage.data.auteurs[v])
+        } catch (err) {
+          reqPage.data.auteurs = []
+        }
+
+        if (f) {
+          ret = await mongoose.models.challenge.updateOne({ id_challenge: idChallenge }, reqPage.data)
+        } else {
+          reqPage.data.id_challenge = idChallenge
+          ret = await mongoose.models.challenge.create(reqPage.data)
+
+          if (client && channelIds) {
+            for (const channel of channelIds) await client.channels.cache.get(channel).send({ embeds: [challengeEmbed(challengeInfo(reqPage.data), true)] })
+          }
+        }
+        logger.log(idChallenge + ' > ' + (reqPage?.data?.titre || 'Titre inconnu') + (ret.nModified || ret._id ? '*' : ''))
+        await pause(1000)
+      } else {
+        logger.error('Failed while loading challenge')
+      }
     }
   },
   updateUsers: async function(channelIds) {
