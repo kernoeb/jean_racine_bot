@@ -22,7 +22,8 @@ module.exports = {
       if (tmpChall) u = tmpChall.challengeInfo()
       else return await interaction.reply({ content: '*Challenge inexistant ou erreur côté serveur, désolé !*', ephemeral: true })
     } else {
-      const chall = await mongoose.models.challenge.find({ $text: { $search: option } }).sort({ score: { $meta: 'textScore' } }).limit(1)
+      let chall = await mongoose.models.challenge.find({ $text: { $search: option } }).sort({ score: { $meta: 'textScore' } }).limit(1)
+      if (!chall || (chall && !chall.length)) chall = await mongoose.models.challenge.find({ titre: new RegExp(option, 'i') }) // try in regex if not found
       if (!chall || (chall && !chall.length)) return await interaction.reply({ content: '*Aucun challenge trouvé, désolé !*', ephemeral: true })
       u = chall[0].challengeInfo()
       if (u && !!Object.keys(u).length) option = u.id.toString()
