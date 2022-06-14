@@ -77,11 +77,12 @@ docker-compose pull && docker-compose up -d --build
 > `image: ghcr.io/kernoeb/jean_racine_bot:main`
 
 - Wait for the bot to load all the challenges (it can take a long time)
-- Refresh Discord slash commands
+- Refresh Discord slash commands (this can be very long too, Discord is slow, so uncomment the line in the register_slash_commands file, with your guild id, inside the container) 
 
 ```bash
 docker exec -it <name-of-jean-racine-container> register_slash_commands
 ```
+
 
 #### Optional :
 
