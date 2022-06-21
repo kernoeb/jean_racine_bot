@@ -5,6 +5,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    # Only if you want Tor nodes
+    depends_on:
+      tor-node-1:
+        condition: service_healthy
+      tor-node-2:
+        condition: service_healthy
+      tor-node-3:
+        condition: service_healthy
+      tor-node-4:
+        condition: service_healthy
+      tor-node-chall:
+        condition: service_healthy
     restart: always
     stdin_open: true
     tty: true
@@ -24,6 +36,7 @@ services:
       - "27017"
     volumes:
       - '/opt/jeanracine:/bitnami/mongodb'
+  # Only if you want Tor nodes
   tor-node-1:
     image: osminogin/tor-simple
     networks:
