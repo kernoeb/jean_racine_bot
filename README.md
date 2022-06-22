@@ -12,19 +12,22 @@ built by `@kernoeb`
 - Notifications (new challenge added or succeed, new validation, new solution)
 - Search a user or a challenge id
 - Information about a challenge or a user
+- Chart (leaderboard)
+- 
 
 ### Commands
 
-`/init`: Initialize the bot in the canal  
-`/adduser` : Add a user  
-`/deluser` : Delete a user  
-`/scoreboard` : Scoreboard  
-`/searchuser` : Search a user  
-`/challenge <id>` : Search and information about a challenge  
-`/user <id>`: Information about a user  
-`/createglobalscoreboard` : Add a global scoreboard  
-`/getlastchallenges` : Get last challenges  
-`/ping`: Test if the bot is not down
+`/adduser <id>`: Add a user (id)  
+`/challenge <id_or_name>`: Information about a challenge  
+`/chart` : Leaderboard chart  
+`/createglobalscoreboard` : Create a global scoreboard  
+`/deluser <id>` : Delete a user (id)  
+`/getlastchallenges` : Get the last challenges    
+`/init` : Initialize the bot in the channel  
+`/ping` : Ping pong  
+`/scoreboard <category>` : Scoreboard (with optional category)  
+`/searchuser <name>` : Search a user by name  
+`/user <id_or_name>` : Information about a user (id or name)
 
 ## Prerequisites
 
@@ -41,7 +44,7 @@ You can also add the Dockerfile if you want to build the image by yourself
 - Copy `.env.example` to `.env` and replace variables
 
 > API_KEY is the main Root-Me API Key (premium is better!).  
-> API_KEY_FIRST can be used to get all non-premium challenges, to avoid lot of requests on your account  
+> API_KEY_FIRST can be used to get all non-premium challenges, to avoid a lot of requests on your account  
 > You can use an api key or a cookie
 
 ```bash
@@ -50,9 +53,6 @@ chown -R 1001 /opt/jeanracine
 chmod +x ./update.sh
 ./update.sh
 ```
-
-> You can also use my published docker image, instead of build the Dockerfile  
-> `image: ghcr.io/kernoeb/jean_racine_bot:main`
 
 - Wait for the bot to load all the challenges (it can take a long time)
 - Refresh Discord slash commands (this can be very long too, Discord is slow, so uncomment the line in the register_slash_commands file, with your guild id, inside the container)
