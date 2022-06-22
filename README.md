@@ -13,7 +13,6 @@ built by `@kernoeb`
 - Search a user or a challenge id
 - Information about a challenge or a user
 - Chart (leaderboard)
-- 
 
 ### Commands
 
