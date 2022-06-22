@@ -21,7 +21,8 @@ built by `@kernoeb`
 `/chart` : Leaderboard chart  
 `/createglobalscoreboard` : Create a global scoreboard  
 `/deluser <id>` : Delete a user (id)  
-`/getlastchallenges` : Get the last challenges    
+`/getlastchallenges` : Get the last challenges   
+`/help` : Help
 `/init` : Initialize the bot in the channel  
 `/ping` : Ping pong  
 `/scoreboard <category>` : Scoreboard (with optional category)  
