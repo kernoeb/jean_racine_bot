@@ -29,7 +29,7 @@ built by `@kernoeb`
 ## Prerequisites
 
 - Docker > 20
-- docker-compose > 1.29
+- docker-compose > 1.29 (or docker compose 2 !)
 - Create a Discord bot and invite it : https://discord.com/api/oauth2/authorize?client_id=xxxx&permissions=2684472384&scope=applications.commands%20bot (replace xxxx with the bot client id)
 
 ## Installation
@@ -70,9 +70,9 @@ Add this to your `.bashrc` :
 function jeanracinelogs() {
   if [ $# -eq 0 ]
   then
-      docker logs jean_racine_bot_rootme_node_1 --tail 20 -f
+      docker logs jean_racine_bot-rootme_node-1 --tail 20 -f
   else
-      docker logs jean_racine_bot_rootme_node_1 --tail $1 -f
+      docker logs jean_racine_bot-rootme_node-1 --tail $1 -f
   fi
 }
 ```
