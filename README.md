@@ -30,6 +30,7 @@ built by `@kernoeb`
 
 - Docker > 20
 - docker-compose > 1.29
+- Create a Discord bot and invite it : https://discord.com/api/oauth2/authorize?client_id=xxxx&permissions=2684472384&scope=applications.commands%20bot (replace xxxx with the bot client id)
 
 ## Installation
 
