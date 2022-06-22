@@ -13,20 +13,20 @@
     "lint": "eslint --fix . --ext .js"
   },
   "engines": {
-    "node": "v16.15.0"
+    "node": "v16.15.1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/builders": "^0.13.0",
-    "@discordjs/rest": "^0.4.1",
+    "@discordjs/builders": "^0.15.0",
+    "@discordjs/rest": "^0.5.0",
     "agenda": "^4.3.0",
     "canvas": "^2.9.1",
     "chart.js": "^3.8.0",
     "chartjs-node-canvas": "^4.1.6",
-    "discord-api-types": "^0.33.0",
-    "discord.js": "^13.7.0",
+    "discord-api-types": "^0.34.0",
+    "discord.js": "^13.8.0",
     "html-entities": "^2.3.3",
     "jsdom": "^19.0.0",
     "luxon": "^2.4.0",
