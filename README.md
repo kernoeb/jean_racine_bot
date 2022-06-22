@@ -22,7 +22,7 @@ built by `@kernoeb`
 `/createglobalscoreboard` : Create a global scoreboard  
 `/deluser <id>` : Delete a user (id)  
 `/getlastchallenges` : Get the last challenges   
-`/help` : Help
+`/help` : Help  
 `/init` : Initialize the bot in the channel  
 `/ping` : Ping pong  
 `/scoreboard <category>` : Scoreboard (with optional category)  
