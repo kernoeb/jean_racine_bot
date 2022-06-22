@@ -2,9 +2,12 @@ version: "3"
 
 services:
   rootme_node:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # You can use my own image, or build it from scratch
+    image: ghcr.io/kernoeb/jean_racine_bot:main
+#   build:
+#     context: .
+#     dockerfile: Dockerfile
+
     # Only if you want Tor nodes
     depends_on:
       tor-node-1:

@@ -39,7 +39,7 @@ if [ -x "$(command -v docker)" ]; then
     $DOCKER_COMPOSE_COMMAND pull || exit 1
 
     echo -e "${YELLOW}[+]${RESET} Updating images..."
-    $DOCKER_COMPOSE_COMMAND up -d --remove-orphans
+    $DOCKER_COMPOSE_COMMAND up -d --remove-orphans --build || exit 1
 else
     echo -e "${RED}[-]${RESET} Docker is not installed, please install it first."
     exit 1

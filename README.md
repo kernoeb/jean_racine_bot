@@ -34,6 +34,9 @@ built by `@kernoeb`
 
 ## Installation
 
+- Clone the repository, or only download `.env.example`, `docker-compose.yml` and `update.sh`  
+You can also add the Dockerfile if you want to build the image by yourself
+
 - Get an API Key on Root-Me [here](https://www.root-me.org/?page=preferences)
 - Copy `.env.example` to `.env` and replace variables
 
@@ -44,7 +47,8 @@ built by `@kernoeb`
 ```bash
 mkdir -p /opt/jeanracine
 chown -R 1001 /opt/jeanracine
-docker-compose pull && docker-compose up -d --build
+chmod +x ./update.sh
+./update.sh
 ```
 
 > You can also use my published docker image, instead of build the Dockerfile  
