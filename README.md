@@ -2,8 +2,8 @@
 
 ### RootMe bot
 
-Root-Me Discord using `Discord.js` and `Slash Commands`.  
-built by `@kernoeb`
+Root-Me Discord bot using `Discord.js` and Slash Commands.  
+built by [@kernoeb](https://www.root-me.org/kernoeb).
 
 ### Features
 
@@ -16,8 +16,8 @@ built by `@kernoeb`
 
 ### Commands
 
-`/adduser <id>`: Add a user (id)  
-`/challenge <id_or_name>`: Information about a challenge  
+`/adduser <id>` : Add a user (id)  
+`/challenge <id_or_name>` : Information about a challenge  
 `/chart` : Leaderboard chart  
 `/createglobalscoreboard` : Create a global scoreboard  
 `/deluser <id>` : Delete a user (id)  
@@ -34,6 +34,8 @@ built by `@kernoeb`
 - Docker > 20
 - docker-compose > 1.29 (or docker compose 2 !)
 - Create a Discord bot and invite it : https://discord.com/api/oauth2/authorize?client_id=xxxx&permissions=2684472384&scope=applications.commands%20bot (replace xxxx with the bot client id)
+
+> I'm using Docker version 20.10.x and Docker Compose (not docker-compose) version v2.6.0
 
 ## Installation
 
@@ -60,7 +62,6 @@ chmod +x ./update.sh
 ```bash
 docker exec -it <name-of-jean-racine-container> register_slash_commands
 ```
-
 
 #### Optional :
 
@@ -116,4 +117,4 @@ If this does not work -> `kernoeb#7737` on Discord, [@kernoeb](https://t.me/kern
 
 ### Similar projects
 
-- [RootMeBotV2](https://github.com/slowerzs/RootMeBotV2/) - Slowerzs
+- [RootMeBotV2](https://github.com/slowerzs/RootMeBotV2/) - [Slowerzs](https://www.root-me.org/Slowerzs)
