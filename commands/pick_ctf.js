@@ -3,6 +3,7 @@ const { curly } = require('node-libcurl')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
+const { formattedEmbed } = require('../utils/ctftime')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -41,17 +42,7 @@ module.exports = {
       .setColor('#36393f')
       .addField(
         ':information_source: Infos',
-        `**Démarre le :** ${start_time[0]}, à ${start_time[1]} \n
-                **Organisé par :** ${body.organizers[0].name} \n
-                **Termine le :** ${end[0]}, à ${end[1]} \n
-                **Site Web :** ${body.url} \n
-                **URL CTFTime :** ${body.ctftime_url} \n
-                **IRL :** ${body.onsite ? 'Oui' : 'Non'} \n
-                **Format :** ${body.format} \n 
-                **Durée :** ${duration} \n 
-                **Nombre d'équipes intéressées :** ${body.participants} \n
-                **Poids :** ${body.weight} \n
-                **CTF ID :** ${body.id}`
+        formattedEmbed(body, start_time, end, duration)
       )
       .setThumbnail(body.logo)
     // Sends the message

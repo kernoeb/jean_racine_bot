@@ -3,6 +3,7 @@ const { curly } = require('node-libcurl')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
+const { formattedEmbed } = require('../utils/ctftime')
 
 
 module.exports = {
@@ -55,26 +56,16 @@ module.exports = {
       const start_time = DateTime.fromISO(body[i].start).setLocale('fr').toFormat('f').split(', ')
       const end = DateTime.fromISO(body[i].finish).setLocale('fr').toFormat('f').split(', ')
       let time = ''
-      if(body[i].duration.days && body[i].duration.hours) {
+      if (body[i].duration.days && body[i].duration.hours) {
         time += `${body[i].duration.days} jours et ${body[i].duration.hours} heures`
       } else if (body[i].duration.days) {
         time += `${body[i].duration.days} jours`
-      } else{
+      } else {
         time += `${body[i].duration.hours} heures`
       }
       embed.addField(
         ':information_source: Infos',
-        `**Démarre le :** ${start_time[0]}, à : ${start_time[1]} \n
-                **Organisé par :** ${body[i].organizers[0].name} \n
-                **Termine le :** ${end[0]}, à : ${end[1]} \n
-                **Site Web :** ${body[i].url} \n
-                **URL CTFTime :** ${body[i].ctftime_url} \n
-                **IRL :** ${body[i].onsite ? 'Oui' : 'Non'} \n
-                **Format :** ${body[i].format} \n 
-                **Durée :** ${time} \n 
-                **Nombre d'équipes intéressées :** ${body[i].participants} \n
-                **Poids :** ${body[i].weight} \n
-                **CTF ID :** ${body[i].id}`
+        formattedEmbed(body[i], start_time, end, time)
       )
       embed.setThumbnail(body[i].logo)
       embedArray.push(embed)
