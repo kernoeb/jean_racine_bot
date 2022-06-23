@@ -90,21 +90,27 @@ module.exports = {
     interaction.editReply({ embeds: [msgtop10] })
     let x = 0
 
+    // TODO make this better, or get more info :)
     function master() {
       // Set an interval to avoid the rate limit
       const inter = setInterval(messageSender, 1500)
 
       async function messageSender() {
-        if (x < 10) {
-          const [id, place] = ids[x]
-          x++
-          // get the team name via the CTF time API
-          const resp = await curly.get(`https://ctftime.org/api/v1/teams/${id}/`)
-          const json = resp.data
-          msgtop10.addField(json.name, 'Place : ' + place)
-          await interaction.editReply({ embeds: [msgtop10] })
-        } else {
+        try {
+          if (x < 10) {
+            const [id, place] = ids[x]
+            x++
+            // get the team name via the CTF time API
+            const resp = await curly.get(`https://ctftime.org/api/v1/teams/${id}/`)
+            const json = resp.data
+            msgtop10.addField(json.name, 'Place : ' + place)
+            await interaction.editReply({ embeds: [msgtop10] })
+          } else {
+            clearInterval(inter)
+          }
+        } catch (e) {
           clearInterval(inter)
+          logger.error('Error while fetching the TOP10 CTFTime might be down')
         }
       }
     }
