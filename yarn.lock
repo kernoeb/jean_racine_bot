@@ -804,15 +804,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"canvas@npm:^2.9.1":
-  version: 2.9.1
-  resolution: "canvas@npm:2.9.1"
+"canvas@npm:^2.9.2":
+  version: 2.9.2
+  resolution: "canvas@npm:2.9.2"
   dependencies:
     "@mapbox/node-pre-gyp": ^1.0.0
     nan: ^2.15.0
     node-gyp: latest
     simple-get: ^3.0.3
-  checksum: 0175067df9eaa591113605441c150ffe7d5196a3273559b0aadfe56854e8353ea99eb3c56c9347c76e54a4781c88dd24662268a0f86500e69b608d5b1e9e6801
+  checksum: 8788dd11a77408db16f4cd3dfadd2d4b0a418560b92613c4f3b2c93dfd9d66e77b33cd994725f17bb94a549a440ac981b62075cc22e0a82fe2aa7f1aa7d9b065
   languageName: node
   linkType: hard
 
@@ -1283,16 +1283,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:^0.34.0":
-  version: 0.34.0
-  resolution: "discord-api-types@npm:0.34.0"
-  checksum: 16ef4a7e82c442808447d2062adb907c050f1c0b10b0dd7ffd459b5cbc2ae8e5ba46d17c645e401500a0263ee661c651d29ab5b41bd2af15a72281d03cba90dc
+"discord-api-types@npm:^0.35.0":
+  version: 0.35.0
+  resolution: "discord-api-types@npm:0.35.0"
+  checksum: 22c6709c0221f3ef0e1ba9ed0b50ec0beb81a95c8e40660bcfa70bfffa3ce5d73661626c768c227bb36028b63248f22f976ff7225a6fce9b91f57048239dcde4
   languageName: node
   linkType: hard
 
-"discord.js@npm:^13.8.0":
-  version: 13.8.0
-  resolution: "discord.js@npm:13.8.0"
+"discord.js@npm:^13.8.1":
+  version: 13.8.1
+  resolution: "discord.js@npm:13.8.1"
   dependencies:
     "@discordjs/builders": ^0.14.0
     "@discordjs/collection": ^0.7.0
@@ -1303,7 +1303,7 @@ __metadata:
     form-data: ^4.0.0
     node-fetch: ^2.6.1
     ws: ^8.7.0
-  checksum: 9fb026f5d2bcc5339044b3f2df7efca815656064d593582ea5fb60beabdc0ae0381010949b94940496d91dd8c2aa2dc55bc8db48300da5b8d00eadcc04665dc2
+  checksum: 1311aa3be7e61e9173f4d41c0184c5614860145385a00a67840d7a1849c3cbbf248a2f6339200653e23c90f11acfab554b440a6018bb52d532cd688849618a5a
   languageName: node
   linkType: hard
 
@@ -2486,12 +2486,12 @@ __metadata:
     "@discordjs/builders": ^0.15.0
     "@discordjs/rest": ^0.5.0
     agenda: ^4.3.0
-    canvas: ^2.9.1
+    canvas: ^2.9.2
     chart.js: ^3.8.0
     chartjs-node-canvas: ^4.1.6
     cross-env: ^7.0.3
-    discord-api-types: ^0.34.0
-    discord.js: ^13.8.0
+    discord-api-types: ^0.35.0
+    discord.js: ^13.8.1
     dotenv: ^10.0.0
     eslint: ^7.32.0
     express: ^4.18.1
@@ -2500,7 +2500,7 @@ __metadata:
     luxon: ^2.4.0
     mongoose: 5.13.14
     node-libcurl: ^2.3.4
-    nodemon: ^2.0.16
+    nodemon: ^2.0.18
     random-useragent: ^0.5.0
     rss-parser: ^3.12.0
     signale-logger: ^1.5.1
@@ -3204,9 +3204,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemon@npm:^2.0.16":
-  version: 2.0.16
-  resolution: "nodemon@npm:2.0.16"
+"nodemon@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "nodemon@npm:2.0.18"
   dependencies:
     chokidar: ^3.5.2
     debug: ^3.2.7
@@ -3220,7 +3220,7 @@ __metadata:
     update-notifier: ^5.1.0
   bin:
     nodemon: bin/nodemon.js
-  checksum: ff818aa91b283bd0f1f6cfb8fdc9b5c3e74d5efa0cb72276dc242b742dc35d3f0720d35d99dbe85ecf6df7185f083ef9b1f7908094e43fd4e2508b6805d644dc
+  checksum: dc742018a3f528129b76d5eecc3a3d4286a5c1666f42ced4aee7b19e28076499e3705fcf274ae0d90ae8fada53c9d0e0a112a1cdb65a22d4349e73ab477241f5
   languageName: node
   linkType: hard
 
