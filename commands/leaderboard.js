@@ -5,30 +5,51 @@ const logger = require('signale-logger')
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('topctftimelocale')
-    .setDescription('Show the Top 10 teams in CTFTime from a given country')
-    .addStringOption(option => option.setName('locale').setDescription('the country you want to see the top 10 teams (ex: fr, us, ...)')),
+    .setName('topctftime')
+    .setDescription('Montre le TOP 10 CTFTime global ou d\'un pays')
+    .addStringOption(option => option.setName('locale').setDescription('La locale du pays en question (ex: fr, us, ...)')),
   async execute(interaction) {
     // keep track of the exectuion to show the right error message if any
     // Get the locale parameter
     let locale = interaction.options.getString('locale')
-    // Checks if the user provided a locale
-    if(!locale) {
-      return await interaction.reply('Please specify a locale')
-    }
     // Defer the reply to permit more time to execute the command
     await interaction.deferReply()
+    // Checks if the user provided a locale if not shows the general top 10
+    if(!locale) {
+      let request = await curly.get('https://ctftime.org/api/v1/top/')
+      if(request.statusCode === 200) {
+        // Get the data
+        request = request.data
+      } else{
+        // If the request was not successful, show the error message
+        logger.error('Error while fetching the TOP 10 CTFTime might be down')
+        return interaction.editReply({ content: 'Erreur CTFTime est peut être down', ephemeral: true })
+      }
+
+      const embed = new MessageEmbed()
+        .setTitle('Top 10 global de CTFTime')
+        .setThumbnail('https://avatars.githubusercontent.com/u/2167643?s=200&v=4')
+        .setURL('https://ctftime.org/')
+      request = Object.values(request)[0]
+      for(let i = 0; i < request.length; i++) {
+        embed.addField(request[i].team_name, `Place : ${i}`)
+      }
+      return await interaction.editReply({ embeds: [embed] })
+    }
+
     // Prepare the url
     locale = locale.toUpperCase()
     // Scrap the data from the CTFTime website
     let response = await curly.get('https://ctftime.org/stats/' + locale)
     // Check if the request was successful
-    if(response.statusCode == 200) {
+    if(response.statusCode === 200) {
       // Get the data
       response = response.data
     } else{
       // If the request was not successful, show the error message
-      logger.error('Error while fetching the CTF make sure that the locale is correct')
+      logger.error('Error while fetching the TOP10 make sure that the locale is correct or CTFTime might be down')
+      return interaction.editReply({ content: 'Erreur CTFTime est peut être down ou la locale est incorecte', ephemeral: true })
+
     }
     // Get the top 10 teams
     const text = response
@@ -60,7 +81,7 @@ module.exports = {
 
     // construct the embed
     const msgtop10 = new MessageEmbed()
-    msgtop10.setTitle('Top 10 CTF Time Teams from ' + locale)
+    msgtop10.setTitle('TOP 10 CTFTime du pays ' + locale)
     msgtop10.setThumbnail('https://avatars.githubusercontent.com/u/2167643?s=200&v=4')
     msgtop10.setURL('https://ctftime.org/')
     interaction.editReply({ embeds: [msgtop10] })

@@ -2,12 +2,14 @@ const { SlashCommandBuilder } = require('@discordjs/builders')
 const { curly } = require('node-libcurl')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
+const { DateTime } = require('luxon')
+
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('nextctf')
-    .setDescription('Shows the Next CTF available in CTFTime')
-    .addIntegerOption(option => option.setName('numberctf').setDescription('Number of CTF to show')),
+    .setDescription('Montre les prochains CTF de la semaine sur CTFTime')
+    .addIntegerOption(option => option.setName('numberctf').setDescription('Le nombre de CTF à afficher')),
 
   async execute(interaction) {
     let nbCtf = interaction.options.getInteger('numberctf')
@@ -19,50 +21,59 @@ module.exports = {
       nbCtf = nbCtf > 5 ? 5 : nbCtf
       nbCtf = nbCtf < 1 ? 1 : nbCtf
     }
-    await interaction.reply('Fetching the CTF...')
+    await interaction.reply('Récupération des informations en cours, ...')
 
     let response = await curly.get(`https://ctftime.org/api/v1/events/?limit=${nbCtf}&start=${interaction.createdTimestamp}&finish=${interaction.createdTimestamp + 604800000}`)
-    if(response.statusCode == 200) {
+    if(response.statusCode === 200) {
       response = response.data
     } else{
       logger.error('Error : CTFTime might be down')
-      return interaction.editReply({ content: 'Error while fetching the CTF', ephemeral: true })
+      return interaction.editReply({ content: 'Erreur CTFTime est peut être down', ephemeral: true })
     }
     const body = response
     if(body === []) {
       const embed = new MessageEmbed()
-        .setTitle('Error :x:')
+        .setTitle('Erreur :x:')
         .setColor('RED')
-        .addField('There is no CTF in the next 7 days', 'Please try again later')
+        .addField('Pas de CTF dans les 7 prochains jours :(', 'Veuillez réessayer plus tard')
       await interaction.editReply({ embeds : [embed] })
       return
     }
     nbCtf = nbCtf > body.length ? body.length : nbCtf
     const embedArray = []
     for(let i = 0; i < nbCtf; i++) {
-      const start = body[i].start.split('T')
-      const end = body[i].finish.split('T')
       const embed = new MessageEmbed()
-        .setTitle('Upcomming CTFs')
+        .setTitle('Prochains CTFs')
         .setColor('#36393f')
       if (body[i].title == '_EVENT CHANGED_' && i < body.length - 1) {
-        embed.setDescription(body[i + 1].title + '**event changed**', `${body[i + 1].description}`)
+        embed.setDescription(body[i + 1].title + '**Changement d\'infomations**', `${body[i + 1].description}`)
         i++
       } else{
         embed.setDescription(body[i].title, `${body[i].description}`)
       }
+      // Prepares the message
+      const start_time = DateTime.fromISO(body.start).setLocale('fr').toFormat('f').split(', ')
+      const end = DateTime.fromISO(body.finish).setLocale('fr').toFormat('f').split(', ')
+      let duration = ''
+      if(body.duration.days && body.durtation.hours) {
+        duration += `${body.duration.days} Jours et ${body.duration.hours} Heures`
+      } else if (body.duration.days) {
+        duration += `${body.duration.days} Jours`
+      } else{
+        duration += `${body.duration.hours} Heures`
+      }
       embed.addField(
         ':information_source: Infos',
-        `**Starts on :** ${start[0]}, at : ${start[1]} \n
-                **Host by :** ${body[i].organizers.name} \n
-                **Ends :** ${end[0]}, at : ${end[1]} \n
-                **Website :** ${body[i].url} \n
-                **CTF Time URL :** ${body[i].ctftime_url} \n
+        `**Démarre le :** ${start_time[0]}, à : ${start_time[1]} \n
+                **Organisé par :** ${body[i].organizers[0].name} \n
+                **Fini le :** ${end[0]}, à : ${end[1]} \n
+                **Site Web :** ${body[i].url} \n
+                **URL CTFTime :** ${body[i].ctftime_url} \n
                 **IRL CTF ? :** ${body[i].onsite} \n
                 **Format :** ${body[i].format} \n 
-                **Duration :** ${body[i].duration.hours} Heures & ${body[i].duration.days} Jours \n 
-                **Number of Teams Interested :** ${body[i].participants} \n
-                **Weight** ${body[i].weight} \n
+                **Durée :** ${duration} \n 
+                **Nombre d'équipes interessée :** ${body[i].participants} \n
+                **Poid** ${body[i].weight} \n
                 **CTF ID :** ${body[i].id}`
       )
       embed.setThumbnail(body[i].logo)

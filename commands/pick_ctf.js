@@ -2,47 +2,53 @@ const { SlashCommandBuilder } = require('@discordjs/builders')
 const { curly } = require('node-libcurl')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
+const { DateTime } = require('luxon')
 
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('pickctf')
-    .setDescription('Choose a CTF from CTF time and create a pool to see who is interested in it')
-    .addIntegerOption(option => option.setName('id').setDescription('the id of the CTF').setRequired(true)),
+    .setDescription('Crée un vote à partir de l\'ID d\'un CTF de CTFTime')
+    .addIntegerOption(option => option.setName('id').setDescription('L\'ID du CTF').setRequired(true)),
   async execute(interaction) {
     // Checking for the permission
     const id = interaction.options.getInteger('id')
-    if(!id) {
-      return interaction.reply('Please specify a CTF id')
-    }
     await interaction.deferReply()
     let response = await curly.get(`https://ctftime.org/api/v1/events/${id}/`)
-    if(response.statusCode == 200) {
+    if(response.statusCode === 200) {
       response = response.data
     } else{
-      logger.error('Error while fetching the CTF')
-      return interaction.editReply({ content: 'Error while fetching the CTF', ephemeral: true })
+      logger.error('Error while fetching the CTF CTFTime might be down')
+      return interaction.editReply({ content: 'Erreur CTFtime est down ou L\'ID fournie est incorrect', ephemeral: true })
     }
     const body = response
     // Prepares the message
-    const start = body.start.split('T')
-    const end = body.finish.split('T')
+    const start_time = DateTime.fromISO(body.start).setLocale('fr').toFormat('f').split(', ')
+    const end = DateTime.fromISO(body.finish).setLocale('fr').toFormat('f').split(', ')
+    let duration = ''
+    if(body.duration.days && body.durtation.hours) {
+      duration += `${body.duration.days} Jours et ${body.duration.hours} Heures`
+    } else if (body.duration.days) {
+      duration += `${body.duration.days} Jours`
+    } else{
+      duration += `${body.duration.hours} Heures`
+    }
     const embed = new MessageEmbed()
-      .setTitle('Poll for the next CTF')
+      .setTitle('Vote Pour le CTF')
       .setDescription(body.title, `${body.description}`)
       .setColor('#36393f')
       .addField(
         ':information_source: Infos',
-        `**Starts on :** ${start[0]}, at : ${start[1]} \n
-                **Host by :** ${body.organizers.name} \n
-                **Ends :** ${end[0]}, at : ${end[1]} \n
-                **Website :** ${body.url} \n
-                **CTF Time URL :** ${body.ctftime_url} \n
+        `**Démarre le :** ${start_time[0]} à ${start_time[1]} \n
+                **Organisé par :** ${body.organizers[0].name} \n
+                **Fini le :** ${end[0]}, à ${end[1]} \n
+                **Site Web :** ${body.url} \n
+                **URL CTFTime :** ${body.ctftime_url} \n
                 **IRL CTF ? :** ${body.onsite} \n
                 **Format :** ${body.format} \n 
-                **Duration :** ${body.duration.hours} Heures & ${body.duration.days} Jours \n 
-                **Number of Teams Interested :** ${body.participants} \n
-                **Weight** ${body.weight} \n
+                **Durée :** ${duration} \n 
+                **Nombre d'équipes interessée :** ${body.participants} \n
+                **Poid** ${body.weight} \n
                 **CTF ID :** ${body.id}`
       )
       .setThumbnail(body.logo)
@@ -62,8 +68,8 @@ module.exports = {
         }
         const nbVote = count[0] + count[1]
         const resultEmbed = new MessageEmbed()
-          .setTitle('Results of the poll')
-          .setDescription('The poll has ended, the results are :')
+          .setTitle('Résultat du vote')
+          .setDescription('Fin du vote, les résultats sont :')
           .addField('Stats : ', `✅ : ${100 * count[0] / nbVote}% \n ❌ : ${100 * count[1] / nbVote}% \n Number of votes : ${nbVote}`)
           .setThumbnail(body.logo)
         await interaction.followUp({ embeds: [resultEmbed] })
