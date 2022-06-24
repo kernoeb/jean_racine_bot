@@ -52,15 +52,15 @@ module.exports = {
         embed.setDescription(body[i].title, `${body[i].description}`)
       }
       // Prepares the message
-      const start_time = DateTime.fromISO(body.start).setLocale('fr').toFormat('f').split(', ')
-      const end = DateTime.fromISO(body.finish).setLocale('fr').toFormat('f').split(', ')
-      let duration = ''
-      if(body.duration.days && body.durtation.hours) {
-        duration += `${body.duration.days} Jours et ${body.duration.hours} Heures`
-      } else if (body.duration.days) {
-        duration += `${body.duration.days} Jours`
+      const start_time = DateTime.fromISO(body[i].start).setLocale('fr').toFormat('f').split(', ')
+      const end = DateTime.fromISO(body[i].finish).setLocale('fr').toFormat('f').split(', ')
+      let time = ''
+      if(body[i].duration.days && body[i].duration.hours) {
+        time += `${body[i].duration.days} Jours et ${body[i].duration.hours} Heures`
+      } else if (body[i].duration.days) {
+        time += `${body[i].duration.days} Jours`
       } else{
-        duration += `${body.duration.hours} Heures`
+        time += `${body[i].duration.hours} Heures`
       }
       embed.addField(
         ':information_source: Infos',
@@ -71,7 +71,7 @@ module.exports = {
                 **URL CTFTime :** ${body[i].ctftime_url} \n
                 **IRL CTF ? :** ${body[i].onsite} \n
                 **Format :** ${body[i].format} \n 
-                **Durée :** ${duration} \n 
+                **Durée :** ${time} \n 
                 **Nombre d'équipes interessée :** ${body[i].participants} \n
                 **Poid** ${body[i].weight} \n
                 **CTF ID :** ${body[i].id}`
