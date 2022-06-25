@@ -118,6 +118,11 @@ If this does not work -> `kernoeb#7737` on Discord, [@kernoeb](https://t.me/kern
 ![img.png](images/chart.png)
 
 
+## Contributors
+
+Thanks to [Antabuse](https://www.root-me.org/antabuse) for his help for the CTFTime part of the bot !
+
+
 ### Similar projects
 
 - [RootMeBotV2](https://github.com/slowerzs/RootMeBotV2/) - [Slowerzs](https://www.root-me.org/Slowerzs)
