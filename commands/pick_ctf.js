@@ -3,7 +3,7 @@ const { curly } = require('node-libcurl')
 const { MessageEmbed } = require('discord.js')
 const logger = require('../utils/signale')
 const { DateTime } = require('luxon')
-const { formattedEmbed } = require('../utils/ctftime')
+const { formattedEmbed, getAgenda: getAgendaVotes } = require('../utils/ctftime')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -74,7 +74,15 @@ module.exports = {
       })
     }
 
+    try {
+      getAgendaVotes().schedule('in 10 seconds', 'UPDATE_EMBED', { to: 'test' }).then(() => {
+        logger.info('Scheduled')
+      })
+    } catch (err) {
+      logger.error(err)
+    }
+
     // Timer for the vote
-    setTimeout(vote, process.env.NODE_ENV === 'production' ? 24 * 60 * 60 * 1000 : 15000) // 1 day in production, 15 seconds in development
+    // setTimeout(vote, process.env.NODE_ENV === 'production' ? 24 * 60 * 60 * 1000 : 15000) // 1 day in production, 15 seconds in development
   }
 }
