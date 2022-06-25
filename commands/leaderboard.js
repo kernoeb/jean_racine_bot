@@ -34,7 +34,7 @@ module.exports = {
       }
       request = Object.values(request)[0]
       for (let i = 0; i < request.length; i++) {
-        embed.addField(`${numberList[i + 1]} - **${request[i].team_name}**`, `Points : ${request[i].points}`)
+        embed.addField(`${numberList[i + 1]} - **${request[i].team_name}**`, `Points : ${request[i].points.toFixed(3)}`)
       }
       embed.setTitle('Top 10 global de CTFTime')
       return await interaction.editReply({ embeds: [embed] })
