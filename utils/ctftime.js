@@ -28,10 +28,9 @@ module.exports = {
       .setTitle(data.title)
       .setDescription('Fin du vote, les résultats sont :')
     // Handle if no one has voted
-    if(!nbVote){
+    if(!nbVote) {
       resultEmbed.addField('Stats : ', 'Prsonne n\'a voté')
-    }
-    else{
+    } else{
       resultEmbed.addField('Stats : ', `✅ : ${(100 * count[0] / nbVote) || 0}% \n ❌ : ${(100 * count[1] / nbVote) || 0}% \n Nombre de votes : ${nbVote}`)
     }
     resultEmbed.setURL(data.ctftime_url)
