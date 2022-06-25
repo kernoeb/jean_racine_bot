@@ -27,7 +27,10 @@ built by [@kernoeb](https://www.root-me.org/kernoeb).
 `/ping` : Ping pong  
 `/scoreboard <category>` : Scoreboard (with optional category)  
 `/searchuser <name>` : Search a user by name  
-`/user <id_or_name>` : Information about a user (id or name)
+`/user <id_or_name>` : Information about a user (id or name)  
+`/topctftime <locale>` : CTFTime TOP 10 (global / country)  
+`/nextctf <numberctf>` : Next CTF of week (CTFTime)  
+`/pickctf <id>` : Vote for a specific CTF (CTFTime)
 
 ## Prerequisites
 
