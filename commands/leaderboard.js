@@ -16,7 +16,7 @@ module.exports = {
     // Get the locale parameter
     let locale = interaction.options.getString('locale')
     // Defer the reply to permit more time to execute the command
-    await interaction.deferReply()
+    await interaction.deferReply({ephemeral : true})
     // Declare the embed globally to avoid code redundancy
     const embed = new MessageEmbed()
       .setThumbnail('https://avatars.githubusercontent.com/u/2167643?s=200&v=4')
@@ -60,14 +60,18 @@ module.exports = {
     const dom = new JSDOM(response)
     const top10Names = []
     const top10Global = []
-    for(let i = 2; i <= 12; i++) {
-      top10Names.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i}) > td:nth-child(5) > a`).textContent)
-      top10Global.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i}) > td:nth-child(1)`).textContent)
+    let nbTeams = [...dom.window.document.querySelector('body > div.container > table > tbody').childNodes.values()].length / 2 - 1
+    if (nbTeams > 10) {
+      nbTeams = 10
     }
-    for(let i = 0; i < 10; i++) {
+    for(let i = 0; i < nbTeams; i++) {
+      top10Names.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i + 2}) > td:nth-child(5) > a`).textContent)
+      top10Global.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i + 2}) > td:nth-child(1)`).textContent)
+    }
+    for(let i = 0; i < nbTeams; i++) {
       embed.addField(`${numberList[i + 1]} - ${top10Names[i]}`, `Place globale : **${top10Global[i]}**`)
     }
     embed.setTitle(`Top 10 ${locale} de CTFTime :flag_${locale.toLowerCase()}:`)
-    await interaction.editReply({ embeds : [embed] })
+    await interaction.reply({ embeds : [embed] })
   }
 }

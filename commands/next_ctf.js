@@ -22,7 +22,7 @@ module.exports = {
       nbCtf = nbCtf > 5 ? 5 : nbCtf
       nbCtf = nbCtf < 1 ? 1 : nbCtf
     }
-    await interaction.deferReply()
+    await interaction.deferReply({ephemeral : true})
 
     let response = await curly.get(`https://ctftime.org/api/v1/events/?limit=${nbCtf}&start=${interaction.createdTimestamp}&finish=${interaction.createdTimestamp + 604800000}`)
     if (response.statusCode === 200) {
