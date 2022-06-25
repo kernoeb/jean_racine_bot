@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js')
 const logger = require('signale-logger')
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
+const { numberList } = require('../utils/util')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,7 +19,6 @@ module.exports = {
     await interaction.deferReply()
     // Declare the embed globally to avoid code redundancy
     const embed = new MessageEmbed()
-      .setTitle('Top 10 global de CTFTime')
       .setThumbnail('https://avatars.githubusercontent.com/u/2167643?s=200&v=4')
       .setURL('https://ctftime.org/')
     // Checks if the user provided a locale if not shows the general top 10
@@ -34,8 +34,9 @@ module.exports = {
       }
       request = Object.values(request)[0]
       for (let i = 0; i < request.length; i++) {
-        embed.addField(request[i].team_name, `Place : ${i + 1}`)
+        embed.addField(`${numberList[i + 1]} - **${request[i].team_name}**`, `Points : ${request[i].points}`)
       }
+      embed.setTitle('Top 10 global de CTFTime')
       return await interaction.editReply({ embeds: [embed] })
     }
 
@@ -57,11 +58,16 @@ module.exports = {
 
     }
     const dom = new JSDOM(response)
-    const matches = [...dom.window?.document?.querySelector('tbody')?.textContent?.matchAll(/\d+([a-zA-Z ]+)\d+/g)]
-    let counter = 1
-    matches.slice(0, 10).forEach(match => {
-      embed.addField(match[1], `Place ${counter++}`)
-    })
+    const top10Names = []
+    const top10Global = []
+    for(let i = 2; i <= 12; i++) {
+      top10Names.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i}) > td:nth-child(5) > a`).textContent)
+      top10Global.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i}) > td:nth-child(1)`).textContent)
+    }
+    for(let i = 0; i < 10; i++) {
+      embed.addField(`${numberList[i + 1]} - ${top10Names[i]}`, `Place globale : **${top10Global[i]}**`)
+    }
+    embed.setTitle(`Top 10 ${locale} de CTFTime :flag_${locale.toLowerCase()}:`)
     await interaction.editReply({ embeds : [embed] })
   }
 }
