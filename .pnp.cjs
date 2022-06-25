@@ -36,7 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@discordjs/builders", "npm:0.15.0"],\
             ["@discordjs/rest", "npm:0.5.0"],\
             ["agenda", "npm:4.3.0"],\
-            ["canvas", "npm:2.9.2"],\
+            ["canvas", "npm:2.9.3"],\
             ["chart.js", "npm:3.8.0"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
             ["cross-env", "npm:7.0.3"],\
@@ -966,10 +966,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:2.9.2", {\
-          "packageLocation": "./.yarn/unplugged/canvas-npm-2.9.2-d0e664406e/node_modules/canvas/",\
+        ["npm:2.9.3", {\
+          "packageLocation": "./.yarn/unplugged/canvas-npm-2.9.3-8d21f42376/node_modules/canvas/",\
           "packageDependencies": [\
-            ["canvas", "npm:2.9.2"],\
+            ["canvas", "npm:2.9.3"],\
             ["@mapbox/node-pre-gyp", "npm:1.0.5"],\
             ["nan", "npm:2.15.0"],\
             ["node-gyp", "npm:8.2.0"],\
@@ -2912,7 +2912,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@discordjs/builders", "npm:0.15.0"],\
             ["@discordjs/rest", "npm:0.5.0"],\
             ["agenda", "npm:4.3.0"],\
-            ["canvas", "npm:2.9.2"],\
+            ["canvas", "npm:2.9.3"],\
             ["chart.js", "npm:3.8.0"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
             ["cross-env", "npm:7.0.3"],\
@@ -2979,7 +2979,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["abab", "npm:2.0.5"],\
             ["acorn", "npm:8.6.0"],\
             ["acorn-globals", "npm:6.0.0"],\
-            ["canvas", "npm:2.9.2"],\
+            ["canvas", "npm:2.9.3"],\
             ["cssom", "npm:0.5.0"],\
             ["cssstyle", "npm:2.3.0"],\
             ["data-urls", "npm:3.0.1"],\
