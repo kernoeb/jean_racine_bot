@@ -120,7 +120,7 @@ If this does not work -> `kernoeb#7737` on Discord, [@kernoeb](https://t.me/kern
 
 ## Contributors
 
-Thanks to [Antabuse](https://www.root-me.org/antabuse) for his help for the CTFTime part of the bot !
+Thanks to [Antabuse](https://www.root-me.org/Antabuse) for his help for the CTFTime part of the bot !
 
 
 ### Similar projects
