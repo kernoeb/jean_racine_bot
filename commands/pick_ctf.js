@@ -50,39 +50,12 @@ module.exports = {
     // Create the vote
     const msg = await interaction.fetchReply()
     msg.react('✅').then(() => msg.react('❌'))
-    const reactionArray = ['✅', '❌']
-
-    // Fetch the message to get the result
-    async function vote() {
-      interaction.fetchReply().then(async message => {
-        try {
-          const count = []
-          for (let i = 0; i < reactionArray.length; i++) {
-            count[i] = message.reactions.cache.get(reactionArray[i]).count - 1 // Removes the bot's vote
-          }
-          const nbVote = count[0] + count[1]
-          const resultEmbed = new MessageEmbed()
-            .setTitle('Résultat du vote')
-            .setDescription('Fin du vote, les résultats sont :')
-            .addField('Stats : ', `✅ : ${(100 * count[0] / nbVote) || 0}% \n ❌ : ${(100 * count[1] / nbVote) || 0}% \n Nombre de votes : ${nbVote}`)
-            .setThumbnail(body.logo)
-          await interaction.followUp({ embeds: [resultEmbed] })
-        } catch (err) {
-          // it can happen if the message is deleted or something
-          logger.error(err)
-        }
-      })
-    }
 
     try {
-      getAgendaVotes().schedule('in 10 seconds', 'UPDATE_EMBED', { to: 'test' }).then(() => {
-        logger.info('Scheduled')
-      })
+      const schedule = process.env.NODE_ENV === 'production' ? 'in 24 hours' : 'in 10 seconds'
+      getAgendaVotes().schedule(schedule, 'UPDATE_EMBED', { channelId: msg.channelId, messageId: msg.id, logo: body.logo })
     } catch (err) {
       logger.error(err)
     }
-
-    // Timer for the vote
-    // setTimeout(vote, process.env.NODE_ENV === 'production' ? 24 * 60 * 60 * 1000 : 15000) // 1 day in production, 15 seconds in development
   }
 }
