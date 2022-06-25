@@ -28,9 +28,9 @@ module.exports = {
       .setTitle(data.title)
       .setDescription('Fin du vote, les résultats sont :')
     // Handle if no one has voted
-    if(!nbVote) {
+    if (!nbVote) {
       resultEmbed.addField('Stats : ', 'Prsonne n\'a voté')
-    } else{
+    } else {
       resultEmbed.addField('Stats : ', `✅ : ${(100 * count[0] / nbVote) || 0}% \n ❌ : ${(100 * count[1] / nbVote) || 0}% \n Nombre de votes : ${nbVote}`)
     }
     resultEmbed.setURL(data.ctftime_url)
@@ -56,15 +56,15 @@ module.exports = {
   },
   formattedEmbed: (body, start_time, end, duration) => {
     return `**Démarre le :** ${start_time[0]}, à ${start_time[1]} \n` +
-                `**Organisé par :** ${body.organizers?.[0]?.name || '?'} \n` +
-                `**Termine le :** ${end[0]}, à ${end[1]} \n` +
-                `**Site Web :** ${body.url} \n` +
-                `**URL CTFTime :** ${body.ctftime_url} \n` +
-                `**IRL :** ${body.onsite ? 'Oui' : 'Non'} \n` +
-                `**Format :** ${body.format} \n ` +
-                `**Durée :** ${duration} \n ` +
-                `**Nombre d'équipes intéressées :** ${body.participants} \n` +
-                `**Poids :** ${body.weight} \n` +
-                `**CTF ID :** ${body.id}`
+            `**Organisé par :** ${body.organizers?.[0]?.name || '?'} \n` +
+            `**Termine le :** ${end[0]}, à ${end[1]} \n` +
+            `**Site Web :** ${body.url} \n` +
+            `**URL CTFTime :** ${body.ctftime_url} \n` +
+            `**IRL :** ${body.onsite ? 'Oui' : 'Non'} \n` +
+            `**Format :** ${body.format} \n ` +
+            `**Durée :** ${duration} \n ` +
+            `**Nombre d'équipes intéressées :** ${body.participants} \n` +
+            `**Poids :** ${body.weight} \n` +
+            `**CTF ID :** ${body.id}`
   }
 }

@@ -49,7 +49,11 @@ module.exports = {
     await interaction.editReply({ embeds: [embed] })
     // Create the vote
     const msg = await interaction.fetchReply()
-    msg.react('✅').then(() => msg.react('❌'))
+
+    // Add bot reactions
+    msg.react('✅').then(() =>
+      msg.react('❌').catch(err => logger.error(err))
+    ).catch(err => logger.error(err))
 
     try {
       const schedule = process.env.NODE_ENV === 'production' ? 'in 24 hours' : 'in 5 seconds'
@@ -57,7 +61,7 @@ module.exports = {
         channelId: msg.channelId,
         messageId: msg.id,
         data: { logo: body.logo, ctftime_url: body.ctftime_url, title: body.title }
-      })
+      }).catch(err => logger.error(err))
     } catch (err) {
       logger.error(err)
     }

@@ -21,7 +21,7 @@ module.exports = {
     const embed = new MessageEmbed()
       .setThumbnail('https://avatars.githubusercontent.com/u/2167643?s=200&v=4')
       .setURL('https://ctftime.org/')
-    // Checks if the user provided a locale if not shows the general top 10
+      // Checks if the user provided a locale if not shows the general top 10
     if (!locale) {
       let request = await curly.get('https://ctftime.org/api/v1/top/')
       if (request.statusCode === 200) {
@@ -55,7 +55,6 @@ module.exports = {
         content: 'Erreur : CTFTime est peut être down ou la locale est incorrecte',
         ephemeral: true
       })
-
     }
     const dom = new JSDOM(response)
     const top10Names = []
@@ -64,14 +63,14 @@ module.exports = {
     if (nbTeams > 10) {
       nbTeams = 10
     }
-    for(let i = 0; i < nbTeams; i++) {
+    for (let i = 0; i < nbTeams; i++) {
       top10Names.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i + 2}) > td:nth-child(5) > a`).textContent)
       top10Global.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i + 2}) > td:nth-child(1)`).textContent)
     }
-    for(let i = 0; i < nbTeams; i++) {
+    for (let i = 0; i < nbTeams; i++) {
       embed.addField(`${numberList[i + 1]} - ${top10Names[i]}`, `Place globale : **${top10Global[i]}**`)
     }
     embed.setTitle(`Top 10 ${locale} de CTFTime :flag_${locale.toLowerCase()}:`)
-    await interaction.editReply({ embeds : [embed] })
+    await interaction.editReply({ embeds: [embed] })
   }
 }

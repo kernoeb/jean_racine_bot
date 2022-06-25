@@ -222,9 +222,13 @@ db.once('open', async function() {
       await client.commands.get(interaction.commandName).execute(interaction)
     } catch (error) {
       logger.error(error)
+      const content = 'There was an error while executing this command!'
       try {
-        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+        await interaction.reply({ content, ephemeral: true })
       } catch (err) {
+        await interaction.editReply({ content, ephemeral: true }).catch((e) => {
+          logger.error('Error while editing error interaction', e)
+        })
         logger.error(err)
       }
     }

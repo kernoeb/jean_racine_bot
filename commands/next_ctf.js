@@ -29,7 +29,7 @@ module.exports = {
       response = response.data
     } else {
       logger.error('Error : CTFTime might be down')
-      return interaction.editReply({ content: 'Erreur CTFTime est peut être down', ephemeral: true })
+      return await interaction.editReply({ content: 'Erreur CTFTime est peut être down', ephemeral: true })
     }
     const body = response
     if (!body) {
@@ -37,8 +37,7 @@ module.exports = {
         .setTitle('Erreur :x:')
         .setColor('RED')
         .addField('Pas de CTF dans les 7 prochains jours :(', 'Veuillez réessayer plus tard')
-      await interaction.editReply({ embeds: [embed] })
-      return
+      return await interaction.editReply({ embeds: [embed] })
     }
     nbCtf = nbCtf > body.length ? body.length : nbCtf
     const embedArray = []
