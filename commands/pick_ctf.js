@@ -52,8 +52,12 @@ module.exports = {
     msg.react('✅').then(() => msg.react('❌'))
 
     try {
-      const schedule = process.env.NODE_ENV === 'production' ? 'in 24 hours' : 'in 10 seconds'
-      getAgendaVotes().schedule(schedule, 'UPDATE_EMBED', { channelId: msg.channelId, messageId: msg.id, logo: body.logo })
+      const schedule = process.env.NODE_ENV === 'production' ? 'in 24 hours' : 'in 5 seconds'
+      getAgendaVotes().schedule(schedule, 'UPDATE_EMBED', {
+        channelId: msg.channelId,
+        messageId: msg.id,
+        data: { logo: body.logo, ctftime_url: body.ctftime_url, title: body.title }
+      })
     } catch (err) {
       logger.error(err)
     }
