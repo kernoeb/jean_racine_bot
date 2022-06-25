@@ -20,6 +20,7 @@ const { userInfo } = require('./utils/user')
 const { challengeInfo, getCategory } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
 const { getScoreboard, updateScoreboards } = require('./utils/scoreboard')
+const { getAgenda: initAgendaVotes } = require('./utils/ctftime')
 
 const db = mongoose.connection
 
@@ -191,6 +192,18 @@ db.once('open', async function() {
   /** Discord.js **/
   client.once('ready', () => {
     logger.success('Ready!')
+
+    try {
+      // Initialize agenda with the good db
+      const v = initAgendaVotes(db.db)
+      logger.success('Agenda (votes) initialized successfully')
+      v.on('ready', async () => {
+        logger.success('Agenda (votes) started successfully')
+        v.start()
+      })
+    } catch (err) {
+      logger.error('Error while initializing agenda (votes)', err)
+    }
 
     setTimeout(() => {
       updateScoreboards().catch(() => {
