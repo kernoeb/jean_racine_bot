@@ -72,6 +72,6 @@ module.exports = {
       embed.addField(`${numberList[i + 1]} - ${top10Names[i]}`, `Place globale : **${top10Global[i]}**`)
     }
     embed.setTitle(`Top 10 ${locale} de CTFTime :flag_${locale.toLowerCase()}:`)
-    await interaction.reply({ embeds : [embed] })
+    await interaction.editReply({ embeds : [embed] })
   }
 }
