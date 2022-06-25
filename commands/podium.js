@@ -1,12 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 // const { MessageAttachment } = require('discord.js')
-// const curl = require('../utils/curl')
+// const { curly } = require('node-libcurl')
 // const logger = require('../utils/signale')
 // const fs = require('fs')
 // const path = require('path')
 // const { getProfilePicture } = require('../utils/get_profile_picture')
 // const mongoose = require('../utils/mongoose')
-
 // const html = fs.readFileSync(path.join(process.cwd(), '/assets/podium.html'), 'utf-8')
 
 module.exports = {
@@ -24,15 +23,25 @@ module.exports = {
         nom: 1
       }).limit(3)
 
-      const [pp1, pp2, pp3] = await Promise.all(tmpUsers.map(user => getProfilePicture(user.id_auteur)))
+      logger.info(`Podium: ${tmpUsers.map(v => v.id_auteur).join(', ')}`)
+      const def = process.env.ROOTME_URL + '/IMG/logo/auton0.png'
+      const pp1 = await getProfilePicture(tmpUsers[0].id_auteur) || def
+      const pp2 = await getProfilePicture(tmpUsers[1].id_auteur) || def
+      const pp3 = await getProfilePicture(tmpUsers[2].id_auteur) || def
 
-      // TODO add post
-      const { data } = await curl.post(process.env.API_RENDER || 'http://localhost:11871/api/render', {
-        html,
-        content: { name1: tmpUsers[0].nom, pp1, name2: tmpUsers[1].nom, pp2, name3: tmpUsers[2].nom, pp3 },
-        width: 626,
-        height: 352
-      }, { responseType: 'arraybuffer' })
+      logger.info('Puppeteer')
+      const { data } = await curly.post(process.env.API_RENDER || 'http://localhost:11871/api/render', {
+        postFields: JSON.stringify({
+          html,
+          content: { name1: tmpUsers[0].nom, pp1, name2: tmpUsers[1].nom, pp2, name3: tmpUsers[2].nom, pp3 },
+          width: 626,
+          height: 352
+        }),
+        httpHeader: [
+          'Content-Type: application/json',
+          'Accept: image/png'
+        ]
+      })
       const attachment = new MessageAttachment(Buffer.from(data), 'oui.png')
       await interaction.editReply({ files: [attachment] })
     } catch (err) {
