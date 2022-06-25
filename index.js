@@ -20,6 +20,7 @@ const { userInfo } = require('./utils/user')
 const { challengeInfo, getCategory } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
 const { getScoreboard, updateScoreboards } = require('./utils/scoreboard')
+const { getAgenda: initAgendaVotes } = require('./utils/ctftime')
 
 const db = mongoose.connection
 
@@ -192,6 +193,18 @@ db.once('open', async function() {
   client.once('ready', () => {
     logger.success('Ready!')
 
+    try {
+      // Initialize agenda with the good db
+      const v = initAgendaVotes(db.db)
+      logger.success('Agenda (votes) initialized successfully')
+      v.on('ready', async () => {
+        logger.success('Agenda (votes) started successfully')
+        v.start()
+      })
+    } catch (err) {
+      logger.error('Error while initializing agenda (votes)', err)
+    }
+
     setTimeout(() => {
       updateScoreboards().catch(() => {
         logger.error('Error while updating scoreboards')
@@ -209,9 +222,13 @@ db.once('open', async function() {
       await client.commands.get(interaction.commandName).execute(interaction)
     } catch (error) {
       logger.error(error)
+      const content = 'There was an error while executing this command!'
       try {
-        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+        await interaction.reply({ content, ephemeral: true })
       } catch (err) {
+        await interaction.editReply({ content, ephemeral: true }).catch((e) => {
+          logger.error('Error while editing error interaction', e)
+        })
         logger.error(err)
       }
     }

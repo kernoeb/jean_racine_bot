@@ -6,19 +6,8 @@ const client = require('../utils/discord')()
 const { pause } = require('../utils/util')
 const { getCategory } = require('./challenge')
 const path = require('path')
+const { numberList } = require('./util')
 
-const numberList = {
-  1: ':one:',
-  2: ':two:',
-  3: ':three:',
-  4: ':four:',
-  5: ':five:',
-  6: ':six:',
-  7: ':seven:',
-  8: ':eight:',
-  9: ':nine:',
-  10: ':keycap_ten:'
-}
 
 module.exports = {
   async updateScoreboards() {
