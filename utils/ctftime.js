@@ -24,13 +24,18 @@ module.exports = {
     const count = []
     for (let i = 0; i < reactionArray.length; i++) count[i] = message.reactions.cache.get(reactionArray[i]).count - 1 // Removes the bot vote*
     const nbVote = count[0] + count[1]
-
     const resultEmbed = new MessageEmbed()
       .setTitle(data.title)
       .setDescription('Fin du vote, les résultats sont :')
-      .addField('Stats : ', `✅ : ${(100 * count[0] / nbVote) || 0}% \n ❌ : ${(100 * count[1] / nbVote) || 0}% \n Nombre de votes : ${nbVote}`)
-      .setURL(data.ctftime_url)
-      .setThumbnail(data.logo)
+    // Handle if no one has voted
+    if(!nbVote){
+      resultEmbed.addField('Stats : ', 'Prsonne n\'a voté')
+    }
+    else{
+      resultEmbed.addField('Stats : ', `✅ : ${(100 * count[0] / nbVote) || 0}% \n ❌ : ${(100 * count[1] / nbVote) || 0}% \n Nombre de votes : ${nbVote}`)
+    }
+    resultEmbed.setURL(data.ctftime_url)
+    resultEmbed.setThumbnail(data.logo)
 
     await message.delete()
     await channel.send({ embeds: [resultEmbed] })
