@@ -13,7 +13,7 @@ module.exports = {
   async execute(interaction) {
     // Checking for the permission
     const id = interaction.options.getInteger('id')
-    await interaction.deferReply({ephemeral : true})
+    await interaction.deferReply()
     let response = await curly.get(`https://ctftime.org/api/v1/events/${id}/`)
     if (response.statusCode === 200) {
       response = response.data

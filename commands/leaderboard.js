@@ -16,7 +16,7 @@ module.exports = {
     // Get the locale parameter
     let locale = interaction.options.getString('locale')
     // Defer the reply to permit more time to execute the command
-    await interaction.deferReply({ephemeral : true})
+    await interaction.deferReply()
     // Declare the embed globally to avoid code redundancy
     const embed = new MessageEmbed()
       .setThumbnail('https://avatars.githubusercontent.com/u/2167643?s=200&v=4')
