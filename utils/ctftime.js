@@ -29,9 +29,12 @@ module.exports = {
       .setDescription('Fin du vote, les résultats sont :')
     // Handle if no one has voted
     if (!nbVote) {
-      resultEmbed.addField('Stats : ', 'Prsonne n\'a voté')
+      resultEmbed.addField('Stats : ', 'Personne n\'a voté')
     } else {
-      resultEmbed.addField('Stats : ', `✅ : ${(100 * count[0] / nbVote) || 0}% \n ❌ : ${(100 * count[1] / nbVote) || 0}% \n Nombre de votes : ${nbVote}`)
+      const v1 = (100 * count[0] / nbVote) || 0
+      const v2 = (100 * count[1] / nbVote) || 0
+
+      resultEmbed.addField('Stats : ', `✅ : ${parseFloat(v1.toFixed(2))}% \n ❌ : ${parseFloat(v2.toFixed(2))}% \n Nombre de votes : ${nbVote}`)
     }
     resultEmbed.setURL(data.ctftime_url)
     resultEmbed.setThumbnail(data.logo)
