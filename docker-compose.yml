@@ -65,6 +65,13 @@ services:
     networks:
       - rootme
     restart: always
+  htmltoimage:
+    image: ghcr.io/kernoeb/html_to_image:main
+    restart: always
+    stdin_open: true
+    tty: true
+    security_opt:
+      - seccomp:./docker/chrome.json
 
 networks:
   rootme:
