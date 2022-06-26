@@ -8,13 +8,30 @@ const { getProfilePicture } = require('../utils/get_profile_picture')
 const mongoose = require('../utils/mongoose')
 const html = fs.readFileSync(path.join(process.cwd(), '/assets/podium.html'), 'utf-8')
 
+// BETA - This command is currently in beta.
+
+/**
+ *   html-to-image:
+ *     image: ghcr.io/kernoeb/html_to_image:main # this is image is not part of the package
+ *     restart: always
+ *     stdin_open: true
+ *     tty: true
+ *     networks:
+ *       - rootme
+ *     security_opt:
+ *       - seccomp:./docker/chrome.json
+ */
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('podium')
     .setDescription('Podium sous forme d\'image'),
   async execute(interaction) {
     await interaction.deferReply()
-    // return await interaction.editReply({ content: 'Commande en maintenance, elle revient plus tard !' })
+
+    if (process.env.NODE_ENV === 'production' && !process.env.API_PUPPETEER_RENDER) {
+      return await interaction.editReply({ content: 'Non activé sur ce serveur !' })
+    }
 
     try {
       const channel = await mongoose.models.channels.findOne({ guildId: interaction.guildId })
@@ -30,7 +47,7 @@ module.exports = {
       const pp3 = await getProfilePicture(tmpUsers[2].id_auteur) || def
 
       logger.info('Puppeteer')
-      const { data } = await curly.post(process.env.API_RENDER || 'http://localhost:11871/api/render', {
+      const { data } = await curly.post(process.env.NODE_ENV === 'production' ? process.env.API_PUPPETEER_RENDER : 'http://localhost:11871/api/render', {
         postFields: JSON.stringify({
           html,
           content: { name1: tmpUsers[0].nom, pp1, name2: tmpUsers[1].nom, pp2, name3: tmpUsers[2].nom, pp3 },
@@ -46,7 +63,7 @@ module.exports = {
       await interaction.editReply({ files: [attachment] })
     } catch (err) {
       logger.error(err)
-      await interaction.editReply({ content: 'Erreur désolé...', ephemeral: true })
+      await interaction.editReply({ content: 'Erreur lors de la génération de l\'image !' })
     }
   }
 }

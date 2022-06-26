@@ -33,6 +33,15 @@ services:
     ports:
       - "9054:9050"
     restart: always
+  html-to-image:
+    image: ghcr.io/kernoeb/html_to_image:main
+    restart: always
+    stdin_open: true
+    tty: true
+    ports:
+      - "11871:3000"
+    security_opt:
+      - seccomp:./docker/chrome.json
 
 networks:
   rootme:
