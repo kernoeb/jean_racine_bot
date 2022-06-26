@@ -40,6 +40,8 @@ module.exports = {
         nom: 1
       }).limit(3)
 
+      if (tmpUsers?.length !== 3) return await interaction.editReply({ content: 'Il n\'y a pas assez d\'utilisateurs pour afficher le podium !' })
+
       logger.info(`Podium: ${tmpUsers.map(v => v.id_auteur).join(', ')}`)
       const def = process.env.ROOTME_URL + '/IMG/logo/auton0.png'
       const pp1 = await getProfilePicture(tmpUsers[0].id_auteur) || def
