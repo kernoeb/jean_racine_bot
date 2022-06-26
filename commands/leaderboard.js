@@ -59,6 +59,7 @@ module.exports = {
     const dom = new JSDOM(response)
     const top10Names = []
     const top10Global = []
+    const top10Points = []
     let nbTeams = [...dom.window.document.querySelector('body > div.container > table > tbody').childNodes.values()].length / 2 - 1
     if (nbTeams > 10) {
       nbTeams = 10
@@ -66,9 +67,10 @@ module.exports = {
     for (let i = 0; i < nbTeams; i++) {
       top10Names.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i + 2}) > td:nth-child(5) > a`).textContent)
       top10Global.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i + 2}) > td:nth-child(1)`).textContent)
+      top10Points.push(dom.window.document.querySelector(`body > div.container > table > tbody > tr:nth-child(${i + 2}) > td:nth-child(6)`).textContent)
     }
     for (let i = 0; i < nbTeams; i++) {
-      embed.addField(`${numberList[i + 1]} - ${top10Names[i]}`, `Place globale : **${top10Global[i]}**`)
+      embed.addField(`${numberList[i + 1]} - ${top10Names[i]}`, `**Place globale** : ${top10Global[i]}\n**Points** : ${top10Points[i]}`)
     }
     embed.setTitle(`Top 10 ${locale} de CTFTime :flag_${locale.toLowerCase()}:`)
     await interaction.editReply({ embeds: [embed] })
