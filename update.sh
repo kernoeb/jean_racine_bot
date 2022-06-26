@@ -25,6 +25,11 @@ if [ -x "$(command -v docker)" ]; then
         exit 1
     fi
 
+    docker run --rm curlimages/curl --silent --output /dev/null --show-error https://discord.com || {
+        echo -e "${RED}[!]${RESET} Unable to connect to Discord.com inside a container, make sure Docker can access the internet."
+        exit 1
+    }
+
     if docker compose version 1>/dev/null 2>/dev/null; then
         DOCKER_COMPOSE_COMMAND="docker compose"
     elif docker-compose version 1>/dev/null 2>/dev/null; then
