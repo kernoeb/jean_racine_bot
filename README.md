@@ -66,6 +66,12 @@ chmod +x ./update.sh
 docker exec -it <name-of-jean-racine-container> register_slash_commands
 ```
 
+### Crontab
+
+You can also add a cron to automatically update the bot ([crontab.guru](https://crontab.guru/) is a good tool)
+
+Something like `0 0 * * * cd /path/to/jeanracine/ && ./update.sh`
+
 #### Optional :
 
 Add this to your `.bashrc` :
