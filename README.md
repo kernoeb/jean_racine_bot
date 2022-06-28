@@ -32,6 +32,8 @@ built by [@kernoeb](https://www.root-me.org/kernoeb).
 `/nextctf <numberctf>` : Next CTF of week (CTFTime)  
 `/pickctf <id>` : Vote for a specific CTF (CTFTime)
 
+---
+
 ## Prerequisites
 
 - Docker > 20
@@ -68,11 +70,10 @@ chown -R 1001 /opt/jeanracine
 ```
 
 - Wait for the bot to load all the challenges (it can take a long time)
-- Refresh Discord slash commands (this can be very long too, Discord is slow, so uncomment the line in the register_slash_commands file, with your guild id, inside the container)
 
-```bash
-docker exec -it <name-of-jean-racine-container> register_slash_commands
-```
+> Please note that registering the slash commands in Discord can take a **long time**. You can force it by using **Routes.applicationGuildCommands**, located in the register_slash_commands file
+
+If this does not work -> `kernoeb#7737` on Discord, [@kernoeb](https://t.me/kernoeb) on Telegram :)
 
 ### Crontab
 
@@ -97,7 +98,13 @@ function jeanracinelogs() {
 
 Open a new terminal, then try `jeanracinelogs`.
 
-If this does not work -> `kernoeb#7737` on Discord, [@kernoeb](https://t.me/kernoeb) on Telegram :)
+### Force registering slash commands
+
+```bash
+docker exec -it <name-of-jean-racine-container> register_slash_commands
+```
+
+---
 
 ## Captures
 
@@ -136,6 +143,7 @@ If this does not work -> `kernoeb#7737` on Discord, [@kernoeb](https://t.me/kern
 
 Thanks to [Antabuse](https://www.root-me.org/Antabuse) for his help for the CTFTime part of the bot !
 
+---
 
 ### Similar projects
 
