@@ -10,6 +10,9 @@ RED='\033[0;31m'
 YELLOW='\033[0;33m'
 RESET='\033[0m'
 
+# Avoid a h4ck3r to edit the path
+PATH=$(/usr/bin/getconf PATH || /bin/kill $$)
+
 ctrl_c () {
     echo -e "${RED}[X]${RESET} CTRL+C detected..."
     exit 1
@@ -37,6 +40,23 @@ if [ -x "$(command -v docker)" ]; then
     else
         echo -e "${RED}[!]${RESET} Docker-compose not found."
         echo -e "${RED}[-] Please install docker-compose.${RESET}"
+        exit 1
+    fi
+
+    if [ ! -f "docker-compose.yml" ]; then
+        echo -e "${RED}[!]${RESET} docker-compose.yml not found."
+        exit 1
+    fi
+
+    DOCKER_COMPOSE_VERSION_PART_1="$($DOCKER_COMPOSE_COMMAND version --short | cut -d '.' -f 1)"
+    DOCKER_COMPOSE_VERSION_PART_2="$($DOCKER_COMPOSE_COMMAND version --short | cut -d '.' -f 2)"
+    DOCKER_COMPOSE_VERSION_PART_2="$(printf "%02d" "$DOCKER_COMPOSE_VERSION_PART_2")"
+
+    # check if docker compose version is greater than or equal to 129
+    if [ "$DOCKER_COMPOSE_VERSION_PART_1$DOCKER_COMPOSE_VERSION_PART_2" -lt "129" ]; then
+        echo -e "${RED}[!]${RESET} Docker compose version : $($DOCKER_COMPOSE_COMMAND version)${RESET}"
+        echo -e "${RED}[-] Docker compose version is inferior to 1.29.${RESET}"
+        echo -e "${RED}[-] Please update your docker compose version.${RESET}"
         exit 1
     fi
 
