@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# # # # # # # # # # # # # # # # #
-#  ╦┌─┐┌─┐┌┐┌  ╦═╗┌─┐┌─┐┬┌┐┌┌─┐
-#  ║├┤ ├─┤│││  ╠╦╝├─┤│  ││││├┤
-# ╚╝└─┘┴ ┴┘└┘  ╩╚═┴ ┴└─┘┴┘└┘└─┘
-#  Root-Me and CTF Discord bot
-#  by kernoeb
-
 RED='\033[0;31m'
 YELLOW='\033[0;33m'
 RESET='\033[0m'
+DARK_GRAY='\033[1;90m'
+
+echo -e "${DARK_GRAY}# # # # # # # # # # # # # # # # # #${RESET}"
+echo -e "${DARK_GRAY}#${RESET}   ${YELLOW}╦${RESET}┌─┐┌─┐┌┐┌  ${YELLOW}╦═╗${RESET}┌─┐┌─┐┬┌┐┌┌─┐${RESET}"
+echo -e "${DARK_GRAY}#${RESET}   ${YELLOW}║${RESET}├┤ ├─┤│││  ${YELLOW}╠╦╝${RESET}├─┤│  ││││├┤${RESET}"
+echo -e "${DARK_GRAY}#${RESET}  ${YELLOW}╚╝${RESET}└─┘┴ ┴┘└┘  ${YELLOW}╩╚═${RESET}┴ ┴└─┘┴┘└┘└─┘${RESET}"
+echo -e "${DARK_GRAY}#  ${YELLOW}Root-Me${DARK_GRAY} and CTF ${YELLOW}Discord${DARK_GRAY} bot${RESET}"
+echo -e "${DARK_GRAY}#  by ${YELLOW}kernoeb${RESET}"
+echo -e "${RESET}"
 
 # Avoid a h4ck3r to edit the path
 PATH=$(/usr/bin/getconf PATH || /bin/kill $$)
