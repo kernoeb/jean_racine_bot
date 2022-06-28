@@ -4,7 +4,7 @@ services:
   rootme_node:
     # You can use my own image, or build it from scratch
     image: ghcr.io/kernoeb/jean_racine_bot:main
-#   build:
+#    build:
 #     context: .
 #     dockerfile: Dockerfile
 
@@ -41,27 +41,27 @@ services:
       - '/opt/jeanracine:/bitnami/mongodb'
   # Only if you want Tor nodes
   tor-node-1:
-    image: osminogin/tor-simple
+    image: docker.io/osminogin/tor-simple
     networks:
       - rootme
     restart: always
   tor-node-2:
-    image: osminogin/tor-simple
+    image: docker.io/osminogin/tor-simple
     networks:
       - rootme
     restart: always
   tor-node-3:
-    image: osminogin/tor-simple
+    image: docker.io/osminogin/tor-simple
     networks:
       - rootme
     restart: always
   tor-node-4:
-    image: osminogin/tor-simple
+    image: docker.io/osminogin/tor-simple
     networks:
       - rootme
     restart: always
   tor-node-chall:
-    image: osminogin/tor-simple
+    image: docker.io/osminogin/tor-simple
     networks:
       - rootme
     restart: always
