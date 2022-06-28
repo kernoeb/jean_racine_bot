@@ -42,7 +42,15 @@ built by [@kernoeb](https://www.root-me.org/kernoeb).
 
 ## Installation
 
-- Clone the repository, or only download `.env.example`, `docker-compose.yml` and `update.sh`  
+- Clone the repository, or only download `.env.example`, `docker-compose.yml` and `update.sh` :
+
+```bash
+curl https://raw.githubusercontent.com/kernoeb/jean_racine_bot/main/update.sh -o update.sh
+curl https://raw.githubusercontent.com/kernoeb/jean_racine_bot/main/docker-compose.yml -o docker-compose.yml
+curl https://raw.githubusercontent.com/kernoeb/jean_racine_bot/main/.env.example -o .env.example
+chmod u+x update.sh
+```
+
 You can also add the Dockerfile if you want to build the image by yourself
 
 - Get an API Key on Root-Me [here](https://www.root-me.org/?page=preferences)
