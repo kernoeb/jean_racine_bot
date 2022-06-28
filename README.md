@@ -45,6 +45,7 @@ built by [@kernoeb](https://www.root-me.org/kernoeb).
 - Clone the repository, or only download `.env.example`, `docker-compose.yml` and `update.sh` :
 
 ```bash
+mkdir -p ./jean_racine && cd ./jean_racine
 curl https://raw.githubusercontent.com/kernoeb/jean_racine_bot/main/update.sh -o update.sh
 curl https://raw.githubusercontent.com/kernoeb/jean_racine_bot/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/kernoeb/jean_racine_bot/main/.env.example -o .env.example
@@ -63,7 +64,6 @@ You can also add the Dockerfile if you want to build the image by yourself
 ```bash
 mkdir -p /opt/jeanracine
 chown -R 1001 /opt/jeanracine
-chmod +x ./update.sh
 ./update.sh
 ```
 
