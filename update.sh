@@ -45,6 +45,12 @@ if [ -x "$(command -v docker)" ]; then
 
     if [ ! -f "docker-compose.yml" ]; then
         echo -e "${RED}[!]${RESET} docker-compose.yml not found."
+        echo -e "${YELLOW}[?] Get it from : https://raw.githubusercontent.com/kernoeb/jean_racine_bot/main/docker-compose.yml${RESET}"
+        exit 1
+    fi
+
+    if [ ! -f ".env" ]; then
+        echo -e "${RED}[!]${RESET} .env file not found."
         exit 1
     fi
 
