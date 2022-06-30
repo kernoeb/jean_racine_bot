@@ -25,7 +25,7 @@
     "canvas": "^2.9.3",
     "chart.js": "^3.8.0",
     "chartjs-node-canvas": "^4.1.6",
-    "discord-api-types": "^0.35.0",
+    "discord-api-types": "^0.36.0",
     "discord.js": "^13.8.1",
     "html-entities": "^2.3.3",
     "jsdom": "^19.0.0",
