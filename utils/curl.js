@@ -75,7 +75,6 @@ const get = async (pathname, options) => {
   // console.log(tmpHeaders.concat(optionalHeaders))
   if (proxies && options?.customProxy) opts.proxy = `socks5://${options.customProxy}`
   else if (proxies) opts['proxy'] = `socks5://${proxies[count]}`
-  console.log(s)
   const { statusCode, data } = await curly.get(s, opts)
   count++
   if (statusCode !== 200) {

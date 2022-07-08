@@ -52,6 +52,7 @@ module.exports = {
         }
       } else logger.error(err)
     }
+    if (reqPage?.data?.titre) reqPage.data = [reqPage.data]
     if (reqPage?.data?.[0] && reqPage?.data?.[0]?.['error'] == null) {
       reqPage.data = reqPage.data[0]
       reqPage.data.timestamp = new Date()
