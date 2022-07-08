@@ -54,7 +54,7 @@ const get = async (pathname, options) => {
   try {
     const p = pathname.split('/')
     const lastSegment = p.pop() || p.pop()
-    if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
+    if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
   } catch (err) {}
 
   const s = url.format({
@@ -75,6 +75,7 @@ const get = async (pathname, options) => {
   // console.log(tmpHeaders.concat(optionalHeaders))
   if (proxies && options?.customProxy) opts.proxy = `socks5://${options.customProxy}`
   else if (proxies) opts['proxy'] = `socks5://${proxies[count]}`
+  console.log(s)
   const { statusCode, data } = await curly.get(s, opts)
   count++
   if (statusCode !== 200) {

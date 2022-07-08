@@ -21,6 +21,7 @@ const { challengeInfo, getCategory } = require('./utils/challenge')
 const { updateUsers, fetchChallenges } = require('./utils/updates')
 const { getScoreboard, updateScoreboards } = require('./utils/scoreboard')
 const { getAgenda: initAgendaVotes } = require('./utils/ctftime')
+const { getLastChallenges } = require('./utils/rss')
 
 const db = mongoose.connection
 
@@ -166,6 +167,16 @@ db.once('open', async function() {
     }
   })
 
+  agenda.define('GET_FRESH_CHALLENGES', {}, (job, done) => {
+    getLastChallenges().then(() => {
+      logger.success('GET_FRESH_CHALLENGES OK')
+      done()
+    }).catch(async err => {
+      logger.error('GET_FRESH_CHALLENGES ERROR', err)
+      done()
+    })
+  })
+
   agenda.mongo(db.db, 'agenda')
 
   agenda.on('ready', async () => {
@@ -184,6 +195,11 @@ db.once('open', async function() {
       if (!process.env.NO_UPDATE_CHALLENGES) {
         const UPDATE_CHALLENGES = agenda.create('UPDATE_CHALLENGES', {}).priority('lowest')
         await UPDATE_CHALLENGES.repeatEvery(process.env.REPEAT_CHALLENGES || '15 minutes', { skipImmediate: false }).save()
+      }
+
+      if (!process.env.NO_UPDATE_RSS) {
+        const GET_FRESH_CHALLENGES = agenda.create('GET_FRESH_CHALLENGES', {}).priority('lowest')
+        await GET_FRESH_CHALLENGES.repeatEvery('10 minutes', { skipImmediate: false }).save()
       }
     }
   })
