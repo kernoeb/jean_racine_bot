@@ -43,5 +43,5 @@
     "node-libcurl": "^2.3.4",
     "nodemon": "^2.0.19"
   },
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "yarn@3.2.2"
 }

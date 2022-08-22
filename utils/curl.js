@@ -54,7 +54,7 @@ const get = async (pathname, options) => {
   try {
     const p = pathname.split('/')
     const lastSegment = p.pop() || p.pop()
-    if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
+    //if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
   } catch (err) {}
 
   const s = url.format({
