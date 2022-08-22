@@ -27,7 +27,7 @@ const HEADERS_OBJ = {
   'sec-fetch-user': '?1',
   'sec-gpc': '1',
   'upgrade-insecure-requests': '1',
-  'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+  'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36',
   'cookie': `msg_history=explication_site_multilingue%3B; ${getCookie()}`
 }
 

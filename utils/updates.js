@@ -239,7 +239,7 @@ module.exports = {
         }
 
         await pause()
-        logger.success('User ', update)
+        logger.success('User', user.id_auteur, update)
       } catch (err) {
         await pause(3000)
         if (err?.code === 28) logger.error('Root-Me is slow, timeout was reached...')
