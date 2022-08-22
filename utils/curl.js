@@ -50,11 +50,11 @@ const get = async (pathname, options) => {
   options.params['var_mode'] = 'calcul'
 
   // Bypass cache with random letters
-  let randomString = ''
+  const randomString = ''
   try {
-    const p = pathname.split('/')
-    const lastSegment = p.pop() || p.pop()
-    //if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
+    // const p = pathname.split('/')
+    // const lastSegment = p.pop() || p.pop()
+    // if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
   } catch (err) {}
 
   const s = url.format({
