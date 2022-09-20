@@ -20,6 +20,10 @@ module.exports = {
       if (discordUser.id !== interaction.user.id) return await interaction.reply({ content: ':no_entry_sign: Vous n\'avez pas la permission d\'utiliser cette commande !', ephemeral: true })
     }
 
+    const member = interaction.guild.members.cache.get(discordUser.id)
+    if (!member) return await interaction.reply({ content: ':no_entry_sign: Utilisateur non présent dans le serveur !', ephemeral: true })
+    if (!member.roles.cache.has(role.id)) return await interaction.reply({ content: ':no_entry_sign: Le rôle n\'est pas attribué à l\'utilisateur !', ephemeral: true })
+
     if (!/^\d+$/.test(rootmeId)) return await interaction.reply({ content: ':no_entry_sign: ID Root-Me invalide' })
 
     await interaction.deferReply()
