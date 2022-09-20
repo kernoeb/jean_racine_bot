@@ -17,10 +17,15 @@ module.exports = {
     .addStringOption(option =>
       addChoices(option.setName('category')
         .setDescription('Catégorie')
-        .setRequired(false))),
+        .setRequired(false)))
+    .addRoleOption(option => option.setName('role')
+      .setDescription('Rôle')
+      .setRequired(false)),
   async execute(interaction) {
     const category = interaction.options?.getString('category') || undefined
-    await interaction.reply(await getScoreboard({ guildId: interaction.guildId, category: category || undefined }))
+    let role = interaction.options?.getRole('role') || undefined
+    if (!role || !role.id || (role.name || '').toLowerCase() === '@everyone') role = undefined
+    await interaction.reply(await getScoreboard({ guildId: interaction.guildId, category, role }))
   }
 }
 

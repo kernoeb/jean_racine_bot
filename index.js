@@ -111,6 +111,19 @@ db.once('open', async function() {
   const discordChannelsSchema = new mongoose.Schema(discordChannelsSchemaTemplate)
   const Channels = mongoose.model('channels', discordChannelsSchema)
 
+  // User list synced to a role and a root-me user
+  const syncedUserSchemaTemplate = {
+    discordId: { type: String, required: true },
+    rootmeId: { type: String, required: true },
+    roleId: { type: String, required: true },
+    guildId: { type: String, required: true }
+  }
+
+  const syncedUserSchema = new mongoose.Schema(syncedUserSchemaTemplate)
+
+  syncedUserSchema.index({ guildId: 1, id_role: 1 })
+  mongoose.model('syncedusers', syncedUserSchema)
+
   if (!await Challenges.countDocuments({})) {
     logger.info('Loading challenges, please wait...')
     try {

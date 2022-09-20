@@ -20,7 +20,7 @@ module.exports = {
     let nb = 0
     for (const s of scoreboards.filter(v => v.messageId && v.channelId)) {
       client.channels.cache.get(s.channelId).messages.fetch(s.messageId).then(async msg => {
-        await msg.edit(await module.exports.getScoreboard({ guildId: msg.guildId, limit: 60, globalScoreboard: true }))
+        await msg.edit(await module.exports.getScoreboard({ guildId: msg.guildId, limit: 100, globalScoreboard: true }))
         nb++
         await pause(100)
       }).catch((err) => {
@@ -31,15 +31,26 @@ module.exports = {
 
     logger.success(`Scoreboards updated (${nb}/${channels.length})`)
   },
-  async getScoreboard({ guildId, index = 0, limit = 5, globalScoreboard = false, category = undefined, fromArrow = false }) {
-
+  async getScoreboard({ guildId, index = 0, limit = 5, globalScoreboard = false, category = undefined, role = undefined, fromArrow = false }) {
     const channel = await mongoose.models.channels.findOne({ guildId })
     index = Number(index)
 
-    if (!channel)
-      return { content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true }
+    if (!channel) return { content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true }
 
-    const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }).sort({ [category ? `score_${category}` : 'score']: -1, nom: 1 })
+    let filteredIds = []
+    let roleText = ''
+    if (role?.id) {
+      const tmpUsers = await mongoose.models.syncedusers.find({ guildId, roleId: role.id }, { rootmeId: 1 })
+      filteredIds = tmpUsers.map(u => u.rootmeId)
+      roleText = `: **${role.name || role.id}** `
+    }
+
+    const tmpUsers = await mongoose.models.user.find({
+      id_auteur: { $in: (channel.users.filter(v => role?.id
+        ? filteredIds.includes(v)
+        : Boolean) || []) }
+    })
+      .sort({ [category ? `score_${category}` : 'score']: -1, nom: 1 })
       .limit(limit).skip(index * limit)
     if (tmpUsers && tmpUsers.length) {
       const nb = await mongoose.models.user.countDocuments({ id_auteur: { $in: (channel.users || []) } })
@@ -49,7 +60,7 @@ module.exports = {
         embed.setTitle(`Classement général du serveur | ${nb} membres`)
         embed.setDescription(`${DateTime.now().setLocale('fr').toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS)}`)
       } else {
-        embed.setTitle(`Utilisateurs (${(index * limit) + 1}-${limit * (index + 1) - (limit - tmpUsers.length)}/${nb})`)
+        embed.setTitle(`Utilisateurs ${roleText}(${(index * limit) + 1}-${limit * (index + 1) - (limit - tmpUsers.length)}/${nb})`)
         if (category) {
           const tmpCategory = getCategory(category)
           embed.setDescription('**' + tmpCategory?.title + '**')
