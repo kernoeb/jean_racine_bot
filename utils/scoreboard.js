@@ -45,15 +45,17 @@ module.exports = {
       roleText = `: **${role.name || role.id}** `
     }
 
+    const filteredChannelUsers = (channel.users || []).filter(v => role?.id
+      ? filteredIds.includes(v)
+      : Boolean)
+
     const tmpUsers = await mongoose.models.user.find({
-      id_auteur: { $in: (channel.users.filter(v => role?.id
-        ? filteredIds.includes(v)
-        : Boolean) || []) }
+      id_auteur: { $in: filteredChannelUsers }
     })
       .sort({ [category ? `score_${category}` : 'score']: -1, nom: 1 })
       .limit(limit).skip(index * limit)
     if (tmpUsers && tmpUsers.length) {
-      const nb = await mongoose.models.user.countDocuments({ id_auteur: { $in: (channel.users || []) } })
+      const nb = await mongoose.models.user.countDocuments({ id_auteur: { $in: filteredChannelUsers } })
       const embed = new MessageEmbed()
 
       if (globalScoreboard) {
