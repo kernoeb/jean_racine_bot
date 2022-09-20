@@ -16,6 +16,10 @@ module.exports = {
     const rootmeId = interaction.options.getString('rootme_id')
     const deleteLink = interaction.options.getBoolean('delete') || false
 
+    if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+      if (discordUser.id !== interaction.user.id) return await interaction.reply({ content: ':no_entry_sign: Vous n\'avez pas la permission d\'utiliser cette commande !', ephemeral: true })
+    }
+
     if (!/^\d+$/.test(rootmeId)) return await interaction.reply({ content: ':no_entry_sign: ID Root-Me invalide' })
 
     await interaction.deferReply()
