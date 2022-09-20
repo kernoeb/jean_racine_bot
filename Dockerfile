@@ -1,4 +1,4 @@
-FROM node:16.15.1-slim
+FROM node:16.17.0-slim
 RUN apt-get update  \
     && apt-get install --no-install-recommends --no-install-suggests -y ca-certificates  \
     && apt-get install --no-install-recommends --no-install-suggests --reinstall -y fontconfig
