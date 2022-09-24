@@ -48,6 +48,7 @@ const get = async (pathname, options) => {
   // Bypass cache
   options.params[new Date().getTime().toString()] = new Date().getTime().toString()
   options.params['var_mode'] = 'calcul'
+  options.params['var_hasard'] = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
   // Bypass cache with random letters
   const randomString = ''
