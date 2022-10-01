@@ -24,7 +24,9 @@ module.exports = {
   async execute(interaction) {
     const category = interaction.options?.getString('category') || undefined
     let role = interaction.options?.getRole('role') || undefined
-    if (!role || !role.id || (role.name || '').toLowerCase() === '@everyone') role = undefined
+    if (role.name === '@everyone' || role.name === '@here') return await interaction.reply({ content: '*Le rôle everyone ou here n\'est pas autorisé !*', ephemeral: true })
+
+    if (!role || !role.id) role = undefined
     await interaction.reply(await getScoreboard({ guildId: interaction.guildId, category, role }))
   }
 }

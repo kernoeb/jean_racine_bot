@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  mongodb:
+    image: ghcr.io/zcube/bitnami-compat/mongodb:4.4
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - /tmp/mongo:/bitnami/mongodb'
+  tor-node-1:
+    image: osminogin/tor-simple
+    ports:
+      - "9050:9050"
+    restart: always
+  tor-node-2:
+    image: osminogin/tor-simple
+    ports:
+      - "9051:9050"
+    restart: always
+  tor-node-3:
+    image: osminogin/tor-simple
+    ports:
+      - "9052:9050"
+    restart: always
+  tor-node-4:
+    image: osminogin/tor-simple
+    ports:
+      - "9053:9050"
+    restart: always
+  tor-node-5:
+    image: osminogin/tor-simple
+    ports:
+      - "9054:9050"
+    restart: always
+
+networks:
+  rootme:
+    driver: bridge

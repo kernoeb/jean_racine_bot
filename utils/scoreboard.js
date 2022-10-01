@@ -38,10 +38,11 @@ module.exports = {
     if (!channel) return { content: ':no_entry_sign: Pas la permission dans ce discord ! (**/init**)', ephemeral: true }
 
     let filteredIds = []
+    let tmpSyncedUsers = []
     let roleText = ''
     if (role?.id) {
-      const tmpUsers = await mongoose.models.syncedusers.find({ guildId, roleId: role.id }, { rootmeId: 1 })
-      filteredIds = tmpUsers.map(u => u.rootmeId)
+      tmpSyncedUsers = await mongoose.models.syncedusers.find({ guildId, roleId: role.id }, { rootmeId: 1, discordId: 1 })
+      filteredIds = tmpSyncedUsers.map(u => u.rootmeId)
       roleText = `: **${role.name || role.id}** `
     }
 
@@ -91,7 +92,15 @@ module.exports = {
       if (limit < 25) {
         for (const user of tmpUsers) {
           const tmpUser = user.userInfo()
-          embed.addField(`${tmpUser.name} (${tmpUser.id})`, tmpUser[category ? `score_${category}` : 'score'].toString() + ' points')
+          let discordUser
+          if (role?.id) {
+            try {
+              const discordId = tmpSyncedUsers.find(v => v.rootmeId === tmpUser.id)?.discordId
+              discordUser = await client.guilds.cache.get(guildId).members.fetch(discordId)
+            } catch (e) {}
+          }
+          const discordName = discordUser?.nickname || discordUser?.user?.username || tmpUser.name || tmpUser.id
+          embed.addField(`${discordName}`, tmpUser[category ? `score_${category}` : 'score'].toString() + ' points')
         }
       } else {
         let c = 1

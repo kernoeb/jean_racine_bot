@@ -12,6 +12,8 @@ module.exports = {
 
   async execute(interaction) {
     const role = interaction.options.getRole('role')
+    if (role.name === '@everyone' || role.name === '@here') return await interaction.reply({ content: '*Le rôle everyone ou here n\'est pas autorisé !*', ephemeral: true })
+
     const discordUser = interaction.options.getUser('discord_user')
     const rootmeId = interaction.options.getString('rootme_id')
     const deleteLink = interaction.options.getBoolean('delete') || false
