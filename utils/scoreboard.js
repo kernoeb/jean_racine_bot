@@ -8,6 +8,15 @@ const { getCategory } = require('./challenge')
 const path = require('path')
 const { numberList } = require('./util')
 
+const cleanName = (name) => {
+  return name.replace(/`/g, '\\`')
+    .replace(/\*/g, '\\*')
+    .replace(/_/g, '\\_')
+    .replace(/~/g, '\\~')
+    .replace(/`/g, '\\`')
+    .replace(/</g, '\\<')
+    .replace(/>/g, '\\>')
+}
 
 module.exports = {
   async updateScoreboards() {
@@ -100,7 +109,7 @@ module.exports = {
             } catch (e) {}
           }
           const discordName = discordUser?.nickname || discordUser?.user?.username || tmpUser.name || tmpUser.id
-          embed.addField(`${discordName}`, tmpUser[category ? `score_${category}` : 'score'].toString() + ' points')
+          embed.addField(`${cleanName(discordName)}`, tmpUser[category ? `score_${category}` : 'score'].toString() + ' points')
         }
       } else {
         let c = 1
