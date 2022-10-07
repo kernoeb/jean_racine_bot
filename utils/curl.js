@@ -46,21 +46,22 @@ const get = async (pathname, options) => {
   if (!options.params) options.params = {}
 
   // Bypass cache
-  options.params[new Date().getTime().toString()] = new Date().getTime().toString()
+  // TODO NOT WORKING ANYMORE :'(
+  /* options.params[new Date().getTime().toString()] = new Date().getTime().toString()
   options.params['var_mode'] = 'calcul'
-  options.params['var_hasard'] = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  options.params['var_hasard'] = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)*/
 
   // Bypass cache with random letters
-  const randomString = ''
-  try {
-    // const p = pathname.split('/')
-    // const lastSegment = p.pop() || p.pop()
-    // if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
-  } catch (err) {}
+  // const randomString = ''
+  // try {
+  // const p = pathname.split('/')
+  // const lastSegment = p.pop() || p.pop()
+  // if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
+  // } catch (err) {}
 
   const s = url.format({
     hostname,
-    pathname: pathname ? (pathname + randomString) : undefined,
+    pathname: pathname || undefined,
     protocol: 'https:',
     query: options.params
   }).toString()
