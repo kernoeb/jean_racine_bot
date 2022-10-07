@@ -2,6 +2,10 @@ const logger = require('../utils/signale')
 const url = require('url')
 logger.log('cURL instantiated')
 
+const getRandom = () => {
+  return Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
+}
+
 const getCookie = () => {
   if (process.env.API_KEY_FIRST) return `api_key=${process.env.API_KEY_FIRST}`
   else if (process.env.SPIP_SESSION) return `spip_session=${process.env.SPIP_SESSION}`
@@ -58,6 +62,11 @@ const get = async (pathname, options) => {
   // const lastSegment = p.pop() || p.pop()
   // if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
   // } catch (err) {}
+
+  // Wtf ??
+  if (hostname.startsWith('api.') && (pathname.startsWith('/challenges') || pathname.startsWith('/auteurs'))) {
+    pathname = pathname = getRandom() + '_' + getRandom() + '_' + getRandom() + '/%2E%2E' + pathname
+  }
 
   const s = url.format({
     hostname,
