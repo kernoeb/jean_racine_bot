@@ -46,26 +46,14 @@ const get = async (pathname, options) => {
   }
 
   if (proxies && count >= proxies.length) count = 0
-  options = options || {}
-  if (!options.params) options.params = {}
-
-  // Bypass cache
-  // TODO NOT WORKING ANYMORE :'(
-  /* options.params[new Date().getTime().toString()] = new Date().getTime().toString()
-  options.params['var_mode'] = 'calcul'
-  options.params['var_hasard'] = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)*/
-
-  // Bypass cache with random letters
-  // const randomString = ''
-  // try {
-  // const p = pathname.split('/')
-  // const lastSegment = p.pop() || p.pop()
-  // if (options?.bypassCache && /^\d+$/.test(lastSegment)) randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 5)
-  // } catch (err) {}
+  options ||= {}
+  options.params ||= {}
 
   // Wtf ??
   if (hostname.startsWith('api.') && (pathname.startsWith('/challenges') || pathname.startsWith('/auteurs'))) {
     pathname = pathname = getRandom() + '_' + getRandom() + '_' + getRandom() + '/%2E%2E' + pathname
+    options.params.login = getRandom() + getRandom() + getRandom()
+    options.params.password = getRandom() + getRandom() + getRandom()
   }
 
   const s = url.format({
