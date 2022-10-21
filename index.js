@@ -267,18 +267,30 @@ db.once('open', async function() {
     if (!interaction.isButton()) return
 
     try {
-      if (/go_\d+_page_/.test(interaction.customId)) {
-        const chall = interaction.customId.match(/\d+/)?.[0]?.trim()
+      if (/^go_.+_page_/.test(interaction.customId)) {
+        const [, data,, page] = interaction.customId.split('_')
+        let category, role, roleObj
+        if (data.includes('::')) [category, role] = data.trim().split('::')
+        else category = data.trim()
+
+        if (role) {
+          const guild = client.guilds.cache.get(interaction.guildId)
+          if (guild) roleObj = guild.roles.cache.get(role)
+          if (!roleObj || !roleObj.id) return interaction.reply({ content: 'Le rôle n\'existe pas ou plus :(', ephemeral: true })
+        }
+
         return interaction.update(await getScoreboard({
           guildId: interaction.guildId,
-          index: interaction.customId.split(`go_${chall}_page_`)[1],
-          category: Number(chall),
+          index: Number(page) || 0,
+          category: Number(category) || undefined,
+          role: roleObj || undefined,
           fromArrow: true
         }))
       } else if (interaction.customId.startsWith('go_page_')) {
+        const page = interaction.customId.match(/page_(\d+)/)?.[1]?.trim()
         return interaction.update(await getScoreboard({
           guildId: interaction.guildId,
-          index: interaction.customId.split('go_page_')[1],
+          index: Number(page) || 0,
           fromArrow: true
         }))
       }

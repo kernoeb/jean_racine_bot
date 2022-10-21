@@ -81,10 +81,12 @@ module.exports = {
       }
 
       const row = new MessageActionRow()
+      const customId = `go_${category || ''}${role?.id ? '::' + role.id : ''}${category || role?.id ? '_' : ''}page_`
+
       if (index !== 0) {
         row.addComponents(
           new MessageButton()
-            .setCustomId(`go_${category ? category + '_' : ''}page_` + (index - 1))
+            .setCustomId(customId + (index - 1))
             .setStyle('SECONDARY')
             .setEmoji('⬅️')
         )
@@ -92,7 +94,7 @@ module.exports = {
       if (tmpUsers.length === limit && (limit * (index + 1) - (limit - tmpUsers.length) !== nb)) {
         row.addComponents(
           new MessageButton()
-            .setCustomId(`go_${category ? category + '_' : ''}page_` + (index + 1))
+            .setCustomId(customId + (index + 1))
             .setStyle('SECONDARY')
             .setEmoji('➡️')
         )
