@@ -35,7 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@discordjs/builders", "npm:0.15.0"],\
             ["@discordjs/rest", "npm:0.5.0"],\
-            ["agenda", "npm:4.3.0"],\
+            ["agenda", "npm:4.4.0"],\
             ["canvas", "npm:2.10.1"],\
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
@@ -146,7 +146,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@eslint/eslintrc", "npm:0.4.3"],\
             ["ajv", "npm:6.12.6"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"],\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"],\
             ["espree", "npm:7.3.1"],\
             ["globals", "npm:13.17.0"],\
             ["ignore", "npm:4.0.6"],\
@@ -173,7 +173,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@humanwhocodes/config-array", "npm:0.5.0"],\
             ["@humanwhocodes/object-schema", "npm:1.2.1"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"],\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"],\
             ["minimatch", "npm:3.1.2"]\
           ],\
           "linkType": "HARD"\
@@ -450,13 +450,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["agenda", [\
-        ["npm:4.3.0", {\
-          "packageLocation": "./.yarn/cache/agenda-npm-4.3.0-9b90c5a8bd-259eb1954a.zip/node_modules/agenda/",\
+        ["npm:4.4.0", {\
+          "packageLocation": "./.yarn/cache/agenda-npm-4.4.0-efde2d9333-52cc5a429a.zip/node_modules/agenda/",\
           "packageDependencies": [\
-            ["agenda", "npm:4.3.0"],\
+            ["agenda", "npm:4.4.0"],\
             ["cron-parser", "npm:3.5.0"],\
             ["date.js", "npm:0.3.3"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"],\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"],\
             ["human-interval", "npm:2.0.1"],\
             ["moment-timezone", "npm:0.5.38"],\
             ["mongodb", "npm:4.10.0"]\
@@ -469,7 +469,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/agent-base-npm-6.0.2-428f325a93-f52b6872cc.zip/node_modules/agent-base/",\
           "packageDependencies": [\
             ["agent-base", "npm:6.0.2"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"]\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -479,7 +479,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/agentkeepalive-npm-4.2.1-b86a9fb343-39cb49ed8c.zip/node_modules/agentkeepalive/",\
           "packageDependencies": [\
             ["agentkeepalive", "npm:4.2.1"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"],\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"],\
             ["depd", "npm:1.1.2"],\
             ["humanize-ms", "npm:1.2.1"]\
           ],\
@@ -1296,12 +1296,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4", {\
-          "packageLocation": "./.yarn/__virtual__/debug-virtual-b36f58c845/0/cache/debug-npm-4.3.4-4513954577-3dbad3f94e.zip/node_modules/debug/",\
+        ["virtual:b14c2408e333f57964562787d775cea3bbd258fe1cd3c47c7f07fcc562b4795d18298b4ba0925e7c2fd573d5d32d0f7a495f249d9b8553797095e0117325fff2#npm:3.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/debug-virtual-b14cd835f9/0/cache/debug-npm-3.1.0-9f0accb99b-0b52718ab9.zip/node_modules/debug/",\
           "packageDependencies": [\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"],\
+            ["debug", "virtual:b14c2408e333f57964562787d775cea3bbd258fe1cd3c47c7f07fcc562b4795d18298b4ba0925e7c2fd573d5d32d0f7a495f249d9b8553797095e0117325fff2#npm:3.1.0"],\
             ["@types/supports-color", null],\
-            ["ms", "npm:2.1.2"],\
+            ["ms", "npm:2.0.0"],\
             ["supports-color", null]\
           ],\
           "packagePeers": [\
@@ -1310,12 +1310,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:b14c2408e333f57964562787d775cea3bbd258fe1cd3c47c7f07fcc562b4795d18298b4ba0925e7c2fd573d5d32d0f7a495f249d9b8553797095e0117325fff2#npm:3.1.0", {\
-          "packageLocation": "./.yarn/__virtual__/debug-virtual-b14cd835f9/0/cache/debug-npm-3.1.0-9f0accb99b-0b52718ab9.zip/node_modules/debug/",\
+        ["virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4", {\
+          "packageLocation": "./.yarn/__virtual__/debug-virtual-7ce148b323/0/cache/debug-npm-4.3.4-4513954577-3dbad3f94e.zip/node_modules/debug/",\
           "packageDependencies": [\
-            ["debug", "virtual:b14c2408e333f57964562787d775cea3bbd258fe1cd3c47c7f07fcc562b4795d18298b4ba0925e7c2fd573d5d32d0f7a495f249d9b8553797095e0117325fff2#npm:3.1.0"],\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"],\
             ["@types/supports-color", null],\
-            ["ms", "npm:2.0.0"],\
+            ["ms", "npm:2.1.2"],\
             ["supports-color", null]\
           ],\
           "packagePeers": [\
@@ -1661,7 +1661,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ajv", "npm:6.12.6"],\
             ["chalk", "npm:4.1.2"],\
             ["cross-spawn", "npm:7.0.3"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"],\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"],\
             ["doctrine", "npm:3.0.0"],\
             ["enquirer", "npm:2.3.6"],\
             ["escape-string-regexp", "npm:4.0.0"],\
@@ -2334,7 +2334,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-proxy-agent", "npm:5.0.0"],\
             ["@tootallnate/once", "npm:2.0.0"],\
             ["agent-base", "npm:6.0.2"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"]\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2357,7 +2357,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["https-proxy-agent", "npm:5.0.1"],\
             ["agent-base", "npm:6.0.2"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"]\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2639,7 +2639,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jean_racine_bot", "workspace:."],\
             ["@discordjs/builders", "npm:0.15.0"],\
             ["@discordjs/rest", "npm:0.5.0"],\
-            ["agenda", "npm:4.3.0"],\
+            ["agenda", "npm:4.4.0"],\
             ["canvas", "npm:2.10.1"],\
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
@@ -4388,7 +4388,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["socks-proxy-agent", "npm:7.0.0"],\
             ["agent-base", "npm:6.0.2"],\
-            ["debug", "virtual:9b90c5a8bd71d2549b6bc6b41d75f2212420600a1ae3fd2fecfaaed3d435c930df1011ff543c42f24b5f7e37c4926037bd2c4e1d9811f26dcc4ed9f4b21d1e5d#npm:4.3.4"],\
+            ["debug", "virtual:efde2d933394b3e729c8b0600405a851f65df2b9cf20a29af5fc814627a36bd3e189c18cba857e4e8b8af5bffbfdfc84c6f713d36f8d9b339d156c4da79e74ce#npm:4.3.4"],\
             ["socks", "npm:2.7.1"]\
           ],\
           "linkType": "HARD"\

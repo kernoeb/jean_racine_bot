@@ -348,17 +348,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"agenda@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "agenda@npm:4.3.0"
+"agenda@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "agenda@npm:4.4.0"
   dependencies:
     cron-parser: ^3.0.0
     date.js: ~0.3.3
     debug: ~4.3.0
     human-interval: ~2.0.0
-    moment-timezone: ~0.5.27
+    moment-timezone: ~0.5.37
     mongodb: ^4.1.0
-  checksum: 259eb1954a41f9fb97b6c035f5f0c3ec126555847accb6a8a5ac27a013221fe6bbce65d71355b67d837b585ea6729b2951908317a41b4e2dc8390bed1faaf404
+  checksum: 52cc5a429a5493cc341f6e509c12fc3ebcf7c8d3aefa70fe30db3e03fb361ecdb4b0b76ff733911bad84395425f1575e33560e1b2130ca45340e940ed63bca12
   languageName: node
   linkType: hard
 
@@ -2260,7 +2260,7 @@ __metadata:
   dependencies:
     "@discordjs/builders": ^0.15.0
     "@discordjs/rest": ^0.5.0
-    agenda: ^4.3.0
+    agenda: ^4.4.0
     canvas: ^2.10.1
     chart.js: ^3.9.1
     chartjs-node-canvas: ^4.1.6
@@ -2692,7 +2692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:^0.5.31, moment-timezone@npm:~0.5.27":
+"moment-timezone@npm:^0.5.31, moment-timezone@npm:~0.5.37":
   version: 0.5.38
   resolution: "moment-timezone@npm:0.5.38"
   dependencies:
