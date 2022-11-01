@@ -756,7 +756,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"canvas@npm:^2.10.1, canvas@npm:^2.8.0":
+"canvas@npm:^2.10.2":
+  version: 2.10.2
+  resolution: "canvas@npm:2.10.2"
+  dependencies:
+    "@mapbox/node-pre-gyp": ^1.0.0
+    nan: ^2.17.0
+    node-gyp: latest
+    simple-get: ^3.0.3
+  checksum: b2e3eb4c3635fa2f67857619621c3d314f935a9e51904536dadf4908ab580dff4f5bcbaafe6eb0255247fa027ca494d5cd97c33376a49a0f994997263fa9944b
+  languageName: node
+  linkType: hard
+
+"canvas@npm:^2.8.0":
   version: 2.10.1
   resolution: "canvas@npm:2.10.1"
   dependencies:
@@ -1199,10 +1211,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:^0.37.15":
-  version: 0.37.15
-  resolution: "discord-api-types@npm:0.37.15"
-  checksum: c54d2feeb8074509bdda430fb8ec0f6ff315512e7327d47399e0e7a78bbd0a6f0f0dcfc4b5e39825eb6141a13f33efa942711af89c9a5936a721cfc1e1d69d19
+"discord-api-types@npm:^0.37.16":
+  version: 0.37.16
+  resolution: "discord-api-types@npm:0.37.16"
+  checksum: bf8fb1d8f83fd26be12173d5a86be0736d411f2dd1a7b5e9e29b5b5880bb96cefd4a253ed4d36b36b58e12105eda29dff53569f0d1d3c51cf05c6789e904e506
   languageName: node
   linkType: hard
 
@@ -2261,11 +2273,11 @@ __metadata:
     "@discordjs/builders": ^0.15.0
     "@discordjs/rest": ^0.5.0
     agenda: ^4.4.0
-    canvas: ^2.10.1
+    canvas: ^2.10.2
     chart.js: ^3.9.1
     chartjs-node-canvas: ^4.1.6
     cross-env: ^7.0.3
-    discord-api-types: ^0.37.15
+    discord-api-types: ^0.37.16
     discord.js: ^13.12.0
     dotenv: ^10.0.0
     eslint: ^7.32.0
@@ -2845,7 +2857,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nan@npm:^2.15.0":
+"nan@npm:^2.15.0, nan@npm:^2.17.0":
   version: 2.17.0
   resolution: "nan@npm:2.17.0"
   dependencies:
