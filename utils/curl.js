@@ -52,8 +52,7 @@ const get = async (pathname, options) => {
   // Wtf ??
   if (hostname.startsWith('api.') && (pathname.startsWith('/challenges') || pathname.startsWith('/auteurs'))) {
     pathname = pathname = getRandom() + '_' + getRandom() + '_' + getRandom() + '/%2E%2E' + pathname
-    options.params.login = getRandom() + getRandom() + getRandom()
-    options.params.password = getRandom() + getRandom() + getRandom()
+    options.params.os = getRandom() + getRandom() + getRandom()
   }
 
   const s = url.format({
