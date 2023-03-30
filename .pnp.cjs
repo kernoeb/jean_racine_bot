@@ -31,21 +31,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@discordjs/builders", "npm:0.15.0"],\
             ["@discordjs/rest", "npm:0.5.0"],\
             ["agenda", "npm:4.4.0"],\
-            ["canvas", "npm:2.10.2"],\
+            ["canvas", "npm:2.11.0"],\
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
             ["cross-env", "npm:7.0.3"],\
-            ["discord-api-types", "npm:0.37.20"],\
-            ["discord.js", "npm:13.12.0"],\
+            ["discord-api-types", "npm:0.37.37"],\
+            ["discord.js", "npm:13.14.0"],\
             ["dotenv", "npm:10.0.0"],\
             ["eslint", "npm:7.32.0"],\
             ["express", "npm:4.18.2"],\
             ["html-entities", "npm:2.3.3"],\
             ["jsdom", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:19.0.0"],\
-            ["luxon", "npm:3.1.0"],\
-            ["mongoose", "npm:5.13.15"],\
+            ["luxon", "npm:3.3.0"],\
+            ["mongoose", "npm:5.13.16"],\
             ["node-libcurl", "npm:2.3.4"],\
-            ["nodemon", "npm:2.0.20"],\
+            ["nodemon", "npm:2.0.22"],\
             ["random-useragent", "npm:0.5.0"],\
             ["rss-parser", "npm:3.12.0"],\
             ["signale-logger", "npm:1.5.1"]\
@@ -911,10 +911,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:2.10.2", {\
-          "packageLocation": "./.yarn/unplugged/canvas-npm-2.10.2-ceb54a412f/node_modules/canvas/",\
+        ["npm:2.11.0", {\
+          "packageLocation": "./.yarn/unplugged/canvas-npm-2.11.0-1643476467/node_modules/canvas/",\
           "packageDependencies": [\
-            ["canvas", "npm:2.10.2"],\
+            ["canvas", "npm:2.11.0"],\
             ["@mapbox/node-pre-gyp", "npm:1.0.10"],\
             ["nan", "npm:2.17.0"],\
             ["node-gyp", "npm:9.3.0"],\
@@ -993,7 +993,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chokidar", "npm:3.5.3"],\
             ["anymatch", "npm:3.1.2"],\
             ["braces", "npm:3.0.2"],\
-            ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"],\
+            ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"],\
             ["glob-parent", "npm:5.1.2"],\
             ["is-binary-path", "npm:2.1.0"],\
             ["is-glob", "npm:4.0.3"],\
@@ -1274,10 +1274,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:2fea8f7bf934d589dd2afccb55bdd68145a88b9aa55a29410057bbb8228035ad3d548659b5b68d9a9ac84d437a7692cb2fa244c9ab467fa2df8198a52edaac16#npm:3.2.7", {\
-          "packageLocation": "./.yarn/__virtual__/debug-virtual-59668cc157/0/cache/debug-npm-3.2.7-754e818c7a-b3d8c59407.zip/node_modules/debug/",\
+        ["virtual:2e71ccda0bb8e9b150eba16d9555040ae3f5a03be41bbaba1c15a7310399806e2c8e36c9e19d1b8015c6bb7294dccf844594ece9e99a12b6d5722662eca0b9b2#npm:3.2.7", {\
+          "packageLocation": "./.yarn/__virtual__/debug-virtual-40e471c348/0/cache/debug-npm-3.2.7-754e818c7a-b3d8c59407.zip/node_modules/debug/",\
           "packageDependencies": [\
-            ["debug", "virtual:2fea8f7bf934d589dd2afccb55bdd68145a88b9aa55a29410057bbb8228035ad3d548659b5b68d9a9ac84d437a7692cb2fa244c9ab467fa2df8198a52edaac16#npm:3.2.7"],\
+            ["debug", "virtual:2e71ccda0bb8e9b150eba16d9555040ae3f5a03be41bbaba1c15a7310399806e2c8e36c9e19d1b8015c6bb7294dccf844594ece9e99a12b6d5722662eca0b9b2#npm:3.2.7"],\
             ["@types/supports-color", null],\
             ["ms", "npm:2.1.3"],\
             ["supports-color", "npm:5.5.0"]\
@@ -1460,19 +1460,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:0.37.20", {\
-          "packageLocation": "./.yarn/cache/discord-api-types-npm-0.37.20-e3242ea9fb-88ebed85aa.zip/node_modules/discord-api-types/",\
+        ["npm:0.37.37", {\
+          "packageLocation": "./.yarn/cache/discord-api-types-npm-0.37.37-417c73fff9-6b680f52c1.zip/node_modules/discord-api-types/",\
           "packageDependencies": [\
-            ["discord-api-types", "npm:0.37.20"]\
+            ["discord-api-types", "npm:0.37.37"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["discord.js", [\
-        ["npm:13.12.0", {\
-          "packageLocation": "./.yarn/cache/discord.js-npm-13.12.0-72284023f7-e7121efac9.zip/node_modules/discord.js/",\
+        ["npm:13.14.0", {\
+          "packageLocation": "./.yarn/cache/discord.js-npm-13.14.0-26171e7c88-1eb64e121b.zip/node_modules/discord.js/",\
           "packageDependencies": [\
-            ["discord.js", "npm:13.12.0"],\
+            ["discord.js", "npm:13.14.0"],\
             ["@discordjs/builders", "npm:0.16.0"],\
             ["@discordjs/collection", "npm:0.7.0"],\
             ["@sapphire/async-queue", "npm:1.5.0"],\
@@ -1481,7 +1481,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["discord-api-types", "npm:0.33.5"],\
             ["form-data", "npm:4.0.0"],\
             ["node-fetch", "virtual:1811160047d7e0f7e43f371e07920c11204416dd6ae0b8461e04538b2f68e9167aca28b60b34dbd287674a5cdd52bd05be5797bbe2f7de916231958cb58055fb#npm:2.6.7"],\
-            ["ws", "virtual:72284023f7412248189543d1155a080bc8a6a3170d0c6b9bb9d3887fe7dce8516358f3482ec1425939b47de5c76d897a7582f7211dec5e9316efd8e2acadb26a#npm:8.9.0"]\
+            ["ws", "virtual:26171e7c887632c09bc3497853706824a71f5814c07fcccb25817358932f0364e4519a673206629f923472ce96510c4e77f0f5148de63ba183354acffc1bb18b#npm:8.9.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2064,10 +2064,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["fsevents", [\
-        ["patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7", {\
-          "packageLocation": "./.yarn/unplugged/fsevents-patch-3340e2eb10/node_modules/fsevents/",\
+        ["patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1", {\
+          "packageLocation": "./.yarn/unplugged/fsevents-patch-2882183fbf/node_modules/fsevents/",\
           "packageDependencies": [\
-            ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"],\
+            ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"],\
             ["node-gyp", "npm:9.3.0"]\
           ],\
           "linkType": "HARD"\
@@ -2646,21 +2646,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@discordjs/builders", "npm:0.15.0"],\
             ["@discordjs/rest", "npm:0.5.0"],\
             ["agenda", "npm:4.4.0"],\
-            ["canvas", "npm:2.10.2"],\
+            ["canvas", "npm:2.11.0"],\
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
             ["cross-env", "npm:7.0.3"],\
-            ["discord-api-types", "npm:0.37.20"],\
-            ["discord.js", "npm:13.12.0"],\
+            ["discord-api-types", "npm:0.37.37"],\
+            ["discord.js", "npm:13.14.0"],\
             ["dotenv", "npm:10.0.0"],\
             ["eslint", "npm:7.32.0"],\
             ["express", "npm:4.18.2"],\
             ["html-entities", "npm:2.3.3"],\
             ["jsdom", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:19.0.0"],\
-            ["luxon", "npm:3.1.0"],\
-            ["mongoose", "npm:5.13.15"],\
+            ["luxon", "npm:3.3.0"],\
+            ["mongoose", "npm:5.13.16"],\
             ["node-libcurl", "npm:2.3.4"],\
-            ["nodemon", "npm:2.0.20"],\
+            ["nodemon", "npm:2.0.22"],\
             ["random-useragent", "npm:0.5.0"],\
             ["rss-parser", "npm:3.12.0"],\
             ["signale-logger", "npm:1.5.1"]\
@@ -2713,7 +2713,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["abab", "npm:2.0.6"],\
             ["acorn", "npm:8.8.0"],\
             ["acorn-globals", "npm:6.0.0"],\
-            ["canvas", "npm:2.10.2"],\
+            ["canvas", "npm:2.11.0"],\
             ["cssom", "npm:0.5.0"],\
             ["cssstyle", "npm:2.3.0"],\
             ["data-urls", "npm:3.0.2"],\
@@ -2736,7 +2736,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["whatwg-encoding", "npm:2.0.0"],\
             ["whatwg-mimetype", "npm:3.0.0"],\
             ["whatwg-url", "npm:10.0.0"],\
-            ["ws", "virtual:72284023f7412248189543d1155a080bc8a6a3170d0c6b9bb9d3887fe7dce8516358f3482ec1425939b47de5c76d897a7582f7211dec5e9316efd8e2acadb26a#npm:8.9.0"],\
+            ["ws", "virtual:26171e7c887632c09bc3497853706824a71f5814c07fcccb25817358932f0364e4519a673206629f923472ce96510c4e77f0f5148de63ba183354acffc1bb18b#npm:8.9.0"],\
             ["xml-name-validator", "npm:4.0.0"]\
           ],\
           "packagePeers": [\
@@ -2916,10 +2916,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:3.1.0", {\
-          "packageLocation": "./.yarn/cache/luxon-npm-3.1.0-16e2508500-f8a850b759.zip/node_modules/luxon/",\
+        ["npm:3.3.0", {\
+          "packageLocation": "./.yarn/cache/luxon-npm-3.3.0-bdbae9bfd5-50cf17a0dc.zip/node_modules/luxon/",\
           "packageDependencies": [\
-            ["luxon", "npm:3.1.0"]\
+            ["luxon", "npm:3.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3172,10 +3172,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:a8d6ff2fa1287ddcf1bddc74099a1260a43ba27ccec11c852133143aab5e3129f564bb46352c0282f6cfc9342a53fdfe3c31e5ea0404d044e256690dd453e739#npm:3.7.3", {\
-          "packageLocation": "./.yarn/__virtual__/mongodb-virtual-f9aa664c8d/0/cache/mongodb-npm-3.7.3-c479129d1e-ef7690fe6e.zip/node_modules/mongodb/",\
+        ["virtual:a26e12c20936f27cb2ba55902ba4454991d6f4fa38a41e1ae9ab923f14e803ef57cf6effa7fe00761376f38d7124217b3182085a5c2c88a9b5554423b1549bf3#npm:3.7.3", {\
+          "packageLocation": "./.yarn/__virtual__/mongodb-virtual-951ffe1e62/0/cache/mongodb-npm-3.7.3-c479129d1e-ef7690fe6e.zip/node_modules/mongodb/",\
           "packageDependencies": [\
-            ["mongodb", "virtual:a8d6ff2fa1287ddcf1bddc74099a1260a43ba27ccec11c852133143aab5e3129f564bb46352c0282f6cfc9342a53fdfe3c31e5ea0404d044e256690dd453e739#npm:3.7.3"],\
+            ["mongodb", "virtual:a26e12c20936f27cb2ba55902ba4454991d6f4fa38a41e1ae9ab923f14e803ef57cf6effa7fe00761376f38d7124217b3182085a5c2c88a9b5554423b1549bf3#npm:3.7.3"],\
             ["@types/aws4", null],\
             ["@types/bson-ext", null],\
             ["@types/kerberos", null],\
@@ -3224,16 +3224,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mongoose", [\
-        ["npm:5.13.15", {\
-          "packageLocation": "./.yarn/cache/mongoose-npm-5.13.15-a8d6ff2fa1-74edc47c78.zip/node_modules/mongoose/",\
+        ["npm:5.13.16", {\
+          "packageLocation": "./.yarn/cache/mongoose-npm-5.13.16-a26e12c209-e3171c8fbe.zip/node_modules/mongoose/",\
           "packageDependencies": [\
-            ["mongoose", "npm:5.13.15"],\
+            ["mongoose", "npm:5.13.16"],\
             ["@types/bson", "npm:4.0.5"],\
             ["@types/mongodb", "npm:3.6.20"],\
             ["bson", "npm:1.1.6"],\
             ["kareem", "npm:2.3.2"],\
-            ["mongodb", "virtual:a8d6ff2fa1287ddcf1bddc74099a1260a43ba27ccec11c852133143aab5e3129f564bb46352c0282f6cfc9342a53fdfe3c31e5ea0404d044e256690dd453e739#npm:3.7.3"],\
-            ["mongoose-legacy-pluralize", "virtual:a8d6ff2fa1287ddcf1bddc74099a1260a43ba27ccec11c852133143aab5e3129f564bb46352c0282f6cfc9342a53fdfe3c31e5ea0404d044e256690dd453e739#npm:1.0.2"],\
+            ["mongodb", "virtual:a26e12c20936f27cb2ba55902ba4454991d6f4fa38a41e1ae9ab923f14e803ef57cf6effa7fe00761376f38d7124217b3182085a5c2c88a9b5554423b1549bf3#npm:3.7.3"],\
+            ["mongoose-legacy-pluralize", "virtual:a26e12c20936f27cb2ba55902ba4454991d6f4fa38a41e1ae9ab923f14e803ef57cf6effa7fe00761376f38d7124217b3182085a5c2c88a9b5554423b1549bf3#npm:1.0.2"],\
             ["mpath", "npm:0.8.4"],\
             ["mquery", "npm:3.2.5"],\
             ["ms", "npm:2.1.2"],\
@@ -3254,12 +3254,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:a8d6ff2fa1287ddcf1bddc74099a1260a43ba27ccec11c852133143aab5e3129f564bb46352c0282f6cfc9342a53fdfe3c31e5ea0404d044e256690dd453e739#npm:1.0.2", {\
-          "packageLocation": "./.yarn/__virtual__/mongoose-legacy-pluralize-virtual-cc8b7d0449/0/cache/mongoose-legacy-pluralize-npm-1.0.2-2fbdda9a5a-8312c20882.zip/node_modules/mongoose-legacy-pluralize/",\
+        ["virtual:a26e12c20936f27cb2ba55902ba4454991d6f4fa38a41e1ae9ab923f14e803ef57cf6effa7fe00761376f38d7124217b3182085a5c2c88a9b5554423b1549bf3#npm:1.0.2", {\
+          "packageLocation": "./.yarn/__virtual__/mongoose-legacy-pluralize-virtual-49c9e5aaf3/0/cache/mongoose-legacy-pluralize-npm-1.0.2-2fbdda9a5a-8312c20882.zip/node_modules/mongoose-legacy-pluralize/",\
           "packageDependencies": [\
-            ["mongoose-legacy-pluralize", "virtual:a8d6ff2fa1287ddcf1bddc74099a1260a43ba27ccec11c852133143aab5e3129f564bb46352c0282f6cfc9342a53fdfe3c31e5ea0404d044e256690dd453e739#npm:1.0.2"],\
+            ["mongoose-legacy-pluralize", "virtual:a26e12c20936f27cb2ba55902ba4454991d6f4fa38a41e1ae9ab923f14e803ef57cf6effa7fe00761376f38d7124217b3182085a5c2c88a9b5554423b1549bf3#npm:1.0.2"],\
             ["@types/mongoose", null],\
-            ["mongoose", "npm:5.13.15"]\
+            ["mongoose", "npm:5.13.16"]\
           ],\
           "packagePeers": [\
             "@types/mongoose",\
@@ -3426,12 +3426,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["nodemon", [\
-        ["npm:2.0.20", {\
-          "packageLocation": "./.yarn/unplugged/nodemon-npm-2.0.20-2fea8f7bf9/node_modules/nodemon/",\
+        ["npm:2.0.22", {\
+          "packageLocation": "./.yarn/unplugged/nodemon-npm-2.0.22-2e71ccda0b/node_modules/nodemon/",\
           "packageDependencies": [\
-            ["nodemon", "npm:2.0.20"],\
+            ["nodemon", "npm:2.0.22"],\
             ["chokidar", "npm:3.5.3"],\
-            ["debug", "virtual:2fea8f7bf934d589dd2afccb55bdd68145a88b9aa55a29410057bbb8228035ad3d548659b5b68d9a9ac84d437a7692cb2fa244c9ab467fa2df8198a52edaac16#npm:3.2.7"],\
+            ["debug", "virtual:2e71ccda0bb8e9b150eba16d9555040ae3f5a03be41bbaba1c15a7310399806e2c8e36c9e19d1b8015c6bb7294dccf844594ece9e99a12b6d5722662eca0b9b2#npm:3.2.7"],\
             ["ignore-by-default", "npm:1.0.1"],\
             ["minimatch", "npm:3.1.2"],\
             ["pstree.remy", "npm:1.1.8"],\
@@ -5043,10 +5043,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:72284023f7412248189543d1155a080bc8a6a3170d0c6b9bb9d3887fe7dce8516358f3482ec1425939b47de5c76d897a7582f7211dec5e9316efd8e2acadb26a#npm:8.9.0", {\
-          "packageLocation": "./.yarn/__virtual__/ws-virtual-274d087bb7/0/cache/ws-npm-8.9.0-d620434feb-23aa0f021b.zip/node_modules/ws/",\
+        ["virtual:26171e7c887632c09bc3497853706824a71f5814c07fcccb25817358932f0364e4519a673206629f923472ce96510c4e77f0f5148de63ba183354acffc1bb18b#npm:8.9.0", {\
+          "packageLocation": "./.yarn/__virtual__/ws-virtual-61e9173f70/0/cache/ws-npm-8.9.0-d620434feb-23aa0f021b.zip/node_modules/ws/",\
           "packageDependencies": [\
-            ["ws", "virtual:72284023f7412248189543d1155a080bc8a6a3170d0c6b9bb9d3887fe7dce8516358f3482ec1425939b47de5c76d897a7582f7211dec5e9316efd8e2acadb26a#npm:8.9.0"],\
+            ["ws", "virtual:26171e7c887632c09bc3497853706824a71f5814c07fcccb25817358932f0364e4519a673206629f923472ce96510c4e77f0f5148de63ba183354acffc1bb18b#npm:8.9.0"],\
             ["@types/bufferutil", null],\
             ["@types/utf-8-validate", null],\
             ["bufferutil", null],\
@@ -5119,6 +5119,7 @@ const StringDecoder = require('string_decoder');
 const url = require('url');
 const os = require('os');
 const nodeUtils = require('util');
+const readline = require('readline');
 const assert = require('assert');
 const stream = require('stream');
 const zlib = require('zlib');
@@ -5343,7 +5344,8 @@ function areStatsEqual(a, b) {
 
 const PortablePath = {
   root: `/`,
-  dot: `.`
+  dot: `.`,
+  parent: `..`
 };
 const Filename = {
   nodeModules: `node_modules`,
@@ -6600,7 +6602,7 @@ const DEFAULT_COMPRESSION_LEVEL = `mixed`;
 function toUnixTimestamp(time) {
   if (typeof time === `string` && String(+time) === time)
     return +time;
-  if (Number.isFinite(time)) {
+  if (typeof time === `number` && Number.isFinite(time)) {
     if (time < 0) {
       return Date.now() / 1e3;
     } else {
@@ -6752,6 +6754,10 @@ class ZipFS extends BasePortableFakeFS {
     this.prepareClose();
     if (!this.lzSource)
       throw new Error(`ZipFS was not created from a Buffer`);
+    if (this.entries.size === 0) {
+      this.discardAndClose();
+      return makeEmptyArchive();
+    }
     try {
       this.libzip.source.keep(this.lzSource);
       if (this.libzip.close(this.zip) === -1)
@@ -7178,7 +7184,7 @@ class ZipFS extends BasePortableFakeFS {
       resolvedP = ppath.resolve(parentP, ppath.basename(resolvedP));
       if (!resolveLastComponent || this.symlinkCount === 0)
         break;
-      const index = this.libzip.name.locate(this.zip, resolvedP.slice(1));
+      const index = this.libzip.name.locate(this.zip, resolvedP.slice(1), 0);
       if (index === -1)
         break;
       if (this.isSymbolicLink(index)) {
@@ -7203,7 +7209,7 @@ class ZipFS extends BasePortableFakeFS {
   allocateUnattachedSource(content) {
     const error = this.libzip.struct.errorS();
     const { buffer, byteLength } = this.allocateBuffer(content);
-    const source = this.libzip.source.fromUnattachedBuffer(buffer, byteLength, 0, true, error);
+    const source = this.libzip.source.fromUnattachedBuffer(buffer, byteLength, 0, 1, error);
     if (source === 0) {
       this.libzip.free(error);
       throw this.makeLibzipError(error);
@@ -7212,7 +7218,7 @@ class ZipFS extends BasePortableFakeFS {
   }
   allocateSource(content) {
     const { buffer, byteLength } = this.allocateBuffer(content);
-    const source = this.libzip.source.fromBuffer(this.zip, buffer, byteLength, 0, true);
+    const source = this.libzip.source.fromBuffer(this.zip, buffer, byteLength, 0, 1);
     if (source === 0) {
       this.libzip.free(buffer);
       throw this.makeLibzipError(this.libzip.getError(this.zip));
@@ -8908,7 +8914,7 @@ class ZipOpenFS extends BasePortableFakeFS {
   }
 }
 
-class URLFS extends ProxiedFS {
+class NodePathFS extends ProxiedFS {
   constructor(baseFs) {
     super(npath);
     this.baseFs = baseFs;
@@ -8917,9 +8923,17 @@ class URLFS extends ProxiedFS {
     return path;
   }
   mapToBase(path) {
+    if (typeof path === `string`)
+      return path;
     if (path instanceof url.URL)
       return url.fileURLToPath(path);
-    return path;
+    if (Buffer.isBuffer(path)) {
+      const str = path.toString();
+      if (Buffer.byteLength(str) !== path.byteLength)
+        throw new Error(`Non-utf8 buffers are not supported at the moment. Please upvote the following issue if you encounter this error: https://github.com/yarnpkg/berry/issues/4942`);
+      return str;
+    }
+    throw new Error(`Unsupported path type: ${nodeUtils.inspect(path)}`);
   }
 }
 
@@ -9022,6 +9036,12 @@ class FileHandle {
     } finally {
       this[kUnref]();
     }
+  }
+  readLines(options) {
+    return readline.createInterface({
+      input: this.createReadStream(options),
+      crlfDelay: Infinity
+    });
   }
   async stat(opts) {
     try {
@@ -9208,7 +9228,7 @@ const ASYNC_IMPLEMENTATIONS = /* @__PURE__ */ new Set([
   `writeSync`
 ]);
 function patchFs(patchedFs, fakeFs) {
-  fakeFs = new URLFS(fakeFs);
+  fakeFs = new NodePathFS(fakeFs);
   const setupFn = (target, name, replacement) => {
     const orig = target[name];
     target[name] = replacement;
@@ -13632,7 +13652,7 @@ const makeInterface = (libzip) => ({
     locate: libzip.cwrap(`zip_name_locate`, `number`, [`number`, `string`, `number`])
   },
   source: {
-    fromUnattachedBuffer: libzip.cwrap(`zip_source_buffer_create`, `number`, [`number`, `number`, `number`, `number`]),
+    fromUnattachedBuffer: libzip.cwrap(`zip_source_buffer_create`, `number`, [`number`, ...number64, `number`, `number`]),
     fromBuffer: libzip.cwrap(`zip_source_buffer`, `number`, [`number`, `number`, ...number64, `number`]),
     free: libzip.cwrap(`zip_source_free`, null, [`number`]),
     keep: libzip.cwrap(`zip_source_keep`, null, [`number`]),
@@ -13718,6 +13738,9 @@ function getPathForDisplay(p) {
   return npath.normalize(npath.fromPortablePath(p));
 }
 
+const [major, minor] = process.versions.node.split(`.`).map((value) => parseInt(value, 10));
+const WATCH_MODE_MESSAGE_USES_ARRAYS = major > 19 || major === 19 && minor >= 2 || major === 18 && minor >= 13;
+
 const builtinModules = new Set(require$$0.Module.builtinModules || Object.keys(process.binding(`natives`)));
 const isBuiltinModule = (request) => request.startsWith(`node:`) || builtinModules.has(request);
 function readPackageScope(checkPath) {
@@ -13752,13 +13775,19 @@ Instead change the require of ${basename} in ${parentPath} to a dynamic import()
   err.code = `ERR_REQUIRE_ESM`;
   return err;
 }
-
-const shouldReportRequiredModules = process.env.WATCH_REPORT_DEPENDENCIES;
-function reportModuleToWatchMode(filename) {
-  if (shouldReportRequiredModules && process.send) {
-    process.send({ "watch:require": npath.fromPortablePath(VirtualFS.resolveVirtual(npath.toPortablePath(filename))) });
+function reportRequiredFilesToWatchMode(files) {
+  if (process.env.WATCH_REPORT_DEPENDENCIES && process.send) {
+    files = files.map((filename) => npath.fromPortablePath(VirtualFS.resolveVirtual(npath.toPortablePath(filename))));
+    if (WATCH_MODE_MESSAGE_USES_ARRAYS) {
+      process.send({ "watch:require": files });
+    } else {
+      for (const filename of files) {
+        process.send({ "watch:require": filename });
+      }
+    }
   }
 }
+
 function applyPatch(pnpapi, opts) {
   const defaultCache = {};
   let enableNativeHooks = true;
@@ -13818,7 +13847,7 @@ function applyPatch(pnpapi, opts) {
     }
     const module = new require$$0.Module(modulePath, parent != null ? parent : void 0);
     module.pnpApiPath = moduleApiPath;
-    reportModuleToWatchMode(modulePath);
+    reportRequiredFilesToWatchMode([modulePath]);
     entry.cache[modulePath] = module;
     if (isMain) {
       process.mainModule = module;
@@ -14627,6 +14656,291 @@ function packageImportsResolve({
   throwImportNotDefined(name, packageJSONUrl, base);
 }
 
+const flagSymbol = Symbol('arg flag');
+
+class ArgError extends Error {
+	constructor(msg, code) {
+		super(msg);
+		this.name = 'ArgError';
+		this.code = code;
+
+		Object.setPrototypeOf(this, ArgError.prototype);
+	}
+}
+
+function arg(
+	opts,
+	{
+		argv = process.argv.slice(2),
+		permissive = false,
+		stopAtPositional = false
+	} = {}
+) {
+	if (!opts) {
+		throw new ArgError(
+			'argument specification object is required',
+			'ARG_CONFIG_NO_SPEC'
+		);
+	}
+
+	const result = { _: [] };
+
+	const aliases = {};
+	const handlers = {};
+
+	for (const key of Object.keys(opts)) {
+		if (!key) {
+			throw new ArgError(
+				'argument key cannot be an empty string',
+				'ARG_CONFIG_EMPTY_KEY'
+			);
+		}
+
+		if (key[0] !== '-') {
+			throw new ArgError(
+				`argument key must start with '-' but found: '${key}'`,
+				'ARG_CONFIG_NONOPT_KEY'
+			);
+		}
+
+		if (key.length === 1) {
+			throw new ArgError(
+				`argument key must have a name; singular '-' keys are not allowed: ${key}`,
+				'ARG_CONFIG_NONAME_KEY'
+			);
+		}
+
+		if (typeof opts[key] === 'string') {
+			aliases[key] = opts[key];
+			continue;
+		}
+
+		let type = opts[key];
+		let isFlag = false;
+
+		if (
+			Array.isArray(type) &&
+			type.length === 1 &&
+			typeof type[0] === 'function'
+		) {
+			const [fn] = type;
+			type = (value, name, prev = []) => {
+				prev.push(fn(value, name, prev[prev.length - 1]));
+				return prev;
+			};
+			isFlag = fn === Boolean || fn[flagSymbol] === true;
+		} else if (typeof type === 'function') {
+			isFlag = type === Boolean || type[flagSymbol] === true;
+		} else {
+			throw new ArgError(
+				`type missing or not a function or valid array type: ${key}`,
+				'ARG_CONFIG_VAD_TYPE'
+			);
+		}
+
+		if (key[1] !== '-' && key.length > 2) {
+			throw new ArgError(
+				`short argument keys (with a single hyphen) must have only one character: ${key}`,
+				'ARG_CONFIG_SHORTOPT_TOOLONG'
+			);
+		}
+
+		handlers[key] = [type, isFlag];
+	}
+
+	for (let i = 0, len = argv.length; i < len; i++) {
+		const wholeArg = argv[i];
+
+		if (stopAtPositional && result._.length > 0) {
+			result._ = result._.concat(argv.slice(i));
+			break;
+		}
+
+		if (wholeArg === '--') {
+			result._ = result._.concat(argv.slice(i + 1));
+			break;
+		}
+
+		if (wholeArg.length > 1 && wholeArg[0] === '-') {
+			/* eslint-disable operator-linebreak */
+			const separatedArguments =
+				wholeArg[1] === '-' || wholeArg.length === 2
+					? [wholeArg]
+					: wholeArg
+							.slice(1)
+							.split('')
+							.map((a) => `-${a}`);
+			/* eslint-enable operator-linebreak */
+
+			for (let j = 0; j < separatedArguments.length; j++) {
+				const arg = separatedArguments[j];
+				const [originalArgName, argStr] =
+					arg[1] === '-' ? arg.split(/=(.*)/, 2) : [arg, undefined];
+
+				let argName = originalArgName;
+				while (argName in aliases) {
+					argName = aliases[argName];
+				}
+
+				if (!(argName in handlers)) {
+					if (permissive) {
+						result._.push(arg);
+						continue;
+					} else {
+						throw new ArgError(
+							`unknown or unexpected option: ${originalArgName}`,
+							'ARG_UNKNOWN_OPTION'
+						);
+					}
+				}
+
+				const [type, isFlag] = handlers[argName];
+
+				if (!isFlag && j + 1 < separatedArguments.length) {
+					throw new ArgError(
+						`option requires argument (but was followed by another short argument): ${originalArgName}`,
+						'ARG_MISSING_REQUIRED_SHORTARG'
+					);
+				}
+
+				if (isFlag) {
+					result[argName] = type(true, argName, result[argName]);
+				} else if (argStr === undefined) {
+					if (
+						argv.length < i + 2 ||
+						(argv[i + 1].length > 1 &&
+							argv[i + 1][0] === '-' &&
+							!(
+								argv[i + 1].match(/^-?\d*(\.(?=\d))?\d*$/) &&
+								(type === Number ||
+									// eslint-disable-next-line no-undef
+									(typeof BigInt !== 'undefined' && type === BigInt))
+							))
+					) {
+						const extended =
+							originalArgName === argName ? '' : ` (alias for ${argName})`;
+						throw new ArgError(
+							`option requires argument: ${originalArgName}${extended}`,
+							'ARG_MISSING_REQUIRED_LONGARG'
+						);
+					}
+
+					result[argName] = type(argv[i + 1], argName, result[argName]);
+					++i;
+				} else {
+					result[argName] = type(argStr, argName, result[argName]);
+				}
+			}
+		} else {
+			result._.push(wholeArg);
+		}
+	}
+
+	return result;
+}
+
+arg.flag = (fn) => {
+	fn[flagSymbol] = true;
+	return fn;
+};
+
+// Utility types
+arg.COUNT = arg.flag((v, name, existingCount) => (existingCount || 0) + 1);
+
+// Expose error class
+arg.ArgError = ArgError;
+
+var arg_1 = arg;
+
+/**
+  @license
+  The MIT License (MIT)
+
+  Copyright (c) 2014 Blake Embrey (hello@blakeembrey.com)
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  THE SOFTWARE.
+*/
+function getOptionValue(opt) {
+  parseOptions();
+  return options[opt];
+}
+let options;
+function parseOptions() {
+  if (!options) {
+    options = {
+      "--conditions": [],
+      ...parseArgv(getNodeOptionsEnvArgv()),
+      ...parseArgv(process.execArgv)
+    };
+  }
+}
+function parseArgv(argv) {
+  return arg_1(
+    {
+      "--conditions": [String],
+      "-C": "--conditions"
+    },
+    {
+      argv,
+      permissive: true
+    }
+  );
+}
+function getNodeOptionsEnvArgv() {
+  const errors = [];
+  const envArgv = ParseNodeOptionsEnvVar(process.env.NODE_OPTIONS || "", errors);
+  if (errors.length !== 0) ;
+  return envArgv;
+}
+function ParseNodeOptionsEnvVar(node_options, errors) {
+  const env_argv = [];
+  let is_in_string = false;
+  let will_start_new_arg = true;
+  for (let index = 0; index < node_options.length; ++index) {
+    let c = node_options[index];
+    if (c === "\\" && is_in_string) {
+      if (index + 1 === node_options.length) {
+        errors.push("invalid value for NODE_OPTIONS (invalid escape)\n");
+        return env_argv;
+      } else {
+        c = node_options[++index];
+      }
+    } else if (c === " " && !is_in_string) {
+      will_start_new_arg = true;
+      continue;
+    } else if (c === '"') {
+      is_in_string = !is_in_string;
+      continue;
+    }
+    if (will_start_new_arg) {
+      env_argv.push(c);
+      will_start_new_arg = false;
+    } else {
+      env_argv[env_argv.length - 1] += c;
+    }
+  }
+  if (is_in_string) {
+    errors.push("invalid value for NODE_OPTIONS (unterminated string)\n");
+  }
+  return env_argv;
+}
+
 function makeApi(runtimeState, opts) {
   const alwaysWarnOnFallback = Number(process.env.PNP_ALWAYS_WARN_ON_FALLBACK) > 0;
   const debugLevel = Number(process.env.PNP_DEBUG_LEVEL);
@@ -14740,7 +15054,12 @@ function makeApi(runtimeState, opts) {
         return true;
     return false;
   }
-  const defaultExportsConditions = /* @__PURE__ */ new Set([`default`, `node`, `require`]);
+  const defaultExportsConditions = /* @__PURE__ */ new Set([
+    `default`,
+    `node`,
+    `require`,
+    ...getOptionValue(`--conditions`)
+  ]);
   function applyNodeExportsResolution(unqualifiedPath, conditions = defaultExportsConditions) {
     const locator = findPackageLocator(ppath.join(unqualifiedPath, `internal.js`), {
       resolveIgnored: true,
@@ -15176,6 +15495,7 @@ Required by: ${issuerLocator.name}@${issuerLocator.reference} (via ${issuerForDi
     if (qualifiedPath) {
       return ppath.normalize(qualifiedPath);
     } else {
+      reportRequiredFilesToWatchMode(candidates.map((candidate) => npath.fromPortablePath(candidate)));
       const unqualifiedPathForDisplay = getPathForDisplay(unqualifiedPath);
       const containingPackage = findPackageLocator(unqualifiedPath);
       if (containingPackage) {
@@ -15229,7 +15549,7 @@ ${candidates.map((candidate) => `Not found: ${getPathForDisplay(candidate)}
       conditions: (_a = opts2.conditions) != null ? _a : defaultExportsConditions,
       readFileSyncFn: tryReadFile
     });
-    if (resolved instanceof URL) {
+    if (resolved instanceof url.URL) {
       return resolveUnqualified(npath.toPortablePath(url.fileURLToPath(resolved)), { extensions: opts2.extensions });
     } else {
       if (resolved.startsWith(`#`))

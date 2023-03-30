@@ -756,15 +756,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"canvas@npm:^2.10.2":
-  version: 2.10.2
-  resolution: "canvas@npm:2.10.2"
+"canvas@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "canvas@npm:2.11.0"
   dependencies:
     "@mapbox/node-pre-gyp": ^1.0.0
     nan: ^2.17.0
     node-gyp: latest
     simple-get: ^3.0.3
-  checksum: b2e3eb4c3635fa2f67857619621c3d314f935a9e51904536dadf4908ab580dff4f5bcbaafe6eb0255247fa027ca494d5cd97c33376a49a0f994997263fa9944b
+  checksum: a69a6e0c90014a1b02e52c4c38a627d1a01ffe9539047bec84105cb3554907a947cf39b4a333be43fc1583dd142b641bb5480a4e23f59c6098618c33bf78f67f
   languageName: node
   linkType: hard
 
@@ -1211,16 +1211,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:^0.37.20":
-  version: 0.37.20
-  resolution: "discord-api-types@npm:0.37.20"
-  checksum: 88ebed85aada3483e83ac46a1b4574c0d59948060ac72f451d658fa646b20d62bd6f21792043621dcc5a9e9353d95c25de70646b8d2a93f0022154345800b26c
+"discord-api-types@npm:^0.37.37":
+  version: 0.37.37
+  resolution: "discord-api-types@npm:0.37.37"
+  checksum: 6b680f52c19aebf0dd1a714ef109a55bfe6786d10fd410f7bf1ee9244041f8b10ba81a988799a832382b34b2ae5ef3027ee31f6d1cf4555f1647252635c6eaaa
   languageName: node
   linkType: hard
 
-"discord.js@npm:^13.12.0":
-  version: 13.12.0
-  resolution: "discord.js@npm:13.12.0"
+"discord.js@npm:^13.14.0":
+  version: 13.14.0
+  resolution: "discord.js@npm:13.14.0"
   dependencies:
     "@discordjs/builders": ^0.16.0
     "@discordjs/collection": ^0.7.0
@@ -1231,7 +1231,7 @@ __metadata:
     form-data: ^4.0.0
     node-fetch: ^2.6.7
     ws: ^8.9.0
-  checksum: e7121efac94cf8dba04999f1050cc369e03651afe7c2d440edab415cfac5b6072cca908e7c1310f0027805deaa955922c4bc0d531ff48d84202c643a0bd5141e
+  checksum: 1eb64e121b2c473f13e9a92639341594f69b4c91f3b616e0942e4123bb8f5696587f6c9d31fe2257273c7923488ff3c530795a144abf91df16e79e2ce84c9597
   languageName: node
   linkType: hard
 
@@ -1767,7 +1767,7 @@ __metadata:
 
 "fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -2273,21 +2273,21 @@ __metadata:
     "@discordjs/builders": ^0.15.0
     "@discordjs/rest": ^0.5.0
     agenda: ^4.4.0
-    canvas: ^2.10.2
+    canvas: ^2.11.0
     chart.js: ^3.9.1
     chartjs-node-canvas: ^4.1.6
     cross-env: ^7.0.3
-    discord-api-types: ^0.37.20
-    discord.js: ^13.12.0
+    discord-api-types: ^0.37.37
+    discord.js: ^13.14.0
     dotenv: ^10.0.0
     eslint: ^7.32.0
     express: ^4.18.2
     html-entities: ^2.3.3
     jsdom: ^19.0.0
-    luxon: ^3.1.0
-    mongoose: 5.13.15
+    luxon: ^3.3.0
+    mongoose: 5.13.16
     node-libcurl: ^2.3.4
-    nodemon: ^2.0.20
+    nodemon: ^2.0.22
     random-useragent: ^0.5.0
     rss-parser: ^3.12.0
     signale-logger: ^1.5.1
@@ -2507,10 +2507,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "luxon@npm:3.1.0"
-  checksum: f8a850b759ba7a2e009d904c522ed7bc264bf4add57578f8948e52a0ed96b627b025b5aad8032295b570ae19fac41f0ffab91bdb128715fb0cc020798a7ba886
+"luxon@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "luxon@npm:3.3.0"
+  checksum: 50cf17a0dc155c3dcacbeae8c0b7e80db425e0ba97b9cbdf12a7fc142d841ff1ab1560919f033af46240ed44e2f70c49f76e3422524c7fc8bb8d81ca47c66187
   languageName: node
   linkType: hard
 
@@ -2785,9 +2785,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongoose@npm:5.13.15":
-  version: 5.13.15
-  resolution: "mongoose@npm:5.13.15"
+"mongoose@npm:5.13.16":
+  version: 5.13.16
+  resolution: "mongoose@npm:5.13.16"
   dependencies:
     "@types/bson": 1.x || 4.0.x
     "@types/mongodb": ^3.5.27
@@ -2803,7 +2803,7 @@ __metadata:
     safe-buffer: 5.2.1
     sift: 13.5.2
     sliced: 1.0.1
-  checksum: 74edc47c7819b82220e44402b3607faee622dfe6ac52947e812a7a179feebc295d1f7e7802da9353f8fc1f095b1b4eed775ed2c3914ee4baa332a36cb4679e18
+  checksum: e3171c8fbeb5d6ea8c2994685dcf3ae90be4a13b3f741121d9ea394fcffe1a1856a2d9d1c144779c5b6934ff60b507f0c8a609257db784398be2a7c3854a68f1
   languageName: node
   linkType: hard
 
@@ -2949,9 +2949,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemon@npm:^2.0.20":
-  version: 2.0.20
-  resolution: "nodemon@npm:2.0.20"
+"nodemon@npm:^2.0.22":
+  version: 2.0.22
+  resolution: "nodemon@npm:2.0.22"
   dependencies:
     chokidar: ^3.5.2
     debug: ^3.2.7
@@ -2965,7 +2965,7 @@ __metadata:
     undefsafe: ^2.0.5
   bin:
     nodemon: bin/nodemon.js
-  checksum: 9fe858682414fe703179f4fe36c86e71f40d2693b5345c09803d7b191816a6589c5df8f1f9873bffee92893880183b95a031c86340e46b364ef1b0b7f619edbf
+  checksum: 9c987e139748f5b5c480c6c9080bdc97304ee7d29172b7b3da1a7db590b1323ad57b96346304e9b522b0e445c336dc393ccd3f9f45c73b20d476d2347890dcd0
   languageName: node
   linkType: hard
 

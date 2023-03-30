@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const logger = require('./utils/signale')
 
 const packageJson = require('./package.json')
-if (process.version !== packageJson.engines.node) {
+if (/^v(\d+)\./.exec(process.version)[1] < packageJson.engines.node) {
   logger.error('Please use ' + packageJson.engines.node + ' node version')
   process.exit(1)
 }
