@@ -15,10 +15,6 @@ const getCookie = () => {
 const { curly } = require('node-libcurl')
 const { pause } = require('../utils/util')
 
-const proxies = process.env.PROXIES?.split(',') || null
-logger.log('PROXIES : ', proxies)
-let count = 0
-
 const HEADERS_OBJ = {
   'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
   'accept-encoding': 'gzip, deflate, br',
@@ -45,7 +41,6 @@ const get = async (pathname, options) => {
     if (Object.keys(options).length === 0) options = undefined
   }
 
-  if (proxies && count >= proxies.length) count = 0
   options ||= {}
   options.params ||= {}
 
@@ -70,11 +65,7 @@ const get = async (pathname, options) => {
     followLocation: true,
     httpHeader: headers
   }
-  // console.log(tmpHeaders.concat(optionalHeaders))
-  if (proxies && options?.customProxy) opts.proxy = `socks5://${options.customProxy}`
-  else if (proxies) opts['proxy'] = `socks5://${proxies[count]}`
   const { statusCode, data } = await curly.get(s, opts)
-  count++
   if (statusCode !== 200) {
     if (statusCode === 429) {
       logger.warn('Too many request, wait a bit')

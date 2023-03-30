@@ -37,10 +37,9 @@ built by [@kernoeb](https://www.root-me.org/kernoeb).
 ## Prerequisites
 
 - Docker > 20
-- docker-compose > 1.29 (or docker compose 2 !)
 - Create a Discord bot and invite it : https://discord.com/api/oauth2/authorize?client_id=xxxx&permissions=2684472384&scope=applications.commands%20bot (replace xxxx with the bot client id)
 
-> I'm using Docker version 20.10.x and Docker Compose (not docker-compose) version v2.6.0
+> I'm using Docker version 20.10.x and Docker Compose (not docker-compose)
 
 ## Installation
 

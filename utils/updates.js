@@ -12,8 +12,6 @@ const { validUsers } = require('./user')
 const { DateTime } = require('luxon')
 const { getCategory } = require('./challenge')
 
-const customProxy = process.env.NODE_ENV === 'production' ? (process.env.PROXY_CHALL || 'tor-node-chall:9050') : '127.0.0.1:9054'
-
 const sumByCategory = async (arr, category) => {
   const challs = []
   for (const item of arr || []) {
@@ -33,7 +31,7 @@ module.exports = {
     await pause(1000)
     let reqPage
     try {
-      reqPage = await curl.get(`/challenges/${id_challenge}`, { customProxy, bypassCache: true })
+      reqPage = await curl.get(`/challenges/${id_challenge}`)
     } catch (err) {
       await pause(1000)
       if (err.code === 403) {
@@ -46,7 +44,7 @@ module.exports = {
         try {
           logger.info('Petite pause de 10 secondes parce que l\'api est reloue')
           await pause(9000)
-          reqPage = await curl.get(`/challenges/${id_challenge}`, { headers: { cookie: `api_key=${process.env.API_KEY}` }, customProxy, bypassCache: true })
+          reqPage = await curl.get(`/challenges/${id_challenge}`, { headers: { cookie: `api_key=${process.env.API_KEY}` } })
         } catch (err) {
           logger.error(err)
         }
@@ -110,7 +108,7 @@ module.exports = {
     logger.info('Update users')
     for await (const user of mongoose.models.user.find()) {
       try {
-        const req = await curl.get(`/auteurs/${user.id_auteur}`, { bypassCache: true })
+        const req = await curl.get(`/auteurs/${user.id_auteur}`)
 
         const toCheck = [
           {

@@ -7,8 +7,8 @@
     "start": "node index.js",
     "register": "node register_slash_commands.js",
     "register_dev": "node register_slash_commands_dev.js",
-    "dev": "docker-compose -f docker-compose-dev.yml up -d && nodemon --ignore 'register_slash_commands*.js' index.js",
-    "dev:darwin-arm64": "docker-compose -f docker-compose-dev-arm64.yml pull && docker-compose -f docker-compose-dev-arm64.yml up -d && nodemon --ignore 'register_slash_commands*.js' index.js",
+    "dev": "docker compose -f docker-compose-dev.yml pull && docker compose -f docker-compose-dev.yml up -d --remove-orphans && nodemon --ignore 'register_slash_commands*.js' index.js",
+    "dev:darwin-arm64": "docker compose -f docker-compose-dev-arm64.yml pull && docker compose -f docker-compose-dev-arm64.yml up -d --remove-orphans && nodemon --ignore 'register_slash_commands*.js' index.js",
     "dev_no_update": "cross-env NO_UPDATE=true yarn dev",
     "test_canvas": "cross-env ROOTME_API_URL=https://api.www.root-me.org ROOTME_URL=https://www.root-me.org nodemon manual/app.js",
     "lint": "eslint --fix . --ext .js"
@@ -39,7 +39,7 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.37.0",
     "express": "^4.18.2",
     "node-libcurl": "^2.3.4",
     "nodemon": "^2.0.22"

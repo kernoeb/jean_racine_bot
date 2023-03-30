@@ -5,7 +5,7 @@
     "es6": true
   },
   "parserOptions": {
-    "ecmaVersion": 2021
+    "ecmaVersion": 2022
   },
   "rules": {
     "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
@@ -40,6 +40,7 @@
     "space-infix-ops": "error",
     "space-unary-ops": "error",
     "spaced-comment": "error",
-    "yoda": "error"
+    "yoda": "error",
+    "no-unused-vars": "warn"
   }
 }
