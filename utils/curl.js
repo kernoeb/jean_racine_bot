@@ -15,6 +15,26 @@ const getCookie = () => {
 const { curly } = require('node-libcurl')
 const { pause } = require('../utils/util')
 
+const PROXY_LIST = process.env.ACTIVATE_PROXIES == 1 ? process.env.PROXY_LIST_URL : null
+if (PROXY_LIST) {
+  logger.info('Proxies activated:', PROXY_LIST)
+}
+var proxies_list = [];
+
+const refillProxies = async () => {
+  proxies_list = await curly.get(PROXY_LIST)
+  proxies_list = proxies_list.data.replaceAll('\r\n', '\n').split('\n');
+}
+
+const getProxy = async () => {
+  if (proxies_list.length === 0) {
+    logger.info('No proxies left, refilling')
+    await refillProxies()
+  }
+  const proxy = proxies_list.pop()
+  return proxy
+}
+
 const HEADERS_OBJ = {
   'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
   'accept-encoding': 'gzip, deflate, br',
@@ -45,10 +65,11 @@ const get = async (pathname, options) => {
   options.params ||= {}
 
   // Wtf ??
-  if (hostname.startsWith('api.') && (pathname.startsWith('/challenges') || pathname.startsWith('/auteurs'))) {
-    pathname = pathname = getRandom() + '_' + getRandom() + '_' + getRandom() + '/%2E%2E' + pathname
-    options.params.os = getRandom() + getRandom() + getRandom()
-  }
+  // TO DEBUG: pathname can be null
+  // if (hostname.startsWith('api.') && (pathname.startsWith('/challenges') || pathname.startsWith('/auteurs'))) {
+  //   pathname = pathname = getRandom() + '_' + getRandom() + '_' + getRandom() + '/%2E%2E' + pathname
+  //   options.params.os = getRandom() + getRandom() + getRandom()
+  // }
 
   const s = url.format({
     hostname,
@@ -60,22 +81,45 @@ const get = async (pathname, options) => {
   const optionalHeaders = options?.headers || {}
   const tmpHeaders = { ...HEADERS_OBJ, ...optionalHeaders }
   const headers = Object.entries(tmpHeaders).map(([k, v]) => `${k}: ${v}`)
+  const proxy = PROXY_LIST ? process.env.PROXY || await getProxy() : undefined;
   const opts = {
-    timeoutMs: process.env.TIMEOUT_MS || 15000,
+    timeoutMs: process.env.TIMEOUT_MS || 5000,
     followLocation: true,
     httpHeader: headers
   }
-  const { statusCode, data } = await curly.get(s, opts)
-  if (statusCode !== 200) {
-    if (statusCode === 429) {
-      logger.warn('Too many request, wait a bit')
-      await pause(5000)
-    }
-    if (statusCode === 404) logger.warn('404')
-    else logger.error('Error : ', statusCode)
-    throw { code: statusCode }
+  if (proxy) {
+    opts.proxy = proxy
   }
-  return { data, statusCode }
+  try {
+    const { statusCode, data } = await curly.get(s, opts)
+    if (statusCode !== 200) {
+      if (statusCode === 429) {
+        logger.warn('Too many request, wait a bit')
+        await pause(5000)
+      }
+      if (statusCode === 404) logger.warn('404')
+      else logger.error('Error : ', statusCode)
+      throw { code: statusCode }
+    }
+    return { data, statusCode }
+  } catch (e) {
+    if (PROXY_LIST) {
+      if (e.code === 28) {
+        logger.warn('Timeout, retrying with another proxy') 
+        return await get(pathname, options)
+      }
+      if (e.code === 7) {
+        logger.warn('Connection refused, retrying with another proxy')
+        return await get(pathname, options)
+      }
+      if (e.code === 56) {
+        logger.warn('Failure receiving network data, retrying with another proxy')
+        return await get(pathname, options)
+      }
+    }
+    throw e
+  }
+  
 }
 
 module.exports = { get }
