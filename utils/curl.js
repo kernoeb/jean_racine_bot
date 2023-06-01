@@ -23,7 +23,7 @@ var proxies_list = [];
 
 const refillProxies = async () => {
   proxies_list = await curly.get(PROXY_LIST)
-  proxies_list = proxies_list.data.split('\r\n')
+  proxies_list = proxies_list.data.replaceAll('\r\n', '\n').split('\n');
 }
 
 const getProxy = async () => {
