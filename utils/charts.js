@@ -1,6 +1,7 @@
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas')
 const mongoose = require('../utils/mongoose')
 const { DateTime } = require('luxon')
+const logger = require('./signale')
 
 function range(i) {
   return [...Array(i).keys()]
@@ -13,6 +14,7 @@ async function getScore(id_challenge) {
 module.exports = {
   async getMonthChart(guildId) {
     const channel = await mongoose.models.channels.findOne({ guildId })
+    if (!channel) return logger.error(`Channel ${guildId} not found`)
 
     const tmpUsers = await mongoose.models.user.find({ id_auteur: { $in: (channel.users || []) } }, { validations: 1, score: 1, nom: 1 })
       .sort({ score: -1, nom: 1 })
