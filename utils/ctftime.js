@@ -57,10 +57,11 @@ module.exports = {
 
     return agenda
   },
-  formattedEmbed: (body, start_time, end, duration) => {
-    return `**Démarre le :** ${start_time[0]}, à ${start_time[1] || '?'} \n` +
+  formattedEmbed: (body, start_time, end_time, duration) => {
+    return `**Démarre le :** ${start_time} \n` +
+            `**Termine le :** ${end_time} \n` +
+             (body.location ? `**Lieu :** ${body.location} \n` : '') +
             `**Organisé par :** ${body.organizers?.[0]?.name || '?'} \n` +
-            `**Termine le :** ${end[0]}, à ${end[1] || '?'} \n` +
             `**Site Web :** ${body.url} \n` +
             `**URL CTFTime :** ${body.ctftime_url} \n` +
             `**IRL :** ${body.onsite ? 'Oui' : 'Non'} \n` +

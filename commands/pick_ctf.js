@@ -26,8 +26,9 @@ module.exports = {
     }
     const body = response
     // Prepares the message
-    const start_time = DateTime.fromISO(body.start).setLocale('fr').toFormat('f').split(', ')
-    const end = DateTime.fromISO(body.finish).setLocale('fr').toFormat('f').split(', ')
+    const start_time = DateTime.fromISO(body.start).setLocale('fr').toFormat('f')
+    const end_time = DateTime.fromISO(body.finish).setLocale('fr').toFormat('f')
+
     let duration = ''
     if (body.duration.days && body.duration.hours) {
       duration += `${body.duration.days} jours et ${body.duration.hours} heures`
@@ -42,7 +43,7 @@ module.exports = {
       .setColor('#36393f')
       .addField(
         ':information_source: Infos',
-        formattedEmbed(body, start_time, end, duration)
+        formattedEmbed(body, start_time, end_time, duration)
       )
       .setThumbnail(body.logo)
     // Sends the message

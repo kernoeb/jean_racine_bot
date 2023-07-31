@@ -14,10 +14,10 @@ module.exports = {
 
   async execute(interaction) {
     let nbCtf = interaction.options.getInteger('numberctf')
-    // if no arguments has been provided sets it to 1
+    // if no argument has been provided sets it to 1
     if (!nbCtf)
       nbCtf = 1
-    // basic sanitize of te argument
+    // basic sanitize of the argument
     else {
       nbCtf = nbCtf > 5 ? 5 : nbCtf
       nbCtf = nbCtf < 1 ? 1 : nbCtf
@@ -52,8 +52,9 @@ module.exports = {
         embed.setDescription(body[i].title, `${body[i].description}`)
       }
       // Prepares the message
-      const start_time = DateTime.fromISO(body[i].start).setLocale('fr').toFormat('f').split(', ')
-      const end = DateTime.fromISO(body[i].finish).setLocale('fr').toFormat('f').split(', ')
+      console.log(body[i])
+      const start_time = DateTime.fromISO(body[i].start).setLocale('fr').toFormat('f')
+      const end_time = DateTime.fromISO(body[i].finish).setLocale('fr').toFormat('f')
       let time = ''
       if (body[i].duration.days && body[i].duration.hours) {
         time += `${body[i].duration.days} jours et ${body[i].duration.hours} heures`
@@ -64,7 +65,7 @@ module.exports = {
       }
       embed.addField(
         ':information_source: Infos',
-        formattedEmbed(body[i], start_time, end, time)
+        formattedEmbed(body[i], start_time, end_time, time)
       )
       embed.setThumbnail(body[i].logo)
       embedArray.push(embed)
