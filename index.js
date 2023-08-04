@@ -124,6 +124,17 @@ db.once('open', async function() {
   syncedUserSchema.index({ guildId: 1, id_role: 1 })
   mongoose.model('syncedusers', syncedUserSchema)
 
+  // Profile pictures cache
+  const profilePicturesSchemaTemplate = {
+    rootmeId: { type: String, required: true, unique: true, index: true },
+    image: { type: String, required: true }
+  }
+
+  const profilePicturesSchema = new mongoose.Schema(profilePicturesSchemaTemplate)
+
+  profilePicturesSchema.index({ rootmeId: 1 })
+  mongoose.model('profilepictures', profilePicturesSchema)
+
   if (!await Challenges.countDocuments({})) {
     logger.info('Loading challenges, please wait...')
     try {
