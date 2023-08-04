@@ -19,11 +19,11 @@ const PROXY_LIST = process.env.ACTIVATE_PROXIES == 1 ? process.env.PROXY_LIST_UR
 if (PROXY_LIST) {
   logger.info('Proxies activated:', PROXY_LIST)
 }
-var proxies_list = [];
+let proxies_list = []
 
 const refillProxies = async () => {
   proxies_list = await curly.get(PROXY_LIST)
-  proxies_list = proxies_list.data.replaceAll('\r\n', '\n').split('\n');
+  proxies_list = proxies_list.data.replaceAll('\r\n', '\n').split('\n')
 }
 
 const getProxy = async () => {
@@ -64,12 +64,10 @@ const get = async (pathname, options) => {
   options ||= {}
   options.params ||= {}
 
-  // Wtf ??
-  // TO DEBUG: pathname can be null
-  // if (hostname.startsWith('api.') && (pathname.startsWith('/challenges') || pathname.startsWith('/auteurs'))) {
-  //   pathname = pathname = getRandom() + '_' + getRandom() + '_' + getRandom() + '/%2E%2E' + pathname
-  //   options.params.os = getRandom() + getRandom() + getRandom()
-  // }
+  if (hostname && pathname && hostname.startsWith('api.') && (pathname.startsWith('/challenges') || pathname.startsWith('/auteurs'))) {
+    pathname = `${getRandom()}_${getRandom()}_${getRandom()}/%2E%2E${pathname}`
+    options.params.os = getRandom() + getRandom() + getRandom()
+  }
 
   const s = url.format({
     hostname,
@@ -81,7 +79,7 @@ const get = async (pathname, options) => {
   const optionalHeaders = options?.headers || {}
   const tmpHeaders = { ...HEADERS_OBJ, ...optionalHeaders }
   const headers = Object.entries(tmpHeaders).map(([k, v]) => `${k}: ${v}`)
-  const proxy = PROXY_LIST ? process.env.PROXY || await getProxy() : undefined;
+  const proxy = PROXY_LIST ? process.env.PROXY || await getProxy() : undefined
   const opts = {
     timeoutMs: process.env.TIMEOUT_MS || 5000,
     followLocation: true,
@@ -105,7 +103,7 @@ const get = async (pathname, options) => {
   } catch (e) {
     if (PROXY_LIST) {
       if (e.code === 28) {
-        logger.warn('Timeout, retrying with another proxy') 
+        logger.warn('Timeout, retrying with another proxy')
         return await get(pathname, options)
       }
       if (e.code === 7) {
@@ -119,7 +117,7 @@ const get = async (pathname, options) => {
     }
     throw e
   }
-  
+
 }
 
 module.exports = { get }
