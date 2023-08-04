@@ -2149,10 +2149,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:^0.37.50":
-  version: 0.37.50
-  resolution: "discord-api-types@npm:0.37.50"
-  checksum: 08dc5145dbefda5f52b479cd42d96ac2b8110300861855e1f92cc8a0a6525a4059e32724cd5237490c286f5afd86797a86823238cd5eee016198560bb36f6d43
+"discord-api-types@npm:^0.37.51":
+  version: 0.37.51
+  resolution: "discord-api-types@npm:0.37.51"
+  checksum: 0f6c8a5c316896e333ffb7c95ad31eff51053848cff23a9e47849e27b1f92a342df3e90eb304bf1d1410981b64d7d07a327f883722ffe75c064ae096dd3e9721
   languageName: node
   linkType: hard
 
@@ -3281,7 +3281,7 @@ __metadata:
     chart.js: ^3.9.1
     chartjs-node-canvas: ^4.1.6
     cross-env: ^7.0.3
-    discord-api-types: ^0.37.50
+    discord-api-types: ^0.37.51
     discord.js: ^13.16.0
     dotenv: ^10.0.0
     eslint: ^8.46.0

@@ -35,7 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
             ["cross-env", "npm:7.0.3"],\
-            ["discord-api-types", "npm:0.37.50"],\
+            ["discord-api-types", "npm:0.37.51"],\
             ["discord.js", "npm:13.16.0"],\
             ["dotenv", "npm:10.0.0"],\
             ["eslint", "npm:8.46.0"],\
@@ -2506,10 +2506,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:0.37.50", {\
-          "packageLocation": "./.yarn/cache/discord-api-types-npm-0.37.50-969b9c186e-08dc5145db.zip/node_modules/discord-api-types/",\
+        ["npm:0.37.51", {\
+          "packageLocation": "./.yarn/cache/discord-api-types-npm-0.37.51-89cec04373-0f6c8a5c31.zip/node_modules/discord-api-types/",\
           "packageDependencies": [\
-            ["discord-api-types", "npm:0.37.50"]\
+            ["discord-api-types", "npm:0.37.51"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3760,7 +3760,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chart.js", "npm:3.9.1"],\
             ["chartjs-node-canvas", "virtual:24fa1ffe934386d4e108da379ed545760eee715d9e8e7cb0498c015075530c443a12f8651688167730ef58fe8b896ba573aff62927504e22d8bd3947de534c47#npm:4.1.6"],\
             ["cross-env", "npm:7.0.3"],\
-            ["discord-api-types", "npm:0.37.50"],\
+            ["discord-api-types", "npm:0.37.51"],\
             ["discord.js", "npm:13.16.0"],\
             ["dotenv", "npm:10.0.0"],\
             ["eslint", "npm:8.46.0"],\
