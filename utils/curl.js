@@ -96,15 +96,13 @@ const get = async (pathname, options) => {
         await pause(5000)
       }
       if (statusCode === 404) logger.warn('404')
-      if (statusCode === 35)
-      {
+      if (statusCode === 35) {
         logger.warn('SSL connect error, retrying')
         // If this error happens, it means that we have been banned
         // So we wait 5 minutes before retrying
         // I added 10 seconds to be sure that the server is ready
         await pause(1000 * 60 * 5 + 10000)
-      }
-      else logger.error('Error : ', statusCode)
+      } else logger.error('Error : ', statusCode)
       throw { code: statusCode }
     }
     return { data, statusCode }
