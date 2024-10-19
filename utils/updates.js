@@ -241,7 +241,10 @@ module.exports = {
       } catch (err) {
         await pause(3000)
         if (err?.code === 28) logger.error('Root-Me is slow, timeout was reached...')
-        else logger.error(err)
+        if (err?.code === 35) {
+          logger.error('SSL error, Root-Me banned us waiting for 5 minutes...')
+          await pause(1000 * 60 * 5 + 10000)
+        } else logger.error(err)
       }
     }
   }
